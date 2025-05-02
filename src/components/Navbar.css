@@ -1,0 +1,30 @@
+.logo{
+  width: 136px;
+  cursor: pointer;
+}
+.nav-bar{
+  position: relative;
+  ul{
+    li{
+      a{
+        font-weight: 500;
+      }
+      button{
+        background: #0e95d9e3;
+        border: none;
+        opacity: 1;
+        transition: 0.3s;
+      }
+      button:hover{
+        opacity: 0.8;
+      }
+    }
+  }
+  .center-menu{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+  }
+}
