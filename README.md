@@ -1,54 +1,35 @@
-# React + TypeScript + Vite
+# Project Name: 영화 예매 웹사이트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
 
-Currently, two official plugins are available:
+- React + TypeScript + Vite for Frontend
+- PicoCSS used for basic styling
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Team Members
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 부김은
+- 구효근
+- 조성채
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- See [VITE-SETUP.md](./VITE-SETUP.md) for details about the development environment and configuration.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## Routing:
+
+- 이 프로젝트는 client-side routing을 위해 React Router를 사용한다.
+- 모든 라우트 설정은 `route/` 폴더 안의 `MyRoute.tsx` 파일에서 관리된다.
+- 경로 관리는 `enum`(`AppRoutes`)을 사용하여 쉽게 관리할 수 있도록 구성되어 있다.
+- 추후 `MyRoute.tsx`에 `<Route>` 요소를 추가하여 로그인 페이지, 회원가입 페이지 등을 연결할 예정이다.
+
+### MyRoute.tsx 예시
+
+- 사용자가 `/` 경로를 방문하면, `HomePage` 컴포넌트가 렌더링된다.
+
+---
