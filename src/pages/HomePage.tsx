@@ -16,7 +16,8 @@ const HomePage: React.FC = () => {
 
     const widthItem = slider.querySelector(".item-container")?.clientWidth || 0;
     //check if we are at the end
-    if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) { //if at the end, go to the first item in the slider
+    if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
+      //if at the end, go to the first item in the slider
       slider.scrollLeft = 0;
     } else {
       slider.scrollLeft += widthItem + 20; //20px is margin
@@ -30,8 +31,9 @@ const HomePage: React.FC = () => {
     const widthItem = slider.querySelector(".item-container")?.clientWidth || 0;
     const totalItems = slider.querySelectorAll(".item-container").length;
     //check if we are at the start
-    if (slider.scrollLeft <= 20) {  //if at the start, go to the last item in the slider ; 20: because sometimes there’s a slight margin.
-      slider.scrollLeft = (widthItem + 20) * (totalItems - 1);  //jump to the last item, 20 is margin
+    if (slider.scrollLeft <= 20) {
+      //if at the start, go to the last item in the slider ; 20: because sometimes there’s a slight margin.
+      slider.scrollLeft = (widthItem + 20) * (totalItems - 1); //jump to the last item, 20 is margin
     } else {
       slider.scrollLeft -= widthItem + 20; //20px is margin
     }
@@ -44,10 +46,10 @@ const HomePage: React.FC = () => {
     if (!sliderRef.current) return;
     isDragging.current = true;
     startX.current =
-      (e.type === "touchstart"
+      e.type === "touchstart"
         ? (e as React.TouchEvent).touches[0].pageX
-        : (e as React.MouseEvent).pageX);
-        startScrollLeft.current = sliderRef.current.scrollLeft;
+        : (e as React.MouseEvent).pageX;
+    startScrollLeft.current = sliderRef.current.scrollLeft;
   }
 
   function handleDragMove(
@@ -56,9 +58,9 @@ const HomePage: React.FC = () => {
     if (!isDragging.current || !sliderRef.current) return;
     e.preventDefault(); // prevent highlighting text while dragging
     const x =
-      (e.type === "touchmove"
+      e.type === "touchmove"
         ? (e as React.TouchEvent).touches[0].pageX
-        : (e as React.MouseEvent).pageX);
+        : (e as React.MouseEvent).pageX;
     const walk = (x - startX.current) * 1; // walk>0:user drags to the right, <0: drags to the left ; 1: speed multiplier
     sliderRef.current.scrollLeft = startScrollLeft.current - walk;
   }

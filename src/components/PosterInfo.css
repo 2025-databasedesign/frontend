@@ -1,14 +1,14 @@
-.item{
+.item {
   text-align: center;
-  .top-info{
+  .top-info {
     position: relative;
     margin-bottom: 20px;
-    .poster-info{
-      img{
+    .poster-info {
+      img {
         border-radius: 12px;
       }
     }
-    .rank{
+    .rank {
       position: absolute;
       left: 1rem;
       top: 0;
@@ -19,7 +19,7 @@
       color: whitesmoke;
       text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
     }
-    .over-box{
+    .over-box {
       position: absolute;
       z-index: 2;
       top: 0;
@@ -35,7 +35,7 @@
       background: rgba(0, 0, 0, 0.5);
       opacity: 0;
       transition: 0.4s;
-      button{
+      button {
         padding: 12px 16px;
         color: white;
         border-color: white;
@@ -43,75 +43,75 @@
         transition: 0.2s;
         cursor: pointer;
       }
-      button:hover{
+      button:hover {
         opacity: 1;
       }
-      button:focus{
+      button:focus {
         box-shadow: none;
       }
     }
   }
-  .bottom-info{
+  .bottom-info {
     color: rgb(194, 199, 208);
-    .title-info{
+    .title-info {
       display: flex;
       justify-content: center;
       align-items: center;
-      img{
+      img {
         margin-right: 8px;
       }
     }
-    .sub-info{
+    .sub-info {
       font-size: 16px;
-      .rate-info{
-        .rate-percentage{
+      .rate-info {
+        .rate-percentage {
           font-weight: 600;
         }
       }
-      .star-info{
+      .star-info {
         position: relative;
         padding-left: 16px;
-        img{
+        img {
           width: 12px;
           margin-right: 4px;
         }
       }
-      .star-info::before{
-        content: '';
+      .star-info::before {
+        content: "";
         position: absolute;
         top: 4px;
         left: 8px;
         display: inline-block;
         width: 1px;
         height: 14px;
-        background: #B2B2B2;
+        background: #b2b2b2;
       }
     }
   }
 }
-.item:hover .over-box{
+.item:hover .over-box {
   display: flex;
   opacity: 1;
 }
 @media screen and (max-width: 1200px) {
-  .item{
-    width: calc(25vw - 20px); /*only 4 item displayed*/
+  .item {
+    width: calc(25vw - 20px); /*only 4 items are displayed*/
   }
 }
 @media screen and (max-width: 900px) {
-  .item{
-    width: calc(33.3vw - 20px); /*only 3 item displayed*/
+  .item {
+    width: calc(33.3vw - 20px); /*only 3 items are displayed*/
     font-size: 14px;
-    .top-info .rank{
+    .top-info .rank {
       font-size: 30px;
     }
-    .bottom-info .sub-info .rate-info{
+    .bottom-info .sub-info .rate-info {
       font-size: 12px;
     }
   }
 }
 @media screen and (max-width: 500px) {
-  .item{
-    width: calc(50vw - 20px); /*only 2 item displayed*/
+  .item {
+    width: calc(50vw - 20px); /*only 2 items are displayed*/
   }
 }
