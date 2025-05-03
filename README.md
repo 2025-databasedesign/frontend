@@ -4,6 +4,7 @@
 
 - React + TypeScript + Vite for Frontend
 - PicoCSS used for basic styling
+  - Documentation link: [PicoCss_Doc](https://picocss.com/docs)
 
 ---
 
