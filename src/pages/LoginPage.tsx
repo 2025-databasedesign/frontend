@@ -3,14 +3,38 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 const LoginPage: React.FC = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("로그인 시도:", { username, password });
-        navigate("/");
+
+        try {
+            const response = await fetch("http://54.180.117.246/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("로그인 성공:", data);
+                alert("로그인 성공!");
+                navigate("/");
+            } else {
+                const errorData = await response.json();
+                alert("로그인 실패: " + (errorData.message || response.statusText));
+            }
+        } catch (error) {
+            console.error("로그인 중 오류:", error);
+            alert("서버 오류로 로그인에 실패했습니다.");
+        }
     };
 
     return (
@@ -27,11 +51,11 @@ const LoginPage: React.FC = () => {
             <section className="login-form-container">
                 <form onSubmit={handleLogin}>
                     <input
-                        type="text"
+                        type="email"
                         className="login-input"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                     <input

@@ -6,12 +6,39 @@ const SignUpPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
-        const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Add actual signup logic here
-        console.log('Sign up:', { email, nickname, password });
+
+        try {
+            const response = await fetch('http://54.180.117.246/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: 3785,
+                    username: nickname,
+                    email: email,
+                    password: password
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Register success:', data);
+                alert('회원가입 성공!');
+                navigate('/login-page');
+            } else {
+                const errorData = await response.json();
+                console.error('Register failed:', errorData);
+                alert(`회원가입 실패: ${errorData.message || response.statusText}`);
+            }
+        } catch (error) {
+            console.error('Error during fetch:', error);
+            alert('서버 오류로 회원가입에 실패했습니다.');
+        }
     };
 
     return (
