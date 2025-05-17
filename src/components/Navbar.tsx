@@ -15,13 +15,13 @@ const Navbar: React.FC = () => {
       />
       <ul className="center-menu">
         <li>
-          <a href="#">영화</a>
+          <a className="middle-navigation">영화</a>
         </li>
         <li>
-          <a href="#">예매</a>
+          <a className="middle-navigation" onClick={() => navigate(AppRoutes.SCHEDULE_PAGE)}>예매</a>
         </li>
         <li>
-          <a href="#">상영관</a>
+          <a className="middle-navigation">상영관</a>
         </li>
       </ul>
       <ul>

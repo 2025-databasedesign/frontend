@@ -1,0 +1,126 @@
+[
+  {
+    "date": "2025-05-17",
+    "schedules": [
+      {
+        "movieName": "Inception",
+        "durationMinutes": 148,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "A",
+            "theaterName": "Theater 1",
+            "format": "2D",
+            "subDub": "더빙",
+            "availSeat": 32,
+            "totalSeat": 60,
+            "startTimes": ["08:00", "10:30", "13:00", "15:30", "18:00", "20:30", "23:00", "01:30", "04:00", "06:30", "08:30"],
+            "endTimes": ["10:28", "12:58", "15:28", "17:58", "20:28", "22:58", "01:28", "03:58", "06:28", "08:58", "10:58"]
+          },
+          {
+            "theaterId": "B",
+            "theaterName": "Theater 2",
+            "format": "IMAX",
+            "subDub": "자막",
+            "availSeat": 68,
+            "totalSeat": 90,
+            "startTimes": ["11:00", "14:30", "18:00", "21:30"],
+            "endTimes": ["13:28", "16:58", "20:28", "23:58"]
+          }
+        ]
+      },
+      {
+        "movieId": 2,
+        "movieName": "The Matrix",
+        "durationMinutes": 136,
+        "grade": "/src/assets/grade_19.png",
+        "theaters": [
+          {
+            "theaterId": "A",
+            "theaterName": "Theater 1",
+            "format": "3D",
+            "subDub": "자막",
+            "availSeat": 123,
+            "totalSeat": 156,
+            "startTimes": ["09:30", "12:30", "15:45", "19:00"],
+            "endTimes": ["11:46", "14:46", "17:61", "21:16"]
+          }
+        ]
+      }
+  ]
+  },
+  {
+    "date": "2025-05-18",
+    "schedules": [
+      {
+        "movieId": 3,
+        "movieName": "Toy Story",
+        "durationMinutes": 81,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "C",
+            "theaterName": "Kids Theater",
+            "format": "IMAX",
+            "subDub": "자막",
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2025-05-19",
+    "schedules": [
+      {
+        "movieId": 4,
+        "movieName": "거룩한 밤: 데몬 헌텃스 1",
+        "durationMinutes": 81,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "D",
+            "theaterName": "Theater 1",
+            "format": "2D",
+            "subDub": "자막",
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          },
+          {
+            "theaterId": "E",
+            "theaterName": "Theater 4",
+            "format": "2D",
+            "subDub": null,
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      },
+      {
+        "movieId": 5,
+        "movieName": "거룩한 밤: 데몬 헌텃스 2",
+        "durationMinutes": 81,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "F",
+            "theaterName": "Theater 5",
+            "format": "2D",
+            "subDub": null,
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      }
+    ]
+  }
+]

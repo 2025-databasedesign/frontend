@@ -1,0 +1,27 @@
+.movie-selection {
+  background-color: rgb(226, 223, 210);
+  min-height: 300px;
+  max-height: calc(100dvh - 10dvh - 68px - 68px);
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  ul {
+    padding-top: 1rem;
+    display: grid;
+    gap: 12px;
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      padding-left: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+
+      img {
+        margin-right: 8px;
+        width: 28px;
+        border-radius: 4px;
+      }
+    }
+  }
+}

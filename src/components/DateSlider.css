@@ -1,0 +1,101 @@
+.time-slider-wrapper {
+  position: relative;
+  border-bottom: 1px solid darkgray;
+
+  .time-slider {
+    scroll-behavior: smooth;
+    max-width: 100%;
+    overflow: auto;
+    margin: 0 32px;
+
+    .date-area-wrapper {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      user-select: none;
+
+      .date-area {
+        position: relative;
+        cursor: pointer;
+
+        .month {
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 12px;
+          width: 100%;
+          text-align: center;
+          font-weight: bold;
+        }
+        .main-date {
+          margin: 16px;
+          margin-top: 24px;
+
+          .date,
+          .day {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+          }
+          .day {
+            width: 32px;
+            aspect-ratio: 1;
+            line-height: 32px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+    .date-arrows-area {
+      .left-arrow,
+      .right-arrow {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        background-color: rgb(212, 212, 212);
+        width: 28px;
+        height: 28px;
+        padding-bottom: 10px;
+        border-radius: 50%;
+        opacity: 0.7;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .left-arrow {
+        top: 50%;
+        left: 2px;
+        transform: translateY(-50%);
+        z-index: 3;
+      }
+      .right-arrow {
+        top: 50%;
+        right: 2px;
+        transform: translateY(-50%);
+        z-index: 3;
+      }
+      .left-arrow:hover,
+      .right-arrow:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.time-slider::-webkit-scrollbar {
+  display: none;
+}
+.choose-date {
+  background-color: black;
+  color: white;
+}
+.date-choose-sat {
+  color: rgb(29, 89, 208);
+}
+.date-choose-sun {
+  color: rgb(217, 53, 38);
+}

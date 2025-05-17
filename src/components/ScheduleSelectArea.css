@@ -1,0 +1,75 @@
+.schedule-select-area {
+  display: grid;
+  padding: 0 20px;
+  margin-top: 24px;
+  .group-time-select {
+    display: grid;
+    margin-bottom: 2rem;
+    .movie-info-area {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      img {
+        width: 24px;
+        margin-right: 8px;
+      }
+    }
+    .time-select-wrapper {
+      display: grid;
+      gap: 1rem;
+      .time-select {
+        .hall {
+          font-size: 16px;
+          display: flex;
+          gap: 12px;
+          margin-bottom: 4px;
+        }
+        .main-schedule-area {
+          ul {
+            display: grid;
+            grid-template-columns: repeat(
+              auto-fill,
+              minmax(100px, 1fr)
+            ); /* auto-wrap columns */
+            row-gap: 8px;
+            column-gap: 20px;
+            padding: 0;
+            margin: 0;
+            li {
+              list-style: none;
+              button {
+                background-color: white;
+                border: 1px solid lightgray;
+                box-shadow: 1px 1px 4px rgb(120, 120, 120);
+                color: rgb(102 102 102);
+                .start-time {
+                  font-size: 20px;
+                  font-weight: 700;
+                  color: black;
+                }
+                .seat-info {
+                  font-size: 12px;
+                  font-weight: 500;
+                  .avail-seat {
+                    color: rgb(66 118 82);
+                  }
+                }
+              }
+              .selected-button {
+                border: 1px solid black;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .no-schedule-avail{
+    display: grid;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+  }
+}
