@@ -1,0 +1,122 @@
+[
+  {
+    "theaterId": "A",
+    "theaterName": "Theater 1",
+    "availSeat": 32,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "B",
+    "theaterName": "Theater 2",
+    "availSeat": 45,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "C",
+    "theaterName": "Kids Theater",
+    "availSeat": 18,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "D",
+    "theaterName": "Theater 4",
+    "availSeat": 50,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "E",
+    "theaterName": "Theater 5",
+    "availSeat": 12,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "F",
+    "theaterName": "Theater 6",
+    "availSeat": 60,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "G",
+    "theaterName": "Theater 7",
+    "availSeat": 0,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "H",
+    "theaterName": "Theater 8",
+    "availSeat": 27,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "I",
+    "theaterName": "Theater 9",
+    "availSeat": 38,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "J",
+    "theaterName": "Theater 10",
+    "availSeat": 5,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "K",
+    "theaterName": "Theater 11",
+    "availSeat": 40,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "L",
+    "theaterName": "Theater 12",
+    "availSeat": 22,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "M",
+    "theaterName": "Theater 13",
+    "availSeat": 11,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "N",
+    "theaterName": "Theater 14",
+    "availSeat": 59,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "O",
+    "theaterName": "Theater 15",
+    "availSeat": 7,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "P",
+    "theaterName": "Theater 16",
+    "availSeat": 33,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "Q",
+    "theaterName": "Theater 17",
+    "availSeat": 20,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "R",
+    "theaterName": "Theater 18",
+    "availSeat": 6,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "S",
+    "theaterName": "Theater 19",
+    "availSeat": 48,
+    "totalSeat": 60
+  },
+  {
+    "theaterId": "T",
+    "theaterName": "Theater 20",
+    "availSeat": 14,
+    "totalSeat": 60
+  }
+]

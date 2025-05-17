@@ -1,0 +1,92 @@
+[
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 1",
+    "rating": 26.7,
+    "star": 8,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": true,
+    "rank": 1
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 2",
+    "rating": 25.7,
+    "star": 7.8,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": 2
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 3",
+    "rating": 24.7,
+    "star": 7.4,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": true,
+    "rank": 3
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 4",
+    "rating": 23.7,
+    "star": 5.5,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": 4
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 5",
+    "rating": 22.7,
+    "star": 6.9,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": 5
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 6",
+    "rating": 21.7,
+    "star": 8,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": true,
+    "rank": 6
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 7",
+    "rating": 20.7,
+    "star": 9,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": 7
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 8",
+    "rating": 19.7,
+    "star": null,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": false,
+    "rank": null
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 9",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": null
+  },
+  {
+    "movieName": "거룩한 밤: 데몬 헌텃스 10",
+    "rating": 21.4,
+    "star": null,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": false,
+    "rank": null
+  }
+]
