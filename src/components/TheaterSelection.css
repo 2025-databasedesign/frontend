@@ -1,0 +1,19 @@
+.location-selection {
+  background-color: rgba(226, 226, 226, .8);
+  min-height: 300px;
+  max-height: calc(100dvh - 10dvh - 68px - 68px);
+  overflow: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  ul {
+    padding-top: 1rem;
+    display: grid;
+    gap: 4px;
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      padding-left: 1rem;
+      font-weight: 500;
+    }
+  }
+}

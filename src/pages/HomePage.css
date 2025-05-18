@@ -4,7 +4,7 @@
 .slider {
   width: 1600px;
   max-width: 100%;
-  margin: 100px auto 20px;
+  margin: 40px auto 20px;
   overflow: auto;
   scroll-behavior: smooth;
   scroll-snap-type: both;

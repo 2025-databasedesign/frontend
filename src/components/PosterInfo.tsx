@@ -1,15 +1,6 @@
 import React from "react";
 import "./PosterInfo.css";
-
-type PosterInfoProps = {
-  movieName: string;
-  rating: number;
-  star: string;
-  image: string;
-  grade: string;
-  isReservable: boolean;
-  rank: number | null;
-};
+import { PosterInfoProps } from "../types/ScheduleRelatedType";
 
 const PosterInfo: React.FC<PosterInfoProps> = ({
   movieName,

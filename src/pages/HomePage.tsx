@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
-import PosterInfo from "../components/PosterInfo";
+import PosterInfo, { PosterInfoProps } from "../components/PosterInfo";
 import "./HomePage.css";
 
 const HomePage: React.FC = () => {
@@ -8,6 +8,26 @@ const HomePage: React.FC = () => {
   const isDragging = useRef(false);
   const startX = useRef(0); //X position where the user first started dragging.
   const startScrollLeft = useRef(0); //scroll position (how far slider was scrolled) when the user started dragging.
+  const [movieInfo, setMovieInfo] = useState<PosterInfoProps[]>([]);
+
+  ///////fetch movie's info
+  const getMovieInfo = async () => {
+    try {
+      const response = await fetch("/src/assets/cinema_info/mock_cinema.json");
+      if (!response.ok) {
+        throw new Error("Failed to fetch cinema's info");
+      }
+      const data = await response.json();
+      setMovieInfo(data);
+      return data;
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    getMovieInfo();
+  }, []);
 
   //////////////////////////// Handle slider's button click
   function handleNext() {
@@ -74,138 +94,39 @@ const HomePage: React.FC = () => {
       <div className="navbar-wrapper">
         <Navbar />
       </div>
-      <div className="slider-container">
-        <div
-          className="slider"
-          ref={sliderRef}
-          onMouseDown={handleDragStart}
-          onMouseMove={handleDragMove}
-          onMouseUp={handleDragEnd}
-          onMouseLeave={handleDragEnd}
-          onTouchStart={handleDragStart}
-          onTouchMove={handleDragMove}
-          onTouchEnd={handleDragEnd}
-        >
-          <div className="posters-area">
-            <div className="item-container">
+      <div
+        className="slider"
+        ref={sliderRef}
+        onMouseDown={handleDragStart}
+        onMouseMove={handleDragMove}
+        onMouseUp={handleDragEnd}
+        onMouseLeave={handleDragEnd}
+        onTouchStart={handleDragStart}
+        onTouchMove={handleDragMove}
+        onTouchEnd={handleDragEnd}
+      >
+        <div className="posters-area">
+          {movieInfo.map((movie, index) => (
+            <div className="item-container" key={index}>
               <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 1"
-                rating={26.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={true}
-                rank={1}
+                movieName={movie.movieName}
+                rating={movie.rating}
+                star={movie.star}
+                image={movie.image}
+                grade={movie.grade}
+                isReservable={movie.isReservable}
+                rank={movie.rank}
               />
             </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 2"
-                rating={25.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={true}
-                rank={2}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 3"
-                rating={24.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={true}
-                rank={3}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 4"
-                rating={23.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={true}
-                rank={4}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 5"
-                rating={22.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={false}
-                rank={5}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 6"
-                rating={21.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={true}
-                rank={6}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 7"
-                rating={20.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={false}
-                rank={7}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 8"
-                rating={21.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={false}
-                rank={null}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 9"
-                rating={22.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={false}
-                rank={null}
-              />
-            </div>
-            <div className="item-container">
-              <PosterInfo
-                movieName="거룩한 밤: 데몬 헌텃스 10"
-                rating={21.7}
-                star="8"
-                image="/src/assets/movie1.jpg"
-                grade="/src/assets/grade_15.png"
-                isReservable={false}
-                rank={null}
-              />
-            </div>
-          </div>
+          ))}
         </div>
-        <div className="arrows-area">
-          <div className="left-arrow" onClick={handlePrev}>
-            <img src="/src/assets/arrow_left_white.png" alt="left arrow" />
-          </div>
-          <div className="right-arrow" onClick={handleNext}>
-            <img src="/src/assets/arrow_right_white.png" alt="right arrow" />
-          </div>
+      </div>
+      <div className="arrows-area">
+        <div className="left-arrow" onClick={handlePrev}>
+          <img src="/src/assets/arrow_left_white.png" alt="left arrow" />
+        </div>
+        <div className="right-arrow" onClick={handleNext}>
+          <img src="/src/assets/arrow_right_white.png" alt="right arrow" />
         </div>
       </div>
     </div>
