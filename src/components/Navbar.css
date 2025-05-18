@@ -5,17 +5,69 @@
 .nav-bar {
   position: relative;
   height: 10dvh;
-  ul {
-    li {
-      a {
-        font-weight: 500;
+
+  ul.center-menu {
+    li.li-center-menu {
+      a.middle-navigation {
+        font-weight: 700;
         cursor: pointer;
         text-decoration: none;
-        color: black;
-        opacity: 0.7;
+        .span-nav-content {
+          position: relative;
+          color: black;
+          transition: 0.3s;
+          opacity: 0.5;
+        }
+
+        ul.sub-tab {
+          position: absolute;
+          left: 0;
+          background-color: rgb(224, 227, 231);
+          width: 150%;
+          transform: translate(-15%, 25%);
+          border-radius: 0 0 12px 12px;
+          box-shadow: 0 4px 4px lightgray;
+          transition: 0.5s;
+          display: none;
+
+          li.li-sub-tab {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            a.sub-tab-navigation {
+              padding: 0;
+              margin: 0;
+              text-decoration: none;
+              color: rgb(158, 158, 158);
+              font-weight: 500;
+            }
+          }
+          li.li-sub-tab:hover a {
+            color: rgb(1, 140, 212);
+          }
+        }
+        .span-nav-content::before {
+          content: "";
+          position: absolute;
+          top: 28px;
+          width: 0;
+          height: 2px;
+          background-color: rgb(1, 140, 212);
+          transition: width 0.25s ease-out;
+        }
+        .span-nav-content:hover::before {
+          width: 100%;
+        }
       }
-      a:hover {
+      a.middle-navigation:hover .span-nav-content {
+        color: rgb(1, 114, 173);
         opacity: 1;
+      }
+      a.middle-navigation:hover ul.sub-tab {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
       }
       button {
         background: #0e95d9e3;

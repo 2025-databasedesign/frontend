@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
-import PosterInfo, { PosterInfoProps } from "../components/PosterInfo";
+import PosterInfo from "../components/PosterInfo";
 import "./HomePage.css";
+import { PosterInfoProps } from "../types/ScheduleRelatedType";
 
 const HomePage: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
