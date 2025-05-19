@@ -7,5 +7,5 @@ button {
   box-shadow: none;
 }
 html {
-  overflow-y: scroll; /* Always reserve space for vertical scrollbar */
+  overflow-y: scroll;
 }

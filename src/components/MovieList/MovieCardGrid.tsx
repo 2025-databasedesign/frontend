@@ -10,7 +10,7 @@ type Movie = {
   grade: string;
   isReservable: boolean;
   rank: number | null;
-  releaseDate?: string; // 개봉일 추가되었을 경우 대비
+  releaseDate?: string;
 };
 
 type Props = {

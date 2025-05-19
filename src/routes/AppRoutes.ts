@@ -5,5 +5,6 @@ export enum AppRoutes {
   SIGN_UP_PAGE = "/sign-up-page",
   MOVIELIST_PAGE = "/movie-list-page",
   MOVIEDETAIL_PAGE = "/movies/:movieId",
+  THEATERLIST_PAGE = "/theater-list-page",
   SCHEDULE_PAGE = "/schedule-page",
 }

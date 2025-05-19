@@ -16,7 +16,6 @@ export default function MovieCard({ movie }: { movie: Movie }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    // 공백이 있는 경우를 대비해 인코딩
     navigate(`/movies/${encodeURIComponent(movie.movieName)}`);
   };
 
@@ -37,7 +36,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <button
         className="reserve-button"
         disabled={!movie.isReservable}
-        onClick={(e) => e.stopPropagation()} // ✅ 버튼 클릭 시 카드 클릭 막기
+        onClick={(e) => e.stopPropagation()}
       >
         {movie.isReservable ? "예매하기" : "예매 불가"}
       </button>

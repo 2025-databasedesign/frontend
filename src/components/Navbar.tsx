@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
           <a className="middle-navigation" onClick={() => navigate(AppRoutes.SCHEDULE_PAGE)}>예매</a>
         </li>
         <li>
-          <a className="middle-navigation">상영관</a>
+          <a className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>상영관</a>
         </li>
       </ul>
       <ul>

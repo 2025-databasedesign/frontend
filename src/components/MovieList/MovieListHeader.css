@@ -31,12 +31,12 @@
 
 .filter-checkbox span {
   position: relative;
-  top: -2px; /* 또는 0px ~ -1px까지 조정하면서 확인 */
+  top: -2px;
 }
 
 .right-group {
   display: flex !important;
-  align-items: stretch !important; /* 요소 높이 자체를 동일하게 만듦 */
+  align-items: stretch !important;
   gap: 8px !important;
 }
 
@@ -48,7 +48,6 @@
   line-height: 1.2 !important;
   box-sizing: border-box !important;
 
-  /* 추가 정렬 */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -63,7 +62,6 @@
   line-height: 1.2 !important;
   box-sizing: border-box !important;
 
-  /* 추가 정렬 */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;

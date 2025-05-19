@@ -6,7 +6,7 @@ import "./MovieListPage.css";
 
 export default function MovieListPage() {
   const [sortType, setSortType] = useState("예매율순");
-  const [onlyNowPlaying, setOnlyNowPlaying] = useState(false); // ✅ 추가
+  const [onlyNowPlaying, setOnlyNowPlaying] = useState(false);
 
   return (
     <div>
@@ -16,7 +16,7 @@ export default function MovieListPage() {
       <div className="movie-list-page__container">
         <MovieListHeader
           onSortChange={setSortType}
-          onFilterChange={setOnlyNowPlaying} // ✅ 필터 핸들러 전달
+          onFilterChange={setOnlyNowPlaying}
           onlyNowPlaying={onlyNowPlaying}
         />
         <MovieCardGrid sortType={sortType} onlyNowPlaying={onlyNowPlaying} />

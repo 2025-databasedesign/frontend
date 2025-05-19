@@ -6,6 +6,7 @@ import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import MovieListPage from "../pages/MovieListPage";
 import MovieDetailPage from "../pages/MovieDetailPage";
+import TheaterListPage from "../pages/TheaterListPage";
 import SchedulePage from "../pages/SchedulePage";
 
 const MyRoute: React.FC = () => {
@@ -17,6 +18,7 @@ const MyRoute: React.FC = () => {
         <Route path={AppRoutes.SIGN_UP_PAGE} element={<SignUpPage />} />
         <Route path={AppRoutes.MOVIELIST_PAGE} element={<MovieListPage />} />
         <Route path={AppRoutes.MOVIEDETAIL_PAGE} element={<MovieDetailPage />} />
+        <Route path={AppRoutes.THEATERLIST_PAGE} element={<TheaterListPage />} />
         <Route path={AppRoutes.SCHEDULE_PAGE} element={<SchedulePage />} />
       </Routes>
     </>

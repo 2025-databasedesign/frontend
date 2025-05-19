@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "./MovieDetailPage.css";
 
-// Movie 타입 정의 (간단히 재정의하거나 공통 type에서 import)
 type Movie = {
   movieName: string;
   rating: number;
@@ -16,7 +15,7 @@ type Movie = {
 };
 
 export default function MovieDetailPage() {
-  const { movieId } = useParams(); // movieId는 movieName으로 전달된 문자열
+  const { movieId } = useParams();
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
