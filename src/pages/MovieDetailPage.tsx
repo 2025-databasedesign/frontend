@@ -36,6 +36,11 @@ export default function MovieDetailPage() {
     );
   }
 
+  const parseGradeNumber = (gradePath: string) => {
+    const match = gradePath.match(/grade_(\d+)\.png$/);
+    return match ? match[1] : "등급 정보 없음";
+  };
+
   return (
     <div>
       <div className="navbar-wrapper">
@@ -47,9 +52,10 @@ export default function MovieDetailPage() {
           <img src={movie.image} alt="poster" className="movie-poster" />
           <div className="movie-info-section">
             <div className="movie-title">{movie.movieName}</div>
-            <div className="movie-subtitle">Movie Subtitle Here</div>
             <div className="movie-badges">
-              <span className="badge">{movie.grade}</span>
+              <span className="badge">
+                {parseGradeNumber(movie.grade)}세 관람가
+              </span>
               {movie.isReservable ? (
                 <span className="badge">예매중</span>
               ) : (

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./PosterInfo.css";
 import { PosterInfoProps } from "../types/ScheduleRelatedType";
 
@@ -11,6 +12,13 @@ const PosterInfo: React.FC<PosterInfoProps> = ({
   isReservable,
   rank,
 }) => {
+  const navigate = useNavigate();
+
+  const handleDetailClick = () => {
+    const encodedName = encodeURIComponent(movieName); // URL에 안전하게 포함되도록 인코딩
+    navigate(`/movies/${encodedName}`);
+  };
+
   return (
     <div className="item">
       <div className="top-info">
@@ -20,7 +28,7 @@ const PosterInfo: React.FC<PosterInfoProps> = ({
         <span className="rank">{rank}</span>
         <div className="over-box">
           {isReservable && <button className="outline">예매하기</button>}
-          <button className="outline">상세정보</button>
+          <button className="outline" onClick={handleDetailClick}>상세정보</button>
         </div>
       </div>
       <div className="bottom-info">
