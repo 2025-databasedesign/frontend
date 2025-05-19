@@ -1,15 +1,50 @@
-.movie-list-page {
-  padding: 24px;
+.theater-box {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  padding: 12px;
+  position: relative;
+}
+
+.theater-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.theater-header h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.all-theaters-box {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.toggle-btn-icon {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  padding: 2px 8px;
+  transition: transform 0.2s ease, color 0.2s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-btn-icon:hover {
+  color: #007bff;
+  transform: scale(1.2);
 }
 
 .movie-list-page__container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-.page-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 24px 0;
+  padding: 16px;
 }
