@@ -1,0 +1,64 @@
+.movie-card {
+  width: 180px; /* ✅ 크기 제한 */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+
+.card-header {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  position: relative;
+  color: #d72638;
+}
+
+.card-grade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.movie-poster {
+  width: 100%;
+  height: 240px; /* ✅ 고정 높이 */
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.movie-title {
+  font-size: 14px; /* ✅ 줄임 */
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-info {
+  font-size: 13px; /* ✅ 줄임 */
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.reserve-button {
+  padding: 6px 0;
+  font-size: 13px;
+  width: 100%;
+  border-radius: 4px;
+  background-color: #004080;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.reserve-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

@@ -1,0 +1,15 @@
+.movie-list-page {
+  padding: 24px;
+}
+
+.movie-list-page__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 24px 0;
+}
