@@ -1,0 +1,48 @@
+.theater-layout {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+}
+
+.reviews {
+  width: 260px;
+  background-color: #f3f3f3;
+  color: black;
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.review {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.nickname {
+  color: #333;
+}
+
+.rating {
+  color: #f39c12;
+}
+
+.date {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.content {
+  font-size: 13px;
+}

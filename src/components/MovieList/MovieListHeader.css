@@ -1,0 +1,76 @@
+.movie-list-header {
+  padding: 20px 20px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.header-title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.filter-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
+.filter-checkbox span {
+  position: relative;
+  top: -2px;
+}
+
+.right-group {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+}
+
+.right-group select {
+  min-width: 120px;
+  height: 40px !important;
+  padding: 0 14px !important;
+  font-size: 16px !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 6px !important;
+}
+
+.right-group button {
+  height: 40px !important;
+  padding: 0 14px !important;
+  font-size: 16px !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 6px !important;
+}
+
+.right-group button {
+  background-color: #004080 !important;
+  color: white !important;
+  border: none !important;
+}

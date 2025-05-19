@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
       />
       <ul className="center-menu">
         <li className="li-center-menu">
-          <a className="middle-navigation">
+          <a className="middle-navigation" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>
             <span className="span-nav-content">영화</span>
             <ul className="sub-tab">
               <li className="li-sub-tab">
@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
           </a>
         </li>
         <li className="li-center-menu">
-          <a className="middle-navigation">
+          <a className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>
             <span className="span-nav-content">상영관</span>
           </a>
         </li>
