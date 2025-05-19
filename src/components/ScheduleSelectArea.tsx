@@ -97,7 +97,7 @@ const ScheduleSelectArea: React.FC = () => {
       ))}
       {filteredSchedules.length === 0 && (
         <p className="no-schedule-avail">
-          선택한 극장에서 상영 중인 영화가 없습니다.
+          선택한 조건에 해당하는 상영 일정이 없습니다.
         </p>
       )}
     </div>

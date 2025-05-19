@@ -36,14 +36,41 @@
         "grade": "/src/assets/grade_19.png",
         "theaters": [
           {
-            "theaterId": "A",
-            "theaterName": "Theater 1",
+            "theaterId": "D",
+            "theaterName": "Theater 4",
             "format": "3D",
             "subDub": "자막",
             "availSeat": 123,
             "totalSeat": 156,
             "startTimes": ["09:30", "12:30", "15:45", "19:00"],
             "endTimes": ["11:46", "14:46", "17:61", "21:16"]
+          }
+        ]
+      },
+      {
+        "movieName": "Toy Story",
+        "durationMinutes": 148,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "C",
+            "theaterName": "Kids Theater",
+            "format": "2D",
+            "subDub": "자막",
+            "availSeat": 30,
+            "totalSeat": 60,
+            "startTimes": ["08:00", "10:30", "13:00", "15:30", "18:00", "20:30", "23:00", "01:30", "04:00", "06:30", "08:30"],
+            "endTimes": ["10:28", "12:58", "15:28", "17:58", "20:28", "22:58", "01:28", "03:58", "06:28", "08:58", "10:58"]
+          },
+          {
+            "theaterId": "B",
+            "theaterName": "Theater 2",
+            "format": "2D",
+            "subDub": "더빙",
+            "availSeat": 68,
+            "totalSeat": 90,
+            "startTimes": ["11:00", "14:30", "18:00", "21:30"],
+            "endTimes": ["13:28", "16:58", "20:28", "23:58"]
           }
         ]
       }
@@ -59,14 +86,59 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "C",
-            "theaterName": "Kids Theater",
+            "theaterId": "E",
+            "theaterName": "Theater 5",
             "format": "IMAX",
             "subDub": "자막",
             "availSeat": 42,
             "totalSeat": 60,
             "startTimes": ["10:00", "12:00", "14:00", "16:00"],
             "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      },
+      {
+        "movieName": "Toy Story 2",
+        "durationMinutes": 148,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "C",
+            "theaterName": "Kids Theater",
+            "format": "2D",
+            "subDub": "자막",
+            "availSeat": 30,
+            "totalSeat": 60,
+            "startTimes": ["08:00", "10:30", "13:00", "15:30", "18:00", "20:30", "23:00", "01:30", "04:00", "06:30", "08:30"],
+            "endTimes": ["10:28", "12:58", "15:28", "17:58", "20:28", "22:58", "01:28", "03:58", "06:28", "08:58", "10:58"]
+          },
+          {
+            "theaterId": "D",
+            "theaterName": "Theater 4",
+            "format": "2D",
+            "subDub": "더빙",
+            "availSeat": 68,
+            "totalSeat": 90,
+            "startTimes": ["11:00", "14:30", "18:00", "21:30"],
+            "endTimes": ["13:28", "16:58", "20:28", "23:58"]
+          }
+        ]
+      },
+      {
+        "movieId": 2,
+        "movieName": "The Matrix",
+        "durationMinutes": 136,
+        "grade": "/src/assets/grade_19.png",
+        "theaters": [
+          {
+            "theaterId": "A",
+            "theaterName": "Theater 1",
+            "format": "3D",
+            "subDub": "자막",
+            "availSeat": 123,
+            "totalSeat": 156,
+            "startTimes": ["09:30", "12:30", "15:45", "19:00"],
+            "endTimes": ["11:46", "14:46", "17:61", "21:16"]
           }
         ]
       }
@@ -118,6 +190,24 @@
             "totalSeat": 60,
             "startTimes": ["10:00", "12:00", "14:00", "16:00"],
             "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      },
+      {
+        "movieId": 2,
+        "movieName": "Avatar",
+        "durationMinutes": 136,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": "B",
+            "theaterName": "Theater 2",
+            "format": "3D",
+            "subDub": "자막",
+            "availSeat": 123,
+            "totalSeat": 156,
+            "startTimes": ["09:30", "12:30", "15:45", "19:00"],
+            "endTimes": ["11:46", "14:46", "17:61", "21:16"]
           }
         ]
       }

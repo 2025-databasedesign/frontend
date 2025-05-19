@@ -32,7 +32,12 @@ const Navbar: React.FC = () => {
             <span className="span-nav-content">예매</span>
             <ul className="sub-tab">
               <li className="li-sub-tab">
-                <a className="sub-tab-navigation">빠른예매</a>
+                <a
+                  className="sub-tab-navigation"
+                  onClick={() => navigate(AppRoutes.RESERVATION_PAGE)}
+                >
+                  빠른예매
+                </a>
               </li>
               <li className="li-sub-tab">
                 <a

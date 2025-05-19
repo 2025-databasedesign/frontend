@@ -4,4 +4,5 @@ export enum AppRoutes {
   LOGIN_PAGE = "/login-page",
   SIGN_UP_PAGE = "/sign-up-page",
   SCHEDULE_PAGE = "/schedule-page",
+  RESERVATION_PAGE = "/reservation-page",
 }

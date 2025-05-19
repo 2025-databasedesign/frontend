@@ -1,6 +1,5 @@
 .location-selection {
-  background-color: rgba(226, 226, 226, .8);
-  min-height: 300px;
+  background-color: rgb(241, 241, 241);
   max-height: calc(100dvh - 10dvh - 68px - 68px);
   overflow: auto;
   scroll-behavior: smooth;
