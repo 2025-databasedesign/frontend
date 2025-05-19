@@ -1,0 +1,67 @@
+.theater-layout {
+  display: flex;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.seat-map {
+  background-color: black;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  width: 780px;
+}
+
+.screen {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 0;
+  background-color: #333;
+  margin-bottom: 12px;
+  letter-spacing: 5px;
+  border-radius: 4px;
+}
+
+.seats {
+  display: table;
+  margin: 0 auto;
+  gap: 6px;
+}
+
+.seat-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.row-label {
+  width: 20px;
+  font-size: 12px;
+  color: #ccc;
+  text-align: right;
+  margin-right: 4px;
+}
+
+.seat {
+  width: 24px;
+  height: 24px;
+  margin: 2px;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.seat.door {
+  background-color: green;
+}
+
+.seat.extinguisher {
+  background-color: red;
+}
+
+.seat.aisle {
+  background-color: transparent;
+}
