@@ -1,0 +1,56 @@
+.reservation-main-area {
+  min-height: 90dvh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  .reservation-main-container {
+    width: 100dvw;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 30dvw 30dvw 40dvw;
+
+    .left {
+      .location-selection {
+        max-height: calc(100dvh - 10dvh - 68px);
+      }
+    }
+    .middle {
+      border-left: 1px solid black;
+      .movie-selection {
+        max-height: calc(100dvh - 10dvh - 68px);
+      }
+    }
+    .right {
+      border-left: 1px solid black;
+
+      .schedule-selection {
+        overflow: auto;
+
+        .schedule-list-wrapper {
+          scrollbar-width: thin;
+          scroll-behavior: smooth;
+          max-height: calc(
+            100dvh - 10dvh - 68px - 96px - 1px
+          ); /*1: border-bottom*/
+          overflow-y: auto;
+
+          .schedule-list {
+            max-height: 100%;
+            overflow: auto;
+          }
+        }
+      }
+    }
+    .selected-theater,
+    .selected-movie,
+    .selected-date {
+      height: 68px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(1, 127, 192);
+      color: white;
+    }
+  }
+}

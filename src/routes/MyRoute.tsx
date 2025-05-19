@@ -8,6 +8,7 @@ import MovieListPage from "../pages/MovieListPage";
 import MovieDetailPage from "../pages/MovieDetailPage";
 import TheaterListPage from "../pages/TheaterListPage";
 import SchedulePage from "../pages/SchedulePage";
+import ReservationPage from "../pages/ReservationPage";
 
 const MyRoute: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const MyRoute: React.FC = () => {
         <Route path={AppRoutes.MOVIEDETAIL_PAGE} element={<MovieDetailPage />} />
         <Route path={AppRoutes.THEATERLIST_PAGE} element={<TheaterListPage />} />
         <Route path={AppRoutes.SCHEDULE_PAGE} element={<SchedulePage />} />
+        <Route path={AppRoutes.RESERVATION_PAGE} element={<ReservationPage />} />
       </Routes>
     </>
   );

@@ -1,4 +1,49 @@
 [
+    {
+    "movieName": "Inception",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": true,
+    "rank": null
+  },
+  {
+    "movieName": "The Matrix",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": null
+  },
+  {
+    "movieName": "Toy Story",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_15.png",
+    "isReservable": true,
+    "rank": null
+  },
+  {
+    "movieName": "Toy Story 2",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": null
+  },
+  {
+    "movieName": "Toy Story 3",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
+    "rank": null
+  },
   {
     "movieName": "거룩한 밤: 데몬 헌텃스 1",
     "rating": 26.7,
@@ -87,6 +132,15 @@
     "image": "/src/assets/movie1.jpg",
     "grade": "/src/assets/grade_15.png",
     "isReservable": false,
+    "rank": null
+  },
+  {
+    "movieName": "Avatar",
+    "rating": 20.4,
+    "star": 7.2,
+    "image": "/src/assets/movie1.jpg",
+    "grade": "/src/assets/grade_19.png",
+    "isReservable": true,
     "rank": null
   }
 ]

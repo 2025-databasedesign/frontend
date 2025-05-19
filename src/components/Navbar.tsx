@@ -14,14 +14,46 @@ const Navbar: React.FC = () => {
         className="logo"
       />
       <ul className="center-menu">
-        <li>
-          <a className="middle-navigation" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>영화</a>
+        <li className="li-center-menu">
+          <a className="middle-navigation" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>
+            <span className="span-nav-content">영화</span>
+            <ul className="sub-tab">
+              <li className="li-sub-tab">
+                <a className="sub-tab-navigation">영화A(temp)</a>
+              </li>
+              <li className="li-sub-tab">
+                <a className="sub-tab-navigation">영화B(temp)</a>
+              </li>
+            </ul>
+          </a>
         </li>
-        <li>
-          <a className="middle-navigation" onClick={() => navigate(AppRoutes.SCHEDULE_PAGE)}>예매</a>
+        <li className="li-center-menu">
+          <a className="middle-navigation">
+            <span className="span-nav-content">예매</span>
+            <ul className="sub-tab">
+              <li className="li-sub-tab">
+                <a
+                  className="sub-tab-navigation"
+                  onClick={() => navigate(AppRoutes.RESERVATION_PAGE)}
+                >
+                  빠른예매
+                </a>
+              </li>
+              <li className="li-sub-tab">
+                <a
+                  className="sub-tab-navigation"
+                  onClick={() => navigate(AppRoutes.SCHEDULE_PAGE)}
+                >
+                  상영일정
+                </a>
+              </li>
+            </ul>
+          </a>
         </li>
-        <li>
-          <a className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>상영관</a>
+        <li className="li-center-menu">
+          <a className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>
+            <span className="span-nav-content">상영관</span>
+          </a>
         </li>
       </ul>
       <ul>

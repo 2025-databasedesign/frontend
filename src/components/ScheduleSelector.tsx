@@ -9,9 +9,12 @@ import MovieSelection from "./MovieSelection";
 const ScheduleSelector: React.FC = () => {
   const today = new Date();
   const formatted = today.toISOString().split("T")[0]; // "2025-05-14"
-  const dayName = today.toLocaleDateString("ko-KR", { weekday: "short" }); //"월", "화"
+  //const dayName = today.toLocaleDateString("ko-KR", { weekday: "short" }); //"월", "화"
   const { selectedTheater, scheduleViewType, selectedDate, selectedMovie } =
     useScheduleRelatedStore();
+  const weekday = new Date(selectedDate).toLocaleDateString("ko-KR", {
+    weekday: "short",
+  });
 
   return (
     <div className="theater-main-container">
@@ -19,7 +22,7 @@ const ScheduleSelector: React.FC = () => {
         {scheduleViewType == "theater" ? selectedTheater : selectedMovie}
       </div>
       <div className="right-area">
-        {selectedDate ? selectedDate : formatted}({dayName})
+        {selectedDate ? selectedDate : formatted}({weekday})
       </div>
       {scheduleViewType == "theater" ? (
         <TheaterSelection />

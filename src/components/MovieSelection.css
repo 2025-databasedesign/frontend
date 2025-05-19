@@ -1,6 +1,4 @@
 .movie-selection {
-  background-color: rgb(226, 223, 210);
-  min-height: 300px;
   max-height: calc(100dvh - 10dvh - 68px - 68px);
   overflow: auto;
   scroll-behavior: smooth;
