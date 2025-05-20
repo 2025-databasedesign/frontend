@@ -15,8 +15,8 @@ const Navbar: React.FC = () => {
       />
       <ul className="center-menu">
         <li className="li-center-menu">
-          <a className="middle-navigation" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>
-            <span className="span-nav-content">영화</span>
+          <a className="middle-navigation">
+            <span className="span-nav-content" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>영화</span>
             <ul className="sub-tab">
               <li className="li-sub-tab">
                 <a className="sub-tab-navigation">영화A(temp)</a>
