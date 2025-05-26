@@ -8,10 +8,9 @@
 
   ul.center-menu {
     li.li-center-menu {
-      a.middle-navigation {
+      .middle-navigation {
         font-weight: 700;
         cursor: pointer;
-        text-decoration: none;
         .span-nav-content {
           position: relative;
           color: black;
@@ -59,16 +58,16 @@
           width: 100%;
         }
       }
-      a.middle-navigation:hover .span-nav-content {
+      .middle-navigation:hover .span-nav-content {
         color: rgb(1, 114, 173);
         opacity: 1;
       }
-      a.middle-navigation:hover ul.sub-tab {
+      /* .li-center-menu:hover ul.sub-tab {
         display: flex;
         gap: 2rem;
         justify-content: center;
         align-items: center;
-      }
+      } */
       button {
         background: #0e95d9e3;
         border: none;
@@ -78,6 +77,12 @@
       button:hover {
         opacity: 0.8;
       }
+    }
+    li.li-center-menu:hover ul.sub-tab {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
     }
   }
   .center-menu {

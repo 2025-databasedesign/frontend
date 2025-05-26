@@ -41,6 +41,7 @@ export default function TheaterListPage() {
                     <TheaterSeatMap
                       theaterNumber={theater.id}
                       layout={theater.layout}
+                      isSelectable={false}
                     />
                     <TheaterReview Reviews={theater.Reviews} />
                   </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import "./ReservationPage.css";
-import Navbar from "../components/Navbar";
-import TheaterSelection from "../components/TheaterSelection";
-import MovieSelection from "../components/MovieSelection";
-import DateSlider from "../components/DateSlider";
-import ScheduleSelectArea from "../components/ScheduleSelectArea";
-import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
+import Navbar from "../../components/Navbar";
+import MovieSelection from "../../components/MovieSelection/MovieSelection";
+import ScheduleSelectArea from "../../components/ScheduleSelectArea/ScheduleSelectArea";
+import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import DateSlider from "../../components/DateSlider/DateSlider";
+import TheaterSelection from "../../components/TheaterSelection/TheaterSelection";
 
 const ReservationPage: React.FC = () => {
   const { selectedTheater, selectedDate, selectedMovie } =

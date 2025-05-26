@@ -8,6 +8,7 @@
   .content {
     width: 80dvw;
     height: 100%;
+    font-size: 20px;
     background-color: white;
 
     .hall-and-movie-wrapper {

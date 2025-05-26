@@ -65,3 +65,17 @@
 .seat.aisle {
   background-color: transparent;
 }
+
+.seat.normal.selected {
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+}
+
+.seat.normal.disabled {
+  background-color: #ddd;
+  opacity: 0.6;
+  color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+}

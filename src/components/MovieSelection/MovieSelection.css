@@ -7,6 +7,7 @@
     padding-top: 1rem;
     display: grid;
     gap: 12px;
+
     a {
       cursor: pointer;
       text-decoration: none;
@@ -21,5 +22,9 @@
         border-radius: 4px;
       }
     }
+  }
+  ul a.selected {
+    font-weight: bold;
+    color: #ff4d4f;
   }
 }
