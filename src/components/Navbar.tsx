@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
       />
       <ul className="center-menu">
         <li className="li-center-menu">
-          <a className="middle-navigation">
+          <div className="middle-navigation">
             <span className="span-nav-content" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>영화</span>
             <ul className="sub-tab">
               <li className="li-sub-tab">
@@ -25,10 +25,10 @@ const Navbar: React.FC = () => {
                 <a className="sub-tab-navigation">영화B(temp)</a>
               </li>
             </ul>
-          </a>
+          </div>
         </li>
         <li className="li-center-menu">
-          <a className="middle-navigation">
+          <div className="middle-navigation">
             <span className="span-nav-content">예매</span>
             <ul className="sub-tab">
               <li className="li-sub-tab">
@@ -48,12 +48,12 @@ const Navbar: React.FC = () => {
                 </a>
               </li>
             </ul>
-          </a>
+          </div>
         </li>
         <li className="li-center-menu">
-          <a className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>
+          <div className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>
             <span className="span-nav-content">상영관</span>
-          </a>
+          </div>
         </li>
       </ul>
       <ul>

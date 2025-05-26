@@ -1,10 +1,10 @@
 import React from "react";
 import "./ScheduleSelector.css";
-import DateSlider from "./DateSlider";
-import ScheduleSelectArea from "./ScheduleSelectArea";
-import TheaterSelection from "./TheaterSelection";
-import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
-import MovieSelection from "./MovieSelection";
+import ScheduleSelectArea from "../ScheduleSelectArea/ScheduleSelectArea";
+import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import MovieSelection from "../MovieSelection/MovieSelection";
+import DateSlider from "../DateSlider/DateSlider";
+import TheaterSelection from "../TheaterSelection/TheaterSelection";
 
 const ScheduleSelector: React.FC = () => {
   const today = new Date();

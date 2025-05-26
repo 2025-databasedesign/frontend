@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./MovieSelection.css";
-import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
-import { getMovieInfo } from "../utils/scheduleRelatedUtils";
-import { fullScheduleProps } from "../types/ScheduleRelatedType";
+import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import { getMovieInfo } from "../../utils/scheduleRelatedUtils";
+import { fullScheduleProps } from "../../types/ScheduleRelatedType";
 
 const MovieSelection: React.FC = () => {
   const [movies, setMovies] = useState<fullScheduleProps[]>([]);
-  const { setSelectedMovie, setSelectedTheater } = useScheduleRelatedStore();
+  const { selectedMovie, setSelectedMovie, setSelectedTheater } =
+    useScheduleRelatedStore();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -24,7 +25,11 @@ const MovieSelection: React.FC = () => {
       <ul>
         {movies.map((movie, id) => (
           <li key={id}>
-            <a href="#none" onClick={() => setSelectedMovie(movie.movieName)}>
+            <a
+              href="#none"
+              onClick={() => setSelectedMovie(movie.movieName)}
+              className={selectedMovie === movie.movieName ? "selected" : ""}
+            >
               <img src={movie.grade} />
               {movie.movieName}
             </a>

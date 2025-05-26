@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import "./DateSlider.css";
-import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
-import { mockDateList } from "../utils/scheduleRelatedUtils";
+import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import { mockDateList } from "../../utils/scheduleRelatedUtils";
 
 const DateSlider: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [chosenDateIndex, setChosenDateIndex] = useState<number | null>(null);
+  const [chosenDateIndex, setChosenDateIndex] = useState<number | null>(0);
   const { setSelectedDate } = useScheduleRelatedStore();
   // const dates = getDaysWithWeekday(40); //will use later when fetch real api
   //mock dateList

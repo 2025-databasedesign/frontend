@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./ScheduleSelectArea.css";
-import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
-import { FullSchedule } from "../types/ScheduleRelatedType";
-import { getfullSchedule } from "../utils/scheduleRelatedUtils";
+import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import { FullSchedule } from "../../types/ScheduleRelatedType";
+import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../../routes/AppRoutes";
 
 const ScheduleSelectArea: React.FC = () => {
+  const navigate = useNavigate();
   const [fullSchedule, setFullSchedule] = useState<FullSchedule[]>([]);
-  const { selectedDate, selectedTheater, selectedMovie } =
-    useScheduleRelatedStore();
+  const {
+    selectedDate,
+    selectedTheater,
+    selectedMovie,
+    setSelectedTheater,
+    setSelectedMovie,
+    setSelectedGrade,
+    setSelectedFormat,
+    setSelectedScreenTime,
+    selectedGrade
+  } = useScheduleRelatedStore();
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   //find schedule with selected date
@@ -23,6 +35,23 @@ const ScheduleSelectArea: React.FC = () => {
         (theater) => !selectedTheater || theater.theaterName === selectedTheater
       )
     );
+
+  function handleSelectSchedule(
+    startTime: string,
+    endTime: string,
+    theaterName: string,
+    movieName: string,
+    grade: string,
+    format: string
+  ) {
+    setSelectedScreenTime([startTime, endTime]);
+    setSelectedTheater(theaterName);
+    setSelectedMovie(movieName);
+    setSelectedGrade(grade);
+    setSelectedFormat(format);
+    console.log(selectedGrade);
+    navigate(AppRoutes.SEAT_SELECTION_PAGE);
+  }
 
   useEffect(() => {
     const fetchFullSchedule = async () => {
@@ -69,11 +98,19 @@ const ScheduleSelectArea: React.FC = () => {
                                 ? "selected-button"
                                 : ""
                             }
-                            onClick={() =>
+                            onClick={() => {
                               setSelectedTime(
                                 `${groupTime.movieName}-${theater.theaterId}-${time}`
-                              )
-                            }
+                              );
+                              handleSelectSchedule(
+                                theater.startTimes[index3],
+                                theater.endTimes[index3],
+                                theater.theaterName,
+                                groupTime.movieName,
+                                groupTime.grade,
+                                theater.format
+                              );
+                            }}
                           >
                             <div className="start-time">{time}</div>
                             <div className="seat-info">
