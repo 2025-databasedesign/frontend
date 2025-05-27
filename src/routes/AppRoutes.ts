@@ -8,4 +8,5 @@ export enum AppRoutes {
   SCHEDULE_PAGE = "/schedule-page",
   RESERVATION_PAGE = "/reservation-page",
   SEAT_SELECTION_PAGE = "/seat-selection-page",
+  PAYMENT_PAGE = "/payment-page",
 }

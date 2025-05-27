@@ -25,17 +25,17 @@ export const getMovieInfo = async () => {
 };
 
 export const getfullSchedule = async () => {
-    try {
-      const response = await fetch("/src/assets/schedule/mock_schedule.json");
-      if (!response.ok) {
-        throw new Error("Failed to fetch schedule");
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log("error: ", error);
+  try {
+    const response = await fetch("/src/assets/schedule/mock_schedule.json");
+    if (!response.ok) {
+      throw new Error("Failed to fetch schedule");
     }
-  };
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
 
 //will be deleted later when fetch with real api
 export const mockDates = [
@@ -89,4 +89,10 @@ export function getDaysWithWeekday(
     result.push({ day, weekday, month });
   }
   return result;
+}
+
+export function getWeekday(dateStr: string) {
+  const date = new Date(dateStr);
+  const weekday = date.toLocaleDateString("ko-KR", { weekday: "short" });
+  return weekday;
 }

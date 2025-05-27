@@ -30,22 +30,6 @@ type ScheduleRelatedStore = {
   setSelectedSeats: (seats: number[][]) => void;
 };
 
-// export const useScheduleRelatedStore = create<ScheduleRelatedStore>((set) => ({
-//   selectedDate: "2025-05-17", //temporary date for ui
-//   setSelectedDate: (date) => set({ selectedDate: date }),
-//   selectedTheater: null,
-//   setSelectedTheater: (theater) => set({ selectedTheater: theater }),
-//   scheduleViewType: "theater",
-//   setScheduleViewType: (viewType) => set({ scheduleViewType: viewType }),
-//   selectedMovie: null,
-//   setSelectedMovie: (movie) => set({ selectedMovie: movie }),
-//   selectedScreenTime: null,
-//   setSelectedScreenTime: (screenTime) =>
-//     set({ selectedScreenTime: screenTime }),
-//   selectedPeople: 0,
-//   setSelectedPeople: (people) => set({ selectedPeople: people }),
-// }));
-
 export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
   persist(
     (set) => ({

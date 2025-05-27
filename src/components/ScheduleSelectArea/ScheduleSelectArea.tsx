@@ -18,7 +18,6 @@ const ScheduleSelectArea: React.FC = () => {
     setSelectedGrade,
     setSelectedFormat,
     setSelectedScreenTime,
-    selectedGrade
   } = useScheduleRelatedStore();
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
@@ -49,7 +48,6 @@ const ScheduleSelectArea: React.FC = () => {
     setSelectedMovie(movieName);
     setSelectedGrade(grade);
     setSelectedFormat(format);
-    console.log(selectedGrade);
     navigate(AppRoutes.SEAT_SELECTION_PAGE);
   }
 

@@ -10,6 +10,7 @@ import TheaterListPage from "../pages/TheaterListPage";
 import SchedulePage from "../pages/SchedulePage/SchedulePage";
 import ReservationPage from "../pages/ReservationPage/ReservationPage";
 import SeatSelectionPage from "../pages/SeatSelectionPage/SeatSelectionPage";
+import PaymentPage from "../pages/PaymentPage/PaymentPage";
 
 const MyRoute: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ const MyRoute: React.FC = () => {
           element={<ReservationPage />}
         />
         <Route path={AppRoutes.SEAT_SELECTION_PAGE} element={<SeatSelectionPage />} />
+        <Route path={AppRoutes.PAYMENT_PAGE} element={<PaymentPage />} />
       </Routes>
     </>
   );
