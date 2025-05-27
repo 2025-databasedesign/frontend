@@ -4,8 +4,12 @@ import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import TheaterSeatMap from "../../components/TheaterList/TheaterSeatMap";
 import theaters from "../../assets/theater_info/mock_seat.json";
 import Navbar from "../../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../../routes/AppRoutes";
 
 const SeatSelectionPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const {
     selectedDate,
     selectedTheater,
@@ -52,6 +56,26 @@ const SeatSelectionPage: React.FC = () => {
     }
   }
 
+  function handleNavigatePayment() {
+    const totalPeople =
+      selectedPeople.adult +
+      selectedPeople.teen +
+      selectedPeople.senior +
+      selectedPeople.kid +
+      selectedPeople.disabled;
+    
+    if (
+      selectedDate &&
+      selectedTheater &&
+      selectedMovie &&
+      selectedScreenTime &&
+      selectedPeople &&
+      selectedSeats.length == totalPeople
+    ) {
+      navigate(AppRoutes.PAYMENT_PAGE);
+    }
+  }
+
   return (
     <div className="seat-select-page">
       <div className="navbar-wrapper">
@@ -80,7 +104,9 @@ const SeatSelectionPage: React.FC = () => {
                       className="grade-image"
                     />
                   </span>
-                  <p className="seat-page-movie-title">{selectedMovie} ({selectedFormat})</p>
+                  <p className="seat-page-movie-title">
+                    {selectedMovie} ({selectedFormat})
+                  </p>
                 </div>
                 <div className="schedule-info">
                   <div className="date-and-time-area">
@@ -244,7 +270,12 @@ const SeatSelectionPage: React.FC = () => {
                 </span>
               </span>
             </div>
-            <button className="right-pay-button">결제하기</button>
+            <button
+              className="right-pay-button"
+              onClick={() => handleNavigatePayment()}
+            >
+              결제하기
+            </button>
           </div>
         </div>
       </div>
