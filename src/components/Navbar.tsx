@@ -2,13 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes/AppRoutes";
 import "./Navbar.css";
+import logoImage from '../assets/image/logo-transparent-bg.png'
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   return (
     <nav className="nav-bar container">
       <img
-        src="/src/assets/logo-transparent-bg.png"
+        src={logoImage}
         alt="cinema logo"
         onClick={() => navigate(AppRoutes.HOME)}
         className="logo"
@@ -17,14 +18,6 @@ const Navbar: React.FC = () => {
         <li className="li-center-menu">
           <div className="middle-navigation">
             <span className="span-nav-content" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>영화</span>
-            <ul className="sub-tab">
-              <li className="li-sub-tab">
-                <a className="sub-tab-navigation">영화A(temp)</a>
-              </li>
-              <li className="li-sub-tab">
-                <a className="sub-tab-navigation">영화B(temp)</a>
-              </li>
-            </ul>
           </div>
         </li>
         <li className="li-center-menu">

@@ -22,7 +22,8 @@
         background-color: rgb(111, 120, 135);
       }
       .selected-btn {
-        background-color: rgb(1, 127, 192);
+        /* background-color: rgb(1, 127, 192); */
+        background-color: var(--primary-color);
       }
     }
   }

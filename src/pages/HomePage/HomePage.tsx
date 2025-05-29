@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import Navbar from "../components/Navbar";
-import PosterInfo from "../components/PosterInfo";
 import "./HomePage.css";
-import { PosterInfoProps } from "../types/ScheduleRelatedType";
+import leftArrow from "../../assets/image/arrow_left_white.png";
+import rightArrow from "../../assets/image/arrow_right_white.png";
+import { PosterInfoProps } from "../../types/ScheduleRelatedType";
+import Navbar from "../../components/Navbar";
+import PosterInfo from "../../components/PosterInfo";
 
 const HomePage: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -124,10 +126,10 @@ const HomePage: React.FC = () => {
       </div>
       <div className="arrows-area">
         <div className="left-arrow" onClick={handlePrev}>
-          <img src="/src/assets/arrow_left_white.png" alt="left arrow" />
+          <img src={leftArrow} alt="left arrow" />
         </div>
         <div className="right-arrow" onClick={handleNext}>
-          <img src="/src/assets/arrow_right_white.png" alt="right arrow" />
+          <img src={rightArrow} alt="right arrow" />
         </div>
       </div>
     </div>

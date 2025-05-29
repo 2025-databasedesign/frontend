@@ -3,10 +3,12 @@ import "./TheaterSelection.css";
 import { TheaterInSchedule } from "../../types/ScheduleRelatedType";
 import { getTheatersInfo } from "../../utils/scheduleRelatedUtils";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import checkIcon from "../../assets/image/check.png";
 
 const TheaterSelection: React.FC = () => {
   const [theaters, setTheaters] = useState<TheaterInSchedule[]>([]);
-  const { setSelectedTheater, setSelectedMovie } = useScheduleRelatedStore();
+  const { selectedTheater, setSelectedTheater, setSelectedMovie } =
+    useScheduleRelatedStore();
 
   useEffect(() => {
     const fetchTheaters = async () => {
@@ -27,8 +29,18 @@ const TheaterSelection: React.FC = () => {
             <a
               href="#none"
               onClick={() => setSelectedTheater(theater.theaterName)}
+              className={
+                selectedTheater === theater.theaterName ? "selected" : ""
+              }
             >
-              {theater.theaterName}
+              <span>{theater.theaterName}</span>
+              <img
+                src={checkIcon}
+                className={`check ${
+                  selectedTheater === theater.theaterName ? "selected" : ""
+                }`}
+                alt={theater.theaterName}
+              />
             </a>
           </li>
         ))}

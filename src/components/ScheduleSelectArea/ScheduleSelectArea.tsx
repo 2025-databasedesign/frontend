@@ -5,6 +5,12 @@ import { FullSchedule } from "../../types/ScheduleRelatedType";
 import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
+// import Grade from "../Grade/Grade";
+
+// const parseGradeNumber = (gradePath: string) => {
+//   const match = gradePath.match(/grade_(\d+)\.png$/);
+//   return match ? match[1] : "등급 정보 없음";
+// };
 
 const ScheduleSelectArea: React.FC = () => {
   const navigate = useNavigate();
@@ -67,6 +73,7 @@ const ScheduleSelectArea: React.FC = () => {
         <div className="group-time-select" key={index1}>
           <div className="movie-info-area">
             <img src={groupTime.grade} />
+            {/* <Grade grade={`${parseGradeNumber(groupTime.grade)}`}/> */}
             <span className="movie-name">{groupTime.movieName}</span>
           </div>
           <div className="time-select-wrapper">

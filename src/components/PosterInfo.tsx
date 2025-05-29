@@ -2,6 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./PosterInfo.css";
 import { PosterInfoProps } from "../types/ScheduleRelatedType";
+// import Grade from "./Grade/Grade";
+
+// const parseGradeNumber = (gradePath: string) => {
+//   const match = gradePath.match(/grade_(\d+)\.png$/);
+//   return match ? match[1] : "등급 정보 없음";
+// };
 
 const PosterInfo: React.FC<PosterInfoProps> = ({
   movieName,
@@ -28,11 +34,14 @@ const PosterInfo: React.FC<PosterInfoProps> = ({
         <span className="rank">{rank}</span>
         <div className="over-box">
           {isReservable && <button className="outline">예매하기</button>}
-          <button className="outline" onClick={handleDetailClick}>상세정보</button>
+          <button className="outline" onClick={handleDetailClick}>
+            상세정보
+          </button>
         </div>
       </div>
       <div className="bottom-info">
         <div className="title-info">
+          {/* <Grade grade={parseGradeNumber(grade)} /> */}
           <img src={grade} />
           {movieName}
         </div>

@@ -1,5 +1,5 @@
 .logo {
-  width: 136px;
+  width: 132px;
   cursor: pointer;
 }
 .nav-bar {
@@ -59,7 +59,7 @@
         }
       }
       .middle-navigation:hover .span-nav-content {
-        color: rgb(1, 114, 173);
+        color: var(--primary-color);
         opacity: 1;
       }
       /* .li-center-menu:hover ul.sub-tab {

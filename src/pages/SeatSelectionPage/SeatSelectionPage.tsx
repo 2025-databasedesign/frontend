@@ -6,6 +6,8 @@ import theaters from "../../assets/theater_info/mock_seat.json";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
+import minusIcon from '../../assets/image/minus-icon.png'
+import plusIcon from '../../assets/image/plus-icon.png'
 
 const SeatSelectionPage: React.FC = () => {
   const navigate = useNavigate();
@@ -129,22 +131,14 @@ const SeatSelectionPage: React.FC = () => {
                     className="minus"
                     onClick={() => handleCount("adult", -1)}
                   >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
+                    <img src={minusIcon} alt="" className="minus" />
                   </button>
                   <div className="count">{selectedPeople.adult}</div>
                   <button
                     className="plus"
                     onClick={() => handleCount("adult", 1)}
                   >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
+                    <img src={plusIcon} alt="" className="plus" />
                   </button>
                 </div>
               </div>
@@ -155,22 +149,14 @@ const SeatSelectionPage: React.FC = () => {
                     className="minus"
                     onClick={() => handleCount("teen", -1)}
                   >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
+                    <img src={minusIcon} alt="" className="minus" />
                   </button>
                   <div className="count">{selectedPeople.teen}</div>
                   <button
                     className="plus"
                     onClick={() => handleCount("teen", 1)}
                   >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
+                    <img src={plusIcon} alt="" className="plus" />
                   </button>
                 </div>
               </div>
@@ -181,22 +167,14 @@ const SeatSelectionPage: React.FC = () => {
                     className="minus"
                     onClick={() => handleCount("senior", -1)}
                   >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
+                    <img src={minusIcon} alt="" className="minus" />
                   </button>
                   <div className="count">{selectedPeople.senior}</div>
                   <button
                     className="plus"
                     onClick={() => handleCount("senior", 1)}
                   >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
+                    <img src={plusIcon} alt="" className="plus" />
                   </button>
                 </div>
               </div>
@@ -207,22 +185,14 @@ const SeatSelectionPage: React.FC = () => {
                     className="minus"
                     onClick={() => handleCount("kid", -1)}
                   >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
+                    <img src={minusIcon} alt="" className="minus" />
                   </button>
                   <div className="count">{selectedPeople.kid}</div>
                   <button
                     className="plus"
                     onClick={() => handleCount("kid", 1)}
                   >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
+                    <img src={plusIcon} alt="" className="plus" />
                   </button>
                 </div>
               </div>
@@ -233,22 +203,14 @@ const SeatSelectionPage: React.FC = () => {
                     className="minus"
                     onClick={() => handleCount("disabled", -1)}
                   >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
+                    <img src={minusIcon} alt="" className="minus" />
                   </button>
                   <div className="count">{selectedPeople.disabled}</div>
                   <button
                     className="plus"
                     onClick={() => handleCount("disabled", 1)}
                   >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
+                    <img src={plusIcon} alt="" className="plus" />
                   </button>
                 </div>
               </div>

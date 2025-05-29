@@ -15,16 +15,32 @@
       font-weight: 500;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      color: var(--primary-color);
+
+      .grade-title-area {
+        display: flex;
+        align-items: center;
+      }
 
       img {
         margin-right: 8px;
         width: 28px;
         border-radius: 4px;
       }
+      /* .grade-badge {
+        margin-right: 8px;
+      } */
+      .check {
+        display: none;
+        width: 20px;
+      }
+      .check.selected {
+        display: block;
+      }
     }
   }
   ul a.selected {
-    font-weight: bold;
-    color: #ff4d4f;
+    color: var(--accent-color-red);
   }
 }
