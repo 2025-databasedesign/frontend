@@ -8,8 +8,8 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "A",
-            "theaterName": "Theater 1",
+            "theaterId": 1,
+            "theaterName": "1관",
             "format": "2D",
             "subDub": "더빙",
             "availSeat": 32,
@@ -18,8 +18,8 @@
             "endTimes": ["10:28", "12:58", "15:28", "17:58", "20:28", "22:58", "01:28", "03:58", "06:28", "08:58", "10:58"]
           },
           {
-            "theaterId": "B",
-            "theaterName": "Theater 2",
+            "theaterId": 2,
+            "theaterName": "2관",
             "format": "IMAX",
             "subDub": "자막",
             "availSeat": 68,
@@ -36,8 +36,8 @@
         "grade": "/src/assets/grade_19.png",
         "theaters": [
           {
-            "theaterId": "D",
-            "theaterName": "Theater 4",
+            "theaterId": 4,
+            "theaterName": "4관",
             "format": "3D",
             "subDub": "자막",
             "availSeat": 123,
@@ -53,8 +53,8 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "C",
-            "theaterName": "Kids Theater",
+            "theaterId": 3,
+            "theaterName": "키즈관",
             "format": "2D",
             "subDub": "자막",
             "availSeat": 30,
@@ -63,8 +63,8 @@
             "endTimes": ["10:28", "12:58", "15:28", "17:58", "20:28", "22:58", "01:28", "03:58", "06:28", "08:58", "10:58"]
           },
           {
-            "theaterId": "B",
-            "theaterName": "Theater 2",
+            "theaterId": 2,
+            "theaterName": "2관",
             "format": "2D",
             "subDub": "더빙",
             "availSeat": 68,
@@ -86,8 +86,8 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "E",
-            "theaterName": "Theater 5",
+            "theaterId": 5,
+            "theaterName": "5관",
             "format": "IMAX",
             "subDub": "자막",
             "availSeat": 42,
@@ -103,8 +103,8 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "C",
-            "theaterName": "Kids Theater",
+            "theaterId": 3,
+            "theaterName": "키즈관",
             "format": "2D",
             "subDub": "자막",
             "availSeat": 30,
@@ -113,8 +113,8 @@
             "endTimes": ["10:28", "12:58", "15:28", "17:58", "20:28", "22:58", "01:28", "03:58", "06:28", "08:58", "10:58"]
           },
           {
-            "theaterId": "D",
-            "theaterName": "Theater 4",
+            "theaterId": 4,
+            "theaterName": "4관",
             "format": "2D",
             "subDub": "더빙",
             "availSeat": 68,
@@ -131,8 +131,8 @@
         "grade": "/src/assets/grade_19.png",
         "theaters": [
           {
-            "theaterId": "A",
-            "theaterName": "Theater 1",
+            "theaterId": 1,
+            "theaterName": "1관",
             "format": "3D",
             "subDub": "자막",
             "availSeat": 123,
@@ -154,8 +154,8 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "D",
-            "theaterName": "Theater 1",
+            "theaterId": 1,
+            "theaterName": "1관",
             "format": "2D",
             "subDub": "자막",
             "availSeat": 42,
@@ -164,8 +164,8 @@
             "endTimes": ["11:21", "13:21", "15:21", "17:21"]
           },
           {
-            "theaterId": "E",
-            "theaterName": "Theater 4",
+            "theaterId": 4,
+            "theaterName": "4관",
             "format": "2D",
             "subDub": null,
             "availSeat": 42,
@@ -182,8 +182,8 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "F",
-            "theaterName": "Theater 5",
+            "theaterId": 5,
+            "theaterName": "5관",
             "format": "2D",
             "subDub": null,
             "availSeat": 42,
@@ -200,8 +200,77 @@
         "grade": "/src/assets/grade_15.png",
         "theaters": [
           {
-            "theaterId": "B",
-            "theaterName": "Theater 2",
+            "theaterId": 2,
+            "theaterName": "2관",
+            "format": "3D",
+            "subDub": "자막",
+            "availSeat": 123,
+            "totalSeat": 156,
+            "startTimes": ["09:30", "12:30", "15:45", "19:00"],
+            "endTimes": ["11:46", "14:46", "17:61", "21:16"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2025-05-20",
+    "schedules": [
+      {
+        "movieId": 6,
+        "movieName": "어벤져스",
+        "durationMinutes": 81,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": 1,
+            "theaterName": "1관",
+            "format": "2D",
+            "subDub": "자막",
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          },
+          {
+            "theaterId": 4,
+            "theaterName": "4관",
+            "format": "2D",
+            "subDub": "더빙",
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      },
+      {
+        "movieId": 7,
+        "movieName": "범죄도시",
+        "durationMinutes": 81,
+        "grade": "/src/assets/grade_19.png",
+        "theaters": [
+          {
+            "theaterId": 5,
+            "theaterName": "5관",
+            "format": "2D",
+            "subDub": null,
+            "availSeat": 42,
+            "totalSeat": 60,
+            "startTimes": ["10:00", "12:00", "14:00", "16:00"],
+            "endTimes": ["11:21", "13:21", "15:21", "17:21"]
+          }
+        ]
+      },
+      {
+        "movieId": 2,
+        "movieName": "Avatar",
+        "durationMinutes": 136,
+        "grade": "/src/assets/grade_15.png",
+        "theaters": [
+          {
+            "theaterId": 2,
+            "theaterName": "2관",
             "format": "3D",
             "subDub": "자막",
             "availSeat": 123,

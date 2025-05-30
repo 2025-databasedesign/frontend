@@ -9,15 +9,6 @@ type PeopleCount = {
   disabled: number;
 };
 
-type MovieInfo = {
-  movieId: number;
-  title: string;
-  grade?: string;
-  releaseDate: string;
-  runningTime: number;
-  director: string;
-};
-
 type ScheduleRelatedStore = {
   selectedDate: string;
   setSelectedDate: (date: string) => void;
@@ -37,8 +28,6 @@ type ScheduleRelatedStore = {
   setSelectedPeople: (people: PeopleCount) => void;
   selectedSeats: number[][];
   setSelectedSeats: (seats: number[][]) => void;
-  movieList: MovieInfo[];
-  setMovieList: (list: MovieInfo[]) => void;
 };
 
 export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
@@ -69,8 +58,6 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
       selectedSeats: [],
       setSelectedSeats: (seats) => set({ selectedSeats: seats }),
       selectedGrade: null,
-      movieList: [],
-      setMovieList: (list) => set({ movieList: list }),
     }),
     {
       name: "schedule-storage",
@@ -83,7 +70,6 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
         selectedScreenTime: state.selectedScreenTime,
         selectedPeople: state.selectedPeople,
         selectedSeats: state.selectedSeats,
-        movieList: state.movieList,
       }),
     }
   )

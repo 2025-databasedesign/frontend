@@ -5,15 +5,17 @@ import rightArrow from "../../assets/image/arrow_right_white.png";
 import { PosterInfoProps } from "../../types/ScheduleRelatedType";
 import Navbar from "../../components/Navbar";
 import PosterInfo from "../../components/PosterInfo";
+// import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
 
 const HomePage: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0); //X position where the user first started dragging.
   const startScrollLeft = useRef(0); //scroll position (how far slider was scrolled) when the user started dragging.
+  // const { movieList, setMovieList, setTheaterList } = useCinemaRelatedStore();
   const [movieInfo, setMovieInfo] = useState<PosterInfoProps[]>([]);
 
-  ///////fetch movie's info
+  /////fetch mock movie's info
   const getMovieInfo = async () => {
     try {
       const response = await fetch("/src/assets/cinema_info/mock_cinema.json");
@@ -31,6 +33,29 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     getMovieInfo();
   }, []);
+
+  //real API
+  // useEffect(() => {
+  //   const fetchAll = async () => {
+  //     try {
+  //       const [moviesRes, theatersRes, ] = await Promise.all([
+  //         fetch("http://54.180.117.246/api/movies"),
+  //         fetch("http://54.180.117.246/api/theaters"),
+  //       ]);
+
+  //       const [movies, theaters] = await Promise.all([
+  //         moviesRes.json(),
+  //         theatersRes.json(),
+  //       ]);
+
+  //       setMovieList(movies.data);
+  //       setTheaterList(theaters.data);
+  //     } catch (err) {
+  //       console.error("Error fetching data:", err);
+  //     }
+  //   };
+  //   fetchAll();
+  // }, [setMovieList, setTheaterList]);
 
   //////////////////////////// Handle slider's button click
   function handleNext() {
@@ -109,6 +134,7 @@ const HomePage: React.FC = () => {
         onTouchEnd={handleDragEnd}
       >
         <div className="posters-area">
+          {/* {movieList.map((movie, index) => ( */}
           {movieInfo.map((movie, index) => (
             <div className="item-container" key={index}>
               <PosterInfo

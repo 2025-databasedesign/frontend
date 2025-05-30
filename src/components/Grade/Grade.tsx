@@ -1,7 +1,7 @@
 import React from "react";
 import "./Grade.css";
 
-type GradeType = { grade: string };
+type GradeType = { grade?: string };
 
 const Grade: React.FC<GradeType> = ({ grade }) => {
   
