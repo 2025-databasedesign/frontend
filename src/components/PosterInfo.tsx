@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./PosterInfo.css";
 import { PosterInfoProps } from "../types/ScheduleRelatedType";
+import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
+import { AppRoutes } from "../routes/AppRoutes";
 // import Grade from "./Grade/Grade";
 
 // const parseGradeNumber = (gradePath: string) => {
@@ -19,11 +21,23 @@ const PosterInfo: React.FC<PosterInfoProps> = ({
   rank,
 }) => {
   const navigate = useNavigate();
+  const setSelectedMovie = useScheduleRelatedStore(
+    (state) => state.setSelectedMovie
+  );
+  const setShouldResetMovie = useScheduleRelatedStore(
+    (state) => state.setShouldResetMovie
+  );
 
   const handleDetailClick = () => {
     const encodedName = encodeURIComponent(movieName); // URL에 안전하게 포함되도록 인코딩
     navigate(`/movies/${encodedName}`);
   };
+
+  function handleReservationClick(movieName: string) {
+    setSelectedMovie(movieName);
+    setShouldResetMovie(false); // prevent reset on mount
+    navigate(AppRoutes.RESERVATION_PAGE);
+  }
 
   return (
     <div className="item">
@@ -33,7 +47,14 @@ const PosterInfo: React.FC<PosterInfoProps> = ({
         </span>
         <span className="rank">{rank}</span>
         <div className="over-box">
-          {isReservable && <button className="outline">예매하기</button>}
+          {isReservable && (
+            <button
+              className="outline"
+              onClick={() => handleReservationClick(movieName)}
+            >
+              예매하기
+            </button>
+          )}
           <button className="outline" onClick={handleDetailClick}>
             상세정보
           </button>

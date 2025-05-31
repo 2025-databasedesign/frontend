@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type PeopleCount = {
+export type PeopleCount = {
   adult: number;
   teen: number;
   senior: number;
@@ -18,6 +18,8 @@ type ScheduleRelatedStore = {
   setScheduleViewType: (viewType: string) => void;
   selectedMovie: string | null;
   setSelectedMovie: (movie: string | null) => void;
+  shouldResetMovie: boolean;
+  setShouldResetMovie: (reset: boolean) => void;
   selectedGrade: string | null;
   setSelectedGrade: (grade: string) => void;
   selectedFormat: string | null;
@@ -41,6 +43,8 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
       setScheduleViewType: (viewType) => set({ scheduleViewType: viewType }),
       selectedMovie: null,
       setSelectedMovie: (movie) => set({ selectedMovie: movie }),
+      shouldResetMovie: true,
+      setShouldResetMovie: (reset) => set({ shouldResetMovie: reset }),
       selectedScreenTime: null,
       setSelectedGrade: (grade) => set({ selectedGrade: grade }),
       selectedFormat: null,

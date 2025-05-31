@@ -6,33 +6,30 @@ import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import { getMovieInfo } from "../../utils/scheduleRelatedUtils";
 import { fullScheduleProps } from "../../types/ScheduleRelatedType";
 import checkIcon from "../../assets/image/check.png";
-// import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
 
 const parseGradeNumber = (gradePath: string) => {
   const match = gradePath.match(/grade_(\d+)\.png$/);
   return match ? match[1] : "등급 정보 없음";
 };
 
-// const extractGradeValue = (grade: string | undefined): string => {
-//   const matched = grade?.match(/\d+/)?.[0];
-//   return matched || "all";
-// };
-
 const MovieSelection: React.FC = () => {
   const [movies, setMovies] = useState<fullScheduleProps[]>([]);
-  const selectedMovie = useScheduleRelatedStore(
-    (state) => state.selectedMovie
-  );
+  // ------------------------- Access store
+  const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
   const setSelectedTheater = useScheduleRelatedStore(
     (state) => state.setSelectedTheater
   );
   const setSelectedMovie = useScheduleRelatedStore(
     (state) => state.setSelectedMovie
   );
+  // ------------------------- Access store
+
   // const {movieList, setMovieList} = useCinemaRelatedStore();
 
   //mock movies' data
   useEffect(() => {
+    setSelectedMovie(null);
+
     const fetchMovies = async () => {
       const data = await getMovieInfo();
       if (data) {
@@ -40,23 +37,28 @@ const MovieSelection: React.FC = () => {
       }
     };
     fetchMovies();
+
     setSelectedTheater(null);
-  }, [setSelectedTheater]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //찐 api
   // useEffect(() => {
-  //   const fetchMovies = async() => {
+  //   setSelectedMovie(null);
+
+  //   const fetchMovies = async () => {
   //     try {
-  //       const res = await fetch("http://54.180.117.246/api/movies");
+  //       const res = await fetch("/api/movies");
   //       const resData = await res.json();
   //       setMovieList(resData.data);
   //     } catch (err) {
   //       console.log("Error fetching movies: ", err);
   //     }
-  //   }
+  //   };
   //   fetchMovies();
   //   setSelectedTheater(null);
-  // }, [setMovieList]);
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="movie-selection">

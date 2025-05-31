@@ -9,6 +9,7 @@ import checkIcon from "../../assets/image/check.png";
 
 const TheaterSelection: React.FC = () => {
   const [theaters, setTheaters] = useState<TheaterInSchedule[]>([]);
+  // ------------------------- Access store
   const selectedTheater = useScheduleRelatedStore(
     (state) => state.selectedTheater
   );
@@ -18,11 +19,14 @@ const TheaterSelection: React.FC = () => {
   const setSelectedMovie = useScheduleRelatedStore(
     (state) => state.setSelectedMovie
   );
+  // ------------------------- Access store
 
   // const {theaterList, setMovieList} = useCinemaRelatedStore();
 
   //mock data
   useEffect(() => {
+    setSelectedTheater(null);
+
     const fetchTheaters = async () => {
       const data = await getTheatersInfo();
       if (data) {
@@ -31,13 +35,16 @@ const TheaterSelection: React.FC = () => {
     };
     fetchTheaters();
     setSelectedMovie(null);
-  }, [setSelectedMovie]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //찐 api
   // useEffect(() => {
+  //   setSelectedTheater(null);
+
   //   const fetchTheaters = async () => {
   //     try {
-  //       const res = await fetch("http://54.180.117.246/api/theaters");
+  //       const res = await fetch("/api/theaters");
   //       const resData = await res.json();
   //       setTheaterList(resData.data);
   //     } catch (err) {
@@ -45,8 +52,10 @@ const TheaterSelection: React.FC = () => {
   //     }
   //   };
   //   fetchTheaters();
+
   //   setSelectedMovie(null);
-  // }, [setTheaterList]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="location-selection">

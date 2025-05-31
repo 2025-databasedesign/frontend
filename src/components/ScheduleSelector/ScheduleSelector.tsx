@@ -10,8 +10,18 @@ const ScheduleSelector: React.FC = () => {
   const today = new Date();
   const formatted = today.toISOString().split("T")[0]; // "2025-05-14"
   //const dayName = today.toLocaleDateString("ko-KR", { weekday: "short" }); //"월", "화"
-  const { selectedTheater, scheduleViewType, selectedDate, selectedMovie } =
-    useScheduleRelatedStore();
+
+  // ------------------------- Access store
+  const selectedTheater = useScheduleRelatedStore(
+    (state) => state.selectedTheater
+  );
+  const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
+  const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
+  const scheduleViewType = useScheduleRelatedStore(
+    (state) => state.scheduleViewType
+  );
+  // ------------------------- Access store
+
   const weekday = new Date(selectedDate).toLocaleDateString("ko-KR", {
     weekday: "short",
   });

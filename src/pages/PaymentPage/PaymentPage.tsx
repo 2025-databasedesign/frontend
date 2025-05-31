@@ -3,57 +3,35 @@ import "./PaymentPage.css";
 import Navbar from "../../components/Navbar";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import { getWeekday } from "../../utils/scheduleRelatedUtils";
+import { getPeopleDisplay, getPeoplePrices, getSeatDisplay, getTotalPrice } from "../../utils/paymentUtils";
 
 const PaymentPage: React.FC = () => {
-  const {
-    selectedDate,
-    selectedTheater,
-    selectedMovie,
-    selectedGrade,
-    selectedFormat,
-    selectedScreenTime,
-    selectedPeople,
-    selectedSeats,
-  } = useScheduleRelatedStore();
+  // ------------------------- Access store
+  const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
+  const selectedTheater = useScheduleRelatedStore(
+    (state) => state.selectedTheater
+  );
+  const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
+  const selectedGrade = useScheduleRelatedStore((state) => state.selectedGrade);
+  const selectedFormat = useScheduleRelatedStore(
+    (state) => state.selectedFormat
+  );
+  const selectedScreenTime = useScheduleRelatedStore(
+    (state) => state.selectedScreenTime
+  );
+  const selectedPeople = useScheduleRelatedStore(
+    (state) => state.selectedPeople
+  );
+  const selectedSeats = useScheduleRelatedStore((state) => state.selectedSeats);
+  // ------------------------- Access store
+
   const [discount, setDiscount] = useState("");
   const discountPrice = 1000;
 
-  const PEOPLE_LABELS: Record<keyof typeof selectedPeople, string> = {
-    adult: "성인",
-    teen: "청소년",
-    senior: "경로",
-    kid: "어린이",
-    disabled: "장애인",
-  };
-  //display "성인 1, 청소년 1"
-  const peopleDisplay = Object.entries(selectedPeople)
-    .filter(([, count]) => count > 0)
-    .map(
-      ([key, count]) =>
-        `${PEOPLE_LABELS[key as keyof typeof selectedPeople]} ${count}`
-    )
-    .join(", ");
-
-  //display [1,2] -> A2
-  const getRowLabel = (row: number) => String.fromCharCode(64 + row);
-  const seatDisplay = selectedSeats
-    .map(([row, col]) => `${getRowLabel(row)}${col}`)
-    .join(", ");
-
-  const TICKET_PRICES: Record<keyof typeof selectedPeople, number> = {
-    adult: 15000,
-    teen: 10000,
-    senior: 8000,
-    kid: 7000,
-    disabled: 6000,
-  };
-  const peoplePrices = Object.entries(selectedPeople)
-    .filter(([, count]) => count > 0)
-    .map(([key, count]) => ({
-      label: `${PEOPLE_LABELS[key as keyof typeof selectedPeople]} ${count}`,
-      price: TICKET_PRICES[key as keyof typeof selectedPeople] * count,
-    }));
-  const totalPrice = peoplePrices.reduce((sum, p) => sum + p.price, 0);
+  const peopleDisplay = getPeopleDisplay(selectedPeople);
+  const seatDisplay = getSeatDisplay(selectedSeats);
+  const peoplePrices = getPeoplePrices(selectedPeople);
+  const totalPrice = getTotalPrice(selectedPeople);
 
   return (
     <div className="payment-page">

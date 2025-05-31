@@ -12,8 +12,18 @@ const HomePage: React.FC = () => {
   const isDragging = useRef(false);
   const startX = useRef(0); //X position where the user first started dragging.
   const startScrollLeft = useRef(0); //scroll position (how far slider was scrolled) when the user started dragging.
-  // const { movieList, setMovieList, setTheaterList } = useCinemaRelatedStore();
   const [movieInfo, setMovieInfo] = useState<PosterInfoProps[]>([]);
+  // ------------------------- Access store
+  // const movieList = useCinemaRelatedStore(
+  //   (state) => state.movieList
+  // );
+  // const setMovieList = useCinemaRelatedStore(
+  //   (state) => state.setMovieList
+  // );
+  // const setTheaterList = useCinemaRelatedStore(
+  //   (state) => state.setTheaterList
+  // );
+  // ------------------------- Access store
 
   /////fetch mock movie's info
   const getMovieInfo = async () => {

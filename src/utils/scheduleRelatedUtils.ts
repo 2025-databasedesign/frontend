@@ -96,3 +96,8 @@ export function getWeekday(dateStr: string) {
   const weekday = date.toLocaleDateString("ko-KR", { weekday: "short" });
   return weekday;
 }
+
+export const extractGradeValue = (grade: string | undefined): string => {
+  const matched = grade?.match(/\d+/)?.[0];
+  return matched || "all";
+};

@@ -5,7 +5,15 @@ import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import ScheduleSelector from "../../components/ScheduleSelector/ScheduleSelector";
 
 const SchedulePage: React.FC = () => {
-  const { scheduleViewType, setScheduleViewType } = useScheduleRelatedStore();
+  // ------------------------- Access store
+  const scheduleViewType = useScheduleRelatedStore(
+    (state) => state.scheduleViewType
+  );
+  const setScheduleViewType = useScheduleRelatedStore(
+    (state) => state.setScheduleViewType
+  );
+  // ------------------------- Access store
+
   return (
     <div className="schedule-page-main">
       <div className="navbar-wrapper">
