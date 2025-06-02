@@ -16,13 +16,11 @@
       }
     }
     .middle {
-      /* border-left: 1px solid black; */
       .movie-selection {
         max-height: calc(100dvh - 10dvh - 68px);
       }
     }
     .right {
-      /* border-left: 1px solid black; */
 
       .schedule-selection {
         overflow: auto;
@@ -53,7 +51,4 @@
       color: white;
     }
   }
-}
-::-webkit-scrollbar {
-  display: none;;
 }

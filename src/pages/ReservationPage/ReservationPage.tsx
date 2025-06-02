@@ -34,8 +34,8 @@ const ReservationPage: React.FC = () => {
 
     if (shouldResetMovie) {
       setSelectedMovie(null);
-      setShouldResetMovie(true); // keep default behavior for next time
     }
+    setShouldResetMovie(true); // keep default behavior for next time
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

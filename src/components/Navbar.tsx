@@ -2,10 +2,27 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes/AppRoutes";
 import "./Navbar.css";
-import logoImage from '../assets/image/logo-transparent-bg.png'
+import logoImage from "../assets/image/logo-transparent-bg.png";
+import { useCinemaRelatedStore } from "../stores/CinemaRelatedStore";
+import { isTokenValid, logout } from "../utils/authUtils";
+import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const setIsLogin = useCinemaRelatedStore((state) => state.setIsLogin);
+
+  function handleLogout() {
+    // Clear token from localStorage
+    logout();
+    // Reset Zustand booking state (in memory)
+    useScheduleRelatedStore.getState().resetState();
+    // Update login state in auth store
+    setIsLogin(false);
+
+    alert("로그아웃되었습니다.");
+    navigate(AppRoutes.HOME);
+  }
+
   return (
     <nav className="nav-bar container">
       <img
@@ -17,7 +34,12 @@ const Navbar: React.FC = () => {
       <ul className="center-menu">
         <li className="li-center-menu">
           <div className="middle-navigation">
-            <span className="span-nav-content" onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}>영화</span>
+            <span
+              className="span-nav-content"
+              onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
+            >
+              영화
+            </span>
           </div>
         </li>
         <li className="li-center-menu">
@@ -44,18 +66,31 @@ const Navbar: React.FC = () => {
           </div>
         </li>
         <li className="li-center-menu">
-          <div className="middle-navigation" onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}>
+          <div
+            className="middle-navigation"
+            onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}
+          >
             <span className="span-nav-content">상영관</span>
           </div>
         </li>
       </ul>
       <ul>
-        <li>
-          <button onClick={() => navigate(AppRoutes.LOGIN_PAGE)}>로그인</button>
-        </li>
-        <li>
-          <button>사용자 정보</button>
-        </li>
+        {isTokenValid() ? (
+          <>
+            <li>
+              <button onClick={handleLogout}>로그아웃</button>
+            </li>
+            <li>
+              <button>사용자 정보</button>
+            </li>
+          </>
+        ) : (
+          <li>
+            <button onClick={() => navigate(AppRoutes.LOGIN_PAGE)}>
+              로그인
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );

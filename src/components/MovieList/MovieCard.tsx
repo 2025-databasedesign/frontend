@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./MovieCard.css";
+import { AppRoutes } from "../../routes/AppRoutes";
+import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 
 type Movie = {
   movieName: string;
@@ -19,6 +21,18 @@ export default function MovieCard({ movie }: { movie: Movie }) {
     navigate(`/movies/${encodeURIComponent(movie.movieName)}`);
   };
 
+  const setSelectedMovie = useScheduleRelatedStore(
+    (state) => state.setSelectedMovie
+  );
+  const setShouldResetMovie = useScheduleRelatedStore(
+    (state) => state.setShouldResetMovie
+  );
+  function handleReservationClick(movieName: string) {
+    setSelectedMovie(movieName);
+    setShouldResetMovie(false); // prevent reset on mount
+    navigate(AppRoutes.RESERVATION_PAGE);
+  }
+
   return (
     <div className="movie-card" onClick={handleCardClick}>
       <div className="card-header">
@@ -30,13 +44,18 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <img src={movie.image} alt={movie.movieName} className="movie-poster" />
       <div className="movie-title">{movie.movieName}</div>
       <div className="movie-info">
-        예매율 {movie.rating.toFixed(1)}% &nbsp;|&nbsp;
-        ⭐ {movie.star ?? "평점 없음"}
+        예매율 {movie.rating.toFixed(1)}% &nbsp;|&nbsp; ⭐{" "}
+        {movie.star ?? "평점 없음"}
       </div>
       <button
         className="reserve-button"
         disabled={!movie.isReservable}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (movie.isReservable) {
+            handleReservationClick(movie.movieName);
+          }
+        }}
       >
         {movie.isReservable ? "예매하기" : "예매 불가"}
       </button>

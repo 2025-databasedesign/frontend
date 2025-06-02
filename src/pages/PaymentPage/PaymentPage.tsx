@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PaymentPage.css";
 import Navbar from "../../components/Navbar";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import { getWeekday } from "../../utils/scheduleRelatedUtils";
-import { getPeopleDisplay, getPeoplePrices, getSeatDisplay, getTotalPrice } from "../../utils/paymentUtils";
+import {
+  getPeopleDisplay,
+  getPeoplePrices,
+  getSeatDisplay,
+  getTotalPrice,
+} from "../../utils/paymentUtils";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../../routes/AppRoutes";
 
 const PaymentPage: React.FC = () => {
+  const navigate = useNavigate();
   // ------------------------- Access store
   const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
   const selectedTheater = useScheduleRelatedStore(
@@ -32,6 +40,14 @@ const PaymentPage: React.FC = () => {
   const seatDisplay = getSeatDisplay(selectedSeats);
   const peoplePrices = getPeoplePrices(selectedPeople);
   const totalPrice = getTotalPrice(selectedPeople);
+
+  useEffect(() => {
+    if (selectedSeats.length === 0) {
+      alert("Please select seats first.");
+      navigate(AppRoutes.SEAT_SELECTION_PAGE, { replace: true });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="payment-page">

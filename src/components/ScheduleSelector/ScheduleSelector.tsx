@@ -5,6 +5,7 @@ import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import MovieSelection from "../MovieSelection/MovieSelection";
 import DateSlider from "../DateSlider/DateSlider";
 import TheaterSelection from "../TheaterSelection/TheaterSelection";
+import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
 
 const ScheduleSelector: React.FC = () => {
   const today = new Date();
@@ -17,7 +18,7 @@ const ScheduleSelector: React.FC = () => {
   );
   const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
   const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
-  const scheduleViewType = useScheduleRelatedStore(
+  const scheduleViewType = useCinemaRelatedStore(
     (state) => state.scheduleViewType
   );
   // ------------------------- Access store

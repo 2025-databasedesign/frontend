@@ -1,5 +1,6 @@
 :root {
   --primary-color: rgb(42, 104, 174);
+  --button-hover-color: rgb(38, 90, 150);
   --accent-color-red: rgb(255, 0, 0);
   --text-color: #333;
   --background-color: #f9f9f9;
@@ -15,11 +16,7 @@
 button {
   box-shadow: none;
   background-color: var(--primary-color);
-  /* border: var(--primary-color); */
 }
 button:hover {
-  /* background-color: rgb(38, 90, 150); */
-}
-html {
-  overflow-y: scroll;
+  background-color: var(--button-hover-color);
 }

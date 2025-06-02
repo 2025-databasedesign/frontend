@@ -95,7 +95,6 @@ const ScheduleSelectArea: React.FC = () => {
         <div className="group-time-select" key={index1}>
           <div className="movie-info-area">
             <img src={groupTime.grade} />
-            {/* <Grade grade={`${parseGradeNumber(groupTime.grade)}`}/> */}
             <span className="movie-name">{groupTime.movieName}</span>
           </div>
           <div className="time-select-wrapper">

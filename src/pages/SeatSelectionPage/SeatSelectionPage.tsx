@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SeatSelectionPage.css";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import TheaterSeatMap from "../../components/TheaterList/TheaterSeatMap";
@@ -13,6 +13,7 @@ import { extractGradeValue } from "../../utils/scheduleRelatedUtils";
 
 const SeatSelectionPage: React.FC = () => {
   const navigate = useNavigate();
+  const [target, setTarget] = useState("");
   // ------------------------- Access store
   const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
   const selectedTheater = useScheduleRelatedStore(
@@ -107,6 +108,28 @@ const SeatSelectionPage: React.FC = () => {
     return true;
   });
 
+  function handleMessage() {
+    if (target == "teen") {
+      return "청소년 요금은 4세 이상 ~ 19세 미만의 청소년에 한해 적용됩니다.";
+    } else if (target == "senior") {
+      return "반드시 본인의 신분증(65세 이상)을 소지하신 후 입장해주세요. 미지참 시 입장이 제한됩니다.";
+    } else if (target == "disabled"){
+      return "반드시 복지카드를 소지하신 후 입장해주세요. 미지참 시 입장이 제한됩니다. (장애의 정도가 심한 장애인: 동반 1인 포함 할인 가능/ 장애 정도가 심하지 않은 장애인: 본인에 한하여 할인 적용)";
+    } else {
+      return "";
+    }
+  }
+
+  useEffect(() => {
+    if (!selectedMovie || !selectedScreenTime) {
+      console.log("Before alert2");
+      alert("Please select a movie and schedule first.");
+      console.log("After alert2");
+      navigate(AppRoutes.RESERVATION_PAGE, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="seat-select-page">
       <div className="navbar-wrapper">
@@ -115,6 +138,9 @@ const SeatSelectionPage: React.FC = () => {
       <div className="seat-select-main">
         <div className="top" style={{ textAlign: "center" }}>
           인원/좌석 선택
+          <span className="max-people" style={{ display: "flex" }}>
+            인원은 최대 8명까지 선택 가능합니다
+          </span>
         </div>
         <div className="bottom">
           <div className="select-people-wrap">
@@ -154,7 +180,13 @@ const SeatSelectionPage: React.FC = () => {
             </div>
             <div className="count-wrap">
               {filteredOptions.map(({ key, label, className }) => (
-                <div className={className}>
+                <div
+                  className={className}
+                  onClick={() => {
+                    setTarget(key);
+                  }}
+                  key={key}
+                >
                   <span className="title">{label}</span>
                   <div className="count-area">
                     <button
@@ -182,6 +214,14 @@ const SeatSelectionPage: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="message">
+            <span>
+              인원을 선택하고 좌석 선택 후 하단에 결제하기 버튼을 클릭하세요
+            </span>
+            <span className="target-message">
+              {handleMessage()}
+            </span>
           </div>
           <div className="seat-view">
             <TheaterSeatMap
