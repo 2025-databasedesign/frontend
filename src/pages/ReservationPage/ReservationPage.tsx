@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ReservationPage.css";
 import Navbar from "../../components/Navbar";
 import MovieSelection from "../../components/MovieSelection/MovieSelection";
@@ -8,11 +8,37 @@ import DateSlider from "../../components/DateSlider/DateSlider";
 import TheaterSelection from "../../components/TheaterSelection/TheaterSelection";
 
 const ReservationPage: React.FC = () => {
-  const { selectedTheater, selectedDate, selectedMovie } =
-    useScheduleRelatedStore();
+  const selectedTheater = useScheduleRelatedStore(
+    (state) => state.selectedTheater
+  );
+  // ------------------------- Access store
+  const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
+  const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
+  const setSelectedMovie = useScheduleRelatedStore(
+    (state) => state.setSelectedMovie
+  );
+  const shouldResetMovie = useScheduleRelatedStore(
+    (state) => state.shouldResetMovie
+  );
+  const setShouldResetMovie = useScheduleRelatedStore(
+    (state) => state.setShouldResetMovie
+  );
+  // ------------------------- Access store
+
   const weekday = new Date(selectedDate).toLocaleDateString("ko-KR", {
     weekday: "short",
   });
+
+  useEffect(() => {
+    setSelectedMovie(selectedMovie);
+
+    if (shouldResetMovie) {
+      setSelectedMovie(null);
+    }
+    setShouldResetMovie(true); // keep default behavior for next time
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="reservation-page-main">

@@ -39,6 +39,7 @@
         padding: 12px 16px;
         color: white;
         border-color: white;
+        background-color: transparent;
         opacity: 0.8;
         transition: 0.2s;
         cursor: pointer;
@@ -52,14 +53,17 @@
     }
   }
   .bottom-info {
-    color: rgb(194, 199, 208);
     .title-info {
       display: flex;
       justify-content: center;
       align-items: center;
+      font-weight: 500;
       img {
         margin-right: 8px;
       }
+      /* .grade-badge {
+        margin-right: 8px;
+      } */
     }
     .sub-info {
       font-size: 16px;

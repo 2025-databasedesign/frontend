@@ -5,21 +5,47 @@ import { FullSchedule } from "../../types/ScheduleRelatedType";
 import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
+import { EMPTY_PEOPLE_COUNT } from "../../utils/constant";
+// import Grade from "../Grade/Grade";
+
+// const parseGradeNumber = (gradePath: string) => {
+//   const match = gradePath.match(/grade_(\d+)\.png$/);
+//   return match ? match[1] : "등급 정보 없음";
+// };
 
 const ScheduleSelectArea: React.FC = () => {
   const navigate = useNavigate();
   const [fullSchedule, setFullSchedule] = useState<FullSchedule[]>([]);
-  const {
-    selectedDate,
-    selectedTheater,
-    selectedMovie,
-    setSelectedTheater,
-    setSelectedMovie,
-    setSelectedGrade,
-    setSelectedFormat,
-    setSelectedScreenTime,
-  } = useScheduleRelatedStore();
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  // ------------------------- Access store
+  const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
+  const selectedTheater = useScheduleRelatedStore(
+    (state) => state.selectedTheater
+  );
+  const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
+
+  const setSelectedTheater = useScheduleRelatedStore(
+    (state) => state.setSelectedTheater
+  );
+  const setSelectedMovie = useScheduleRelatedStore(
+    (state) => state.setSelectedMovie
+  );
+  const setSelectedGrade = useScheduleRelatedStore(
+    (state) => state.setSelectedGrade
+  );
+  const setSelectedFormat = useScheduleRelatedStore(
+    (state) => state.setSelectedFormat
+  );
+  const setSelectedScreenTime = useScheduleRelatedStore(
+    (state) => state.setSelectedScreenTime
+  );
+  const setSelectedPeople = useScheduleRelatedStore(
+    (state) => state.setSelectedPeople
+  );
+  const setSelectedSeats = useScheduleRelatedStore(
+    (state) => state.setSelectedSeats
+  );
+  // ------------------------- Access store
 
   //find schedule with selected date
   const scheduleInfo =
@@ -48,6 +74,8 @@ const ScheduleSelectArea: React.FC = () => {
     setSelectedMovie(movieName);
     setSelectedGrade(grade);
     setSelectedFormat(format);
+    setSelectedPeople(EMPTY_PEOPLE_COUNT);
+    setSelectedSeats([]);
     navigate(AppRoutes.SEAT_SELECTION_PAGE);
   }
 

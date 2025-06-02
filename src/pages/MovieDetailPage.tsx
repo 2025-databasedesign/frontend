@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "./MovieDetailPage.css";
+import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
+import { AppRoutes } from "../routes/AppRoutes";
 
 type Movie = {
   movieName: string;
@@ -17,6 +19,13 @@ type Movie = {
 export default function MovieDetailPage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const navigate = useNavigate();
+  const setSelectedMovie = useScheduleRelatedStore(
+    (state) => state.setSelectedMovie
+  );
+  const setShouldResetMovie = useScheduleRelatedStore(
+    (state) => state.setShouldResetMovie
+  );
 
   useEffect(() => {
     fetch("/src/assets/cinema_info/mock_cinema.json")
@@ -26,6 +35,12 @@ export default function MovieDetailPage() {
         setMovie(matched ?? null);
       });
   }, [movieId]);
+
+  function handleReservationClick(movieName: string) {
+    setSelectedMovie(movieName);
+    setShouldResetMovie(false); // prevent reset on mount
+    navigate(AppRoutes.RESERVATION_PAGE);
+  }
 
   if (!movie) {
     return (
@@ -70,7 +85,7 @@ export default function MovieDetailPage() {
               장르: 액션 / 개봉: {movie.releaseDate ?? "정보 없음"}
             </div>
             <div className="detail-buttons">
-              <button className="reserve" disabled={!movie.isReservable}>
+              <button className="reserve" disabled={!movie.isReservable} onClick={() => handleReservationClick(movie.movieName)}>
                 예매하기
               </button>
             </div>

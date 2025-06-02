@@ -1,0 +1,33 @@
+.grade-badge {
+  display: inline-block;
+  padding: 0px 4px;
+  margin-left: 12px;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  font-family: fantasy, sans-serif;
+}
+
+.grade-19 {
+  background-color: #e74c3c; /* red */
+}
+
+.grade-15 {
+  background-color: #e67e22; /* orange */
+}
+
+.grade-12 {
+  background-color: #f1c40f; /* yellow */
+  color: black;
+}
+
+.grade-all {
+  background-color: #2ecc71; /* green */
+  padding: 3px 4px;
+  letter-spacing: -1px;
+  font-size: 16px;
+}
+
+.grade-default {
+  background-color: #bdc3c7; /* gray */
+}

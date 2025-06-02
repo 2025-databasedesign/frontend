@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AppRoutes } from "./AppRoutes";
-import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import MovieListPage from "../pages/MovieListPage";
@@ -11,6 +10,8 @@ import SchedulePage from "../pages/SchedulePage/SchedulePage";
 import ReservationPage from "../pages/ReservationPage/ReservationPage";
 import SeatSelectionPage from "../pages/SeatSelectionPage/SeatSelectionPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
+import HomePage from "../pages/HomePage/HomePage";
+import ProtectedRoute from "./ProtectedRoute";
 
 const MyRoute: React.FC = () => {
   return (
@@ -33,8 +34,22 @@ const MyRoute: React.FC = () => {
           path={AppRoutes.RESERVATION_PAGE}
           element={<ReservationPage />}
         />
-        <Route path={AppRoutes.SEAT_SELECTION_PAGE} element={<SeatSelectionPage />} />
-        <Route path={AppRoutes.PAYMENT_PAGE} element={<PaymentPage />} />
+        <Route
+          path={AppRoutes.SEAT_SELECTION_PAGE}
+          element={
+            <ProtectedRoute>
+              <SeatSelectionPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={AppRoutes.PAYMENT_PAGE}
+          element={
+            <ProtectedRoute>
+              <PaymentPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

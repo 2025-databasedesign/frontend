@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SeatSelectionPage.css";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import TheaterSeatMap from "../../components/TheaterList/TheaterSeatMap";
@@ -6,34 +6,51 @@ import theaters from "../../assets/theater_info/mock_seat.json";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
+import minusIcon from "../../assets/image/minus-icon.png";
+import plusIcon from "../../assets/image/plus-icon.png";
+import { getTotalPrice } from "../../utils/paymentUtils";
+import { extractGradeValue } from "../../utils/scheduleRelatedUtils";
 
 const SeatSelectionPage: React.FC = () => {
   const navigate = useNavigate();
+  const [target, setTarget] = useState("");
+  // ------------------------- Access store
+  const selectedDate = useScheduleRelatedStore((state) => state.selectedDate);
+  const selectedTheater = useScheduleRelatedStore(
+    (state) => state.selectedTheater
+  );
+  const selectedMovie = useScheduleRelatedStore((state) => state.selectedMovie);
+  const selectedGrade = useScheduleRelatedStore((state) => state.selectedGrade);
+  const selectedFormat = useScheduleRelatedStore(
+    (state) => state.selectedFormat
+  );
+  const selectedScreenTime = useScheduleRelatedStore(
+    (state) => state.selectedScreenTime
+  );
+  const selectedPeople = useScheduleRelatedStore(
+    (state) => state.selectedPeople
+  );
+  const setSelectedPeople = useScheduleRelatedStore(
+    (state) => state.setSelectedPeople
+  );
+  const selectedSeats = useScheduleRelatedStore((state) => state.selectedSeats);
+  const setSelectedSeats = useScheduleRelatedStore(
+    (state) => state.setSelectedSeats
+  );
+  // ------------------------- Access store
 
-  const {
-    selectedDate,
-    selectedTheater,
-    selectedMovie,
-    selectedGrade,
-    selectedFormat,
-    selectedScreenTime,
-    selectedPeople,
-    setSelectedPeople,
-    selectedSeats,
-    setSelectedSeats,
-  } = useScheduleRelatedStore();
+  const totalPeople =
+    selectedPeople.adult +
+    selectedPeople.teen +
+    selectedPeople.senior +
+    selectedPeople.kid +
+    selectedPeople.disabled;
 
   //delta 1: plus, -1: minus
   function handleCount(target: keyof typeof selectedPeople, delta: 1 | -1) {
     const current = selectedPeople[target];
-    const total =
-      selectedPeople.adult +
-      selectedPeople.teen +
-      selectedPeople.senior +
-      selectedPeople.kid +
-      selectedPeople.disabled;
 
-    if (delta === 1 && total >= 8) return;
+    if (delta === 1 && totalPeople >= 8) return;
     if (delta === -1 && current === 0) return;
 
     const newPeople = {
@@ -57,13 +74,6 @@ const SeatSelectionPage: React.FC = () => {
   }
 
   function handleNavigatePayment() {
-    const totalPeople =
-      selectedPeople.adult +
-      selectedPeople.teen +
-      selectedPeople.senior +
-      selectedPeople.kid +
-      selectedPeople.disabled;
-    
     if (
       selectedDate &&
       selectedTheater &&
@@ -76,6 +86,50 @@ const SeatSelectionPage: React.FC = () => {
     }
   }
 
+  const totalPrice = getTotalPrice(selectedPeople).toLocaleString();
+
+  const PEOPLE_OPTIONS: {
+    key: keyof typeof selectedPeople;
+    label: string;
+    className: string;
+  }[] = [
+    { key: "adult", label: "성인", className: "adult" },
+    { key: "teen", label: "청소년", className: "teen" },
+    { key: "senior", label: "경로인", className: "senior" },
+    { key: "kid", label: "어린이", className: "kid" },
+    { key: "disabled", label: "장애인", className: "disabled" },
+  ];
+
+  const filteredOptions = PEOPLE_OPTIONS.filter(({ key }) => {
+    const gradeValue = extractGradeValue(selectedGrade ?? undefined);
+    // If movie is 19+, remove teen and kid
+    if (gradeValue === "19" && (key === "teen" || key === "kid")) return false;
+    if (gradeValue === "15" && key === "kid") return false;
+    return true;
+  });
+
+  function handleMessage() {
+    if (target == "teen") {
+      return "청소년 요금은 4세 이상 ~ 19세 미만의 청소년에 한해 적용됩니다.";
+    } else if (target == "senior") {
+      return "반드시 본인의 신분증(65세 이상)을 소지하신 후 입장해주세요. 미지참 시 입장이 제한됩니다.";
+    } else if (target == "disabled"){
+      return "반드시 복지카드를 소지하신 후 입장해주세요. 미지참 시 입장이 제한됩니다. (장애의 정도가 심한 장애인: 동반 1인 포함 할인 가능/ 장애 정도가 심하지 않은 장애인: 본인에 한하여 할인 적용)";
+    } else {
+      return "";
+    }
+  }
+
+  useEffect(() => {
+    if (!selectedMovie || !selectedScreenTime) {
+      console.log("Before alert2");
+      alert("Please select a movie and schedule first.");
+      console.log("After alert2");
+      navigate(AppRoutes.RESERVATION_PAGE, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="seat-select-page">
       <div className="navbar-wrapper">
@@ -84,6 +138,9 @@ const SeatSelectionPage: React.FC = () => {
       <div className="seat-select-main">
         <div className="top" style={{ textAlign: "center" }}>
           인원/좌석 선택
+          <span className="max-people" style={{ display: "flex" }}>
+            인원은 최대 8명까지 선택 가능합니다
+          </span>
         </div>
         <div className="bottom">
           <div className="select-people-wrap">
@@ -122,137 +179,49 @@ const SeatSelectionPage: React.FC = () => {
               </div>
             </div>
             <div className="count-wrap">
-              <div className="adult">
-                <span className="title">성인</span>
-                <div className="count-area">
-                  <button
-                    className="minus"
-                    onClick={() => handleCount("adult", -1)}
-                  >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
+              {filteredOptions.map(({ key, label, className }) => (
+                <div
+                  className={className}
+                  onClick={() => {
+                    setTarget(key);
+                  }}
+                  key={key}
+                >
+                  <span className="title">{label}</span>
+                  <div className="count-area">
+                    <button
                       className="minus"
-                    />
-                  </button>
-                  <div className="count">{selectedPeople.adult}</div>
-                  <button
-                    className="plus"
-                    onClick={() => handleCount("adult", 1)}
-                  >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
+                      onClick={() => handleCount(key, -1)}
+                    >
+                      <img
+                        src={minusIcon}
+                        alt="decrease count"
+                        className="minus"
+                      />
+                    </button>
+                    <div className="count">{selectedPeople[key]}</div>
+                    <button
                       className="plus"
-                    />
-                  </button>
+                      onClick={() => handleCount(key, 1)}
+                    >
+                      <img
+                        src={plusIcon}
+                        alt="increase count"
+                        className="plus"
+                      />
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="teen">
-                <span className="title">청소년</span>
-                <div className="count-area">
-                  <button
-                    className="minus"
-                    onClick={() => handleCount("teen", -1)}
-                  >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
-                  </button>
-                  <div className="count">{selectedPeople.teen}</div>
-                  <button
-                    className="plus"
-                    onClick={() => handleCount("teen", 1)}
-                  >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
-                  </button>
-                </div>
-              </div>
-              <div className="senior">
-                <span className="title">경로인</span>
-                <div className="count-area">
-                  <button
-                    className="minus"
-                    onClick={() => handleCount("senior", -1)}
-                  >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
-                  </button>
-                  <div className="count">{selectedPeople.senior}</div>
-                  <button
-                    className="plus"
-                    onClick={() => handleCount("senior", 1)}
-                  >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
-                  </button>
-                </div>
-              </div>
-              <div className="kid">
-                <span className="title">어린이</span>
-                <div className="count-area">
-                  <button
-                    className="minus"
-                    onClick={() => handleCount("kid", -1)}
-                  >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
-                  </button>
-                  <div className="count">{selectedPeople.kid}</div>
-                  <button
-                    className="plus"
-                    onClick={() => handleCount("kid", 1)}
-                  >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
-                  </button>
-                </div>
-              </div>
-              <div className="disabled">
-                <span className="title">장애인</span>
-                <div className="count-area">
-                  <button
-                    className="minus"
-                    onClick={() => handleCount("disabled", -1)}
-                  >
-                    <img
-                      src="/src/assets/minus-icon.png"
-                      alt=""
-                      className="minus"
-                    />
-                  </button>
-                  <div className="count">{selectedPeople.disabled}</div>
-                  <button
-                    className="plus"
-                    onClick={() => handleCount("disabled", 1)}
-                  >
-                    <img
-                      src="/src/assets/plus-icon.png"
-                      alt=""
-                      className="plus"
-                    />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
+          </div>
+          <div className="message">
+            <span>
+              인원을 선택하고 좌석 선택 후 하단에 결제하기 버튼을 클릭하세요
+            </span>
+            <span className="target-message">
+              {handleMessage()}
+            </span>
           </div>
           <div className="seat-view">
             <TheaterSeatMap
@@ -266,7 +235,10 @@ const SeatSelectionPage: React.FC = () => {
               <span className="total-text">
                 총 합계{" "}
                 <span className="total-money">
-                  <span className="total-number">0</span>원
+                  <span className="total-number">
+                    {selectedSeats.length == totalPeople ? totalPrice : 0}
+                  </span>
+                  원
                 </span>
               </span>
             </div>

@@ -26,11 +26,14 @@ export default function TheaterListPage() {
             const isOpen = openTheaterId === theater.id;
             return (
               <div key={theater.id} className="theater-box">
-                <div className="theater-header">
+                <div
+                  className="theater-header"
+                  onClick={() => toggleTheater(theater.id)}
+                >
                   <h2>{theater.name}</h2>
                   <button
                     className="toggle-btn-icon"
-                    onClick={() => toggleTheater(theater.id)}
+                    // onClick={() => toggleTheater(theater.id)}
                   >
                     {isOpen ? "−" : "+"}
                   </button>

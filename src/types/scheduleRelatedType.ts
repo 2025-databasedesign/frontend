@@ -28,3 +28,5 @@ export type PosterInfoProps = {
   isReservable: boolean;
   rank: number | null;
 };
+
+
