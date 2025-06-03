@@ -122,9 +122,7 @@ const SeatSelectionPage: React.FC = () => {
 
   useEffect(() => {
     if (!selectedMovie || !selectedScreenTime) {
-      console.log("Before alert2");
-      alert("Please select a movie and schedule first.");
-      console.log("After alert2");
+      alert("스케쥴 먼저 선택해주세요");
       navigate(AppRoutes.RESERVATION_PAGE, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

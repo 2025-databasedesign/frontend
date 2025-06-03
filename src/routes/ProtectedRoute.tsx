@@ -12,7 +12,7 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const location = useLocation();
 
   if(!isValid) {
-    alert("Please login first.");
+    alert("로그인 먼저해주세요.");
   }
 
   return !isValid ? (

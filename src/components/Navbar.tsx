@@ -3,21 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes/AppRoutes";
 import "./Navbar.css";
 import logoImage from "../assets/image/logo-transparent-bg.png";
-import { useCinemaRelatedStore } from "../stores/CinemaRelatedStore";
 import { isTokenValid, logout } from "../utils/authUtils";
 import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
-  const setIsLogin = useCinemaRelatedStore((state) => state.setIsLogin);
 
   function handleLogout() {
     // Clear token from localStorage
     logout();
     // Reset Zustand booking state (in memory)
     useScheduleRelatedStore.getState().resetState();
-    // Update login state in auth store
-    setIsLogin(false);
 
     alert("로그아웃되었습니다.");
     navigate(AppRoutes.HOME);
@@ -81,7 +77,7 @@ const Navbar: React.FC = () => {
               <button onClick={handleLogout}>로그아웃</button>
             </li>
             <li>
-              <button>사용자 정보</button>
+              <button>마이</button>
             </li>
           </>
         ) : (

@@ -41,14 +41,12 @@ type CinemaRelatedStore = {
   theaterList: TheaterInfo[];
   setTheaterList: (list: TheaterInfo[]) => void;
 
-  isLogin: boolean;
-  setIsLogin: (login: boolean) => void;
 };
 
 export const useCinemaRelatedStore = create<CinemaRelatedStore>()(
   persist(
     (set) => ({
-      scheduleViewType: "theater",
+      scheduleViewType: "movie",
       setScheduleViewType: (viewType) => set({ scheduleViewType: viewType }),
 
       movieList: [],
@@ -57,15 +55,12 @@ export const useCinemaRelatedStore = create<CinemaRelatedStore>()(
       theaterList: [],
       setTheaterList: (list) => set({ theaterList: list }),
 
-      isLogin: false,
-      setIsLogin: (login) => set({ isLogin: login }),
     }),
     {
       name: "cinema-storage",
       partialize: (state) => ({
         movieList: state.movieList,
         theaterList: state.theaterList,
-        isLogin: state.isLogin,
       }),
     }
   )

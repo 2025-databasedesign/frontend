@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
-import { useCinemaRelatedStore } from "../stores/CinemaRelatedStore";
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const setIsLogin = useCinemaRelatedStore((state) => state.setIsLogin);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from || "/";
@@ -39,7 +37,6 @@ const LoginPage: React.FC = () => {
                 localStorage.setItem("expires_at", String(expiresAt));
                 
                 alert("로그인 성공!");
-                setIsLogin(true);
                 navigate(from, { replace: true });
             } else {
                 const errorData = await response.json();
