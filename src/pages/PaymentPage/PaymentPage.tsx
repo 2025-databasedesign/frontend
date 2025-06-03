@@ -11,6 +11,8 @@ import {
 } from "../../utils/paymentUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
+import { usePaymentRelatedStore } from "../../stores/PaymentRelatedStore";
+import { isTokenValid } from "../../utils/authUtils";
 
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -31,6 +33,13 @@ const PaymentPage: React.FC = () => {
     (state) => state.selectedPeople
   );
   const selectedSeats = useScheduleRelatedStore((state) => state.selectedSeats);
+
+  const payMethod = usePaymentRelatedStore((state) => state.payMethod);
+  const setPayMethod = usePaymentRelatedStore((state) => state.setPayMethod);
+  
+  const setPaymentAmount = usePaymentRelatedStore((state) => state.setPaymentAmount);
+  const setHasPaid = usePaymentRelatedStore((state) => state.setHasPaid);
+
   // ------------------------- Access store
 
   const [discount, setDiscount] = useState("");
@@ -41,12 +50,25 @@ const PaymentPage: React.FC = () => {
   const peoplePrices = getPeoplePrices(selectedPeople);
   const totalPrice = getTotalPrice(selectedPeople);
 
+  function handlePayment() {
+    if (isTokenValid()) {
+      setPaymentAmount((totalPrice - discountPrice));
+      setHasPaid(true);
+    } else {
+      localStorage.removeItem("schedule-storage");
+    }
+    navigate(AppRoutes.TICKET_PAGE);
+  }
+
   useEffect(() => {
-    if (selectedSeats.length === 0) {
-      alert("Please select seats first.");
+    if (!selectedScreenTime) {
+      alert("스케쥴 먼저 선택하세요.");
+      navigate(AppRoutes.RESERVATION_PAGE, { replace: true });
+    } else if (selectedSeats.length === 0) {
+      alert("좌석 먼저 선택하세요.");
       navigate(AppRoutes.SEAT_SELECTION_PAGE, { replace: true });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -113,9 +135,30 @@ const PaymentPage: React.FC = () => {
             <div className="payment-method-area">
               <div className="area-label">최종 결제수단</div>
               <div className="payment-method-selection">
-                <div>신용/체크카드</div>
-                <div>간편결제</div>
-                <div>휴대폰 결제</div>
+                <div
+                  onClick={() => setPayMethod("card")}
+                  className={`card ${
+                    payMethod == "card" ? "selected-method" : ""
+                  }`}
+                >
+                  신용/체크카드
+                </div>
+                <div
+                  onClick={() => setPayMethod("easy")}
+                  className={`easy ${
+                    payMethod == "easy" ? "selected-method" : ""
+                  }`}
+                >
+                  간편결제
+                </div>
+                <div
+                  onClick={() => setPayMethod("phone")}
+                  className={`phone ${
+                    payMethod == "phone" ? "selected-method" : ""
+                  }`}
+                >
+                  휴대폰 결제
+                </div>
               </div>
             </div>
           </div>
@@ -146,7 +189,7 @@ const PaymentPage: React.FC = () => {
                   <span>{(totalPrice - discountPrice).toLocaleString()}원</span>
                 </div>
               </div>
-              <button className="payment-button">결제하기</button>
+              <button className="payment-button" onClick={() => handlePayment()}>결제하기</button>
             </div>
           </div>
         </div>

@@ -37,9 +37,6 @@ type ScheduleRelatedStore = {
   selectedSeats: number[][];
   setSelectedSeats: (seats: number[][]) => void;
 
-  hasPaid: boolean;
-  setHasPaid: (paid: boolean) => void;
-
   resetState: () => void;
 };
 
@@ -80,9 +77,6 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
       selectedSeats: [],
       setSelectedSeats: (seats) => set({ selectedSeats: seats }),
 
-      hasPaid: false,
-      setHasPaid: (paid) => set({ hasPaid: paid }),
-
 
       resetState: () =>
         set(() => ({
@@ -101,7 +95,6 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
             disabled: 0,
           },
           selectedSeats: [],
-          hasPaid: false,
         })),
     }),
     {
@@ -115,7 +108,6 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
         selectedScreenTime: state.selectedScreenTime,
         selectedPeople: state.selectedPeople,
         selectedSeats: state.selectedSeats,
-        hasPaid: state.hasPaid,
       }),
     }
   )

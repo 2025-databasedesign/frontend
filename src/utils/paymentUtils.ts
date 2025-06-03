@@ -21,6 +21,14 @@ export const getSeatDisplay = (seats: number[][]): string => {
     .join(", ");
 };
 
+export const getSeatSeparately= (seats: number[][]): string[] => {
+  const getRowLabel = (row: number) => String.fromCharCode(64 + row); // 1 -> A, 2 -> B ...
+
+    return [...seats]
+    .sort((a, b) => a[0] - b[0] || a[1] - b[1]) // sort by row, then col
+    .map(([row, col]) => `${getRowLabel(row)}${col}`);
+};
+
 // 각 인원별 가격 리스트 계산
 export const getPeoplePrices = (people: PeopleCount) => {
   return Object.entries(people)
@@ -36,3 +44,15 @@ export const getTotalPrice = (people: PeopleCount): number => {
   const prices = getPeoplePrices(people);
   return prices.reduce((sum, p) => sum + p.price, 0);
 };
+
+export const getPaymentMethod = (method:string | null) => {
+  if(method == "card") {
+    return "신용/체크카드";
+  } else if(method == "easy") {
+    return "간편결제";
+  } else if(method == "phone") {
+    return "휴대폰 결제";
+  } else {
+    return "알 수 없음";
+  }
+}

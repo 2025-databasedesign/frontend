@@ -97,7 +97,15 @@ export function getWeekday(dateStr: string) {
   return weekday;
 }
 
-export const extractGradeValue = (grade: string | undefined): string => {
+export function getMonthAndDay(dateStr: string) {
+  const date = new Date(dateStr);
+
+const month = String(date.getMonth() + 1).padStart(2, "0"); // "06"
+const day = String(date.getDate()).padStart(2, "0");        // "03"
+  return `${month}/${day}`;
+}
+
+export const extractGradeValue = (grade: string | undefined | null): string => {
   const matched = grade?.match(/\d+/)?.[0];
   return matched || "all";
 };
