@@ -14,4 +14,7 @@ export function logout() {
   localStorage.removeItem("access_token");
   localStorage.removeItem("expires_at");
   localStorage.removeItem("schedule-storage");
+  localStorage.removeItem("payment-storage");
+  //consider later after connect with api
+  // localStorage.removeItem("history-storage");
 }

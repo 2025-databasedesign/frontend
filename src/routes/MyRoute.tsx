@@ -13,6 +13,7 @@ import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import HomePage from "../pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import TicketPage from "../pages/TicketPage/TicketPage";
+import MyPage from "../pages/MyPage/MyPage";
 
 const MyRoute: React.FC = () => {
   return (
@@ -56,6 +57,14 @@ const MyRoute: React.FC = () => {
           element={
             <ProtectedRoute>
               <TicketPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={AppRoutes.MY_PAGE}
+          element={
+            <ProtectedRoute>
+              <MyPage />
             </ProtectedRoute>
           }
         />

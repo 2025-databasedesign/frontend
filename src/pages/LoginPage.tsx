@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
+import { isTokenValid } from "../utils/authUtils";
+import { AppRoutes } from "../routes/AppRoutes";
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -47,6 +49,12 @@ const LoginPage: React.FC = () => {
             alert("서버 오류로 로그인에 실패했습니다.");
         }
     };
+
+    useEffect(() => {
+        if(isTokenValid()) {
+            navigate(AppRoutes.HOME);
+        }
+    })
 
     return (
         <main className="login-main">

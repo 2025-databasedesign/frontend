@@ -74,6 +74,9 @@ const SeatSelectionPage: React.FC = () => {
   }
 
   function handleNavigatePayment() {
+    if(selectedSeats.length === 0) {
+      alert("좌석을 골라주세요.");
+    }
     if (
       selectedDate &&
       selectedTheater &&

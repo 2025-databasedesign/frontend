@@ -77,7 +77,10 @@ const Navbar: React.FC = () => {
               <button onClick={handleLogout}>로그아웃</button>
             </li>
             <li>
-              <button>마이</button>
+              <button onClick={() => navigate(AppRoutes.MY_PAGE)} className="my-button">
+                {/* 마이 */}
+                <img src="/src/assets/image/my-icon.png" alt="my page" className="my-icon"/>
+              </button>
             </li>
           </>
         ) : (
