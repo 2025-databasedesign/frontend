@@ -5,16 +5,16 @@
   min-height: 90dvh;
   background: linear-gradient(
     90deg,
-    rgba(58, 52, 110, 1) 15%,
-    rgba(23, 44, 135, 1) 43%,
-    rgba(57, 133, 163, 1) 100%
+    #3a346e 15%,
+    #172c87 43%,
+    #3985a3 100%
   );
 
   .my-page-wrapper {
     width: 800px;
     background-color: rgb(242 244 245);
     display: grid;
-    /* border-radius: 12px; */
+    border-radius: 8px;
     padding: 1rem;
 
     .feature-area {
@@ -22,16 +22,47 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         text-align: center;
-        >* {
+        > * {
           background-color: transparent;
           color: black;
           border-radius: unset;
         }
 
         .selected-ft {
-          background-color:cadetblue;
+          background-color: cadetblue;
+          color: white;
         }
       }
     }
+  }
+}
+.feature-content {
+  min-height: 680px;
+  min-height: calc(100dvh - 10dvh - 65px - 32px - 21px - 20px);
+}
+
+@media screen and (max-width: 1300px) {
+  .my-page-main {
+    .my-page-wrapper {
+      padding: 1rem;
+      .feature-area {
+        .feature-wrapper {
+          > * {
+            color: black;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 12px;
+          }
+  
+          .selected-ft {
+            background-color: cadetblue;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  .feature-content {
+    min-height: calc(100dvh - 10dvh - 65px - 32px - 1rem - 8px);
   }
 }

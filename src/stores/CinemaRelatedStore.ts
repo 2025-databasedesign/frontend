@@ -23,12 +23,12 @@ type Seat = {
   theater: string;
 };
 
-type TheaterInfo = {
+export type TheaterInfo = {
   theaterId: number;
   theaterName: string;
   totalSeats: number;
-  screenType: string;
-  seats: Seat[] | null;
+  screenTypes: string[];
+  seats: Seat[];
 };
 
 type CinemaRelatedStore = {

@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AppRoutes } from "./AppRoutes";
-import LoginPage from "../pages/LoginPage";
-import SignUpPage from "../pages/SignUpPage";
+import LoginPage from "../pages/Login/LoginPage";
+import SignUpPage from "../pages/Signup/SignUpPage";
 import MovieListPage from "../pages/MovieListPage";
 import MovieDetailPage from "../pages/MovieDetailPage";
 import TheaterListPage from "../pages/TheaterListPage";
@@ -14,6 +14,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import TicketPage from "../pages/TicketPage/TicketPage";
 import MyPage from "../pages/MyPage/MyPage";
+
 
 const MyRoute: React.FC = () => {
   return (

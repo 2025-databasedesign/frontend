@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ScheduleSelectArea.css";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
-import { FullSchedule } from "../../types/ScheduleRelatedType";
+import { FullSchedule } from "../../types/scheduleRelatedType";
 import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";

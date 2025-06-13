@@ -24,7 +24,9 @@
       }
     }
     .history-main-wrapper {
-      max-height: calc(100dvh - 10dvh - 245px);
+      max-height: calc(
+        100dvh - 10dvh - 65px - 32px - 21px - 8px - 51px - 16px - 52px
+      );
       overflow: auto;
       .history-main {
         border: 1px solid gray;
@@ -53,11 +55,15 @@
                 display: flex;
                 align-items: center;
                 margin: unset;
+                cursor: pointer;
 
                 img {
                   border-radius: 4px;
                   margin-right: 4px;
                 }
+              }
+              .movie-title:hover {
+                color: var(--primary-color);
               }
               .theater-format {
                 font-weight: 500;
@@ -120,4 +126,16 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 1300px) {
+  .payment-history-main {
+  .history-wrapper {
+    .history-main-wrapper {
+      max-height: calc(
+        100dvh - 10dvh - 65px - 32px - 21px - 8px - 51px - 16px - 32px
+      );
+    }
+  }
+}
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
 import leftArrow from "../../assets/image/arrow_left_white.png";
 import rightArrow from "../../assets/image/arrow_right_white.png";
-import { PosterInfoProps } from "../../types/ScheduleRelatedType";
+import { PosterInfoProps } from "../../types/scheduleRelatedType";
 import Navbar from "../../components/Navbar";
 import PosterInfo from "../../components/PosterInfo";
 // import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
@@ -39,6 +39,12 @@ const HomePage: React.FC = () => {
       console.log("error: ", error);
     }
   };
+
+  // const getUserInfo = async () => {
+  //   try {
+  //     const response = await fetch("http://54.180.117.246/api/users/")
+  //   }
+  // }
 
   useEffect(() => {
     getMovieInfo();

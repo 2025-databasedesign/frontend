@@ -1,5 +1,10 @@
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .logo {
-  width: 132px;
+  width: 140px;
   cursor: pointer;
 }
 .nav-bar {
@@ -115,4 +120,11 @@
 .my-button:hover .my-icon {
   background-color: unset;
   filter: invert(37%) sepia(10%) saturate(5366%) hue-rotate(178deg) brightness(91%) contrast(87%);
+}
+
+/*desktop*/
+@media screen and (max-width: 1300px) {
+  .logo {
+    width: 116px;
+  }
 }

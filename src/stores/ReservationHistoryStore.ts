@@ -14,6 +14,7 @@ export type ReservationType = {
   seats: number[][];
   payMethod: string | null;
   paymentAmount: number;
+  reservationDate: string;
 };
 
 type CancelType = {
@@ -26,6 +27,7 @@ type CancelType = {
   screenTime: [string, string] | null;
   selectedPeople: PeopleCount;
   seats: number[][];
+  reservationDate: string | null;
   cancelDate: string;
   cancelPayMethod: string | null;
   cancelPayAmount: number;

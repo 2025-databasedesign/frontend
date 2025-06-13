@@ -21,12 +21,14 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="nav-bar container">
-      <img
-        src={logoImage}
-        alt="cinema logo"
-        onClick={() => navigate(AppRoutes.HOME)}
-        className="logo"
-      />
+      <span className="logo-wrapper">
+        <img
+          src={logoImage}
+          alt="cinema logo"
+          onClick={() => navigate(AppRoutes.HOME)}
+          className="logo"
+        />
+      </span>
       <ul className="center-menu">
         <li className="li-center-menu">
           <div className="middle-navigation">

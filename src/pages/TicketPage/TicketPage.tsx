@@ -41,6 +41,7 @@ const TicketPage: React.FC = () => {
   const selectedPeople = useScheduleRelatedStore(
     (state) => state.selectedPeople
   );
+  const reservationTime = useScheduleRelatedStore((state) => state.reservationTime);
   // ------------------------- Access store
 
   const seatLabels = getSeatSeparately(selectedSeats);
@@ -48,7 +49,7 @@ const TicketPage: React.FC = () => {
 
   function handleCancel() {
     const cancelReservation = {
-      id: selectedDate + selectedScreenTime + selectedSeats,
+      id: selectedDate + selectedScreenTime + selectedSeats + getTodayDay(),
       date: selectedDate,
       theater: selectedTheater,
       movie: selectedMovie,
@@ -57,6 +58,7 @@ const TicketPage: React.FC = () => {
       screenTime: selectedScreenTime,
       selectedPeople: selectedPeople,
       seats: selectedSeats,
+      reservationDate: reservationTime,
       cancelDate: getTodayDay(),
       cancelPayMethod: payMethod,
       cancelPayAmount: paymentAmount,

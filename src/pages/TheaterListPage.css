@@ -43,6 +43,7 @@
 
 .toggle-btn-icon:hover {
   color: #007bff;
+  background-color: unset;
   transform: scale(1.2);
 }
 

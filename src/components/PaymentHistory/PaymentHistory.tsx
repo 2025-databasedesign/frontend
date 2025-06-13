@@ -30,7 +30,11 @@ const PaymentHistory: React.FC = () => {
   function handleCancel(reservation: ReservationType) {
     if (isTokenValid()) {
       const cancelReservation = {
-        id: reservation.date + reservation.screenTime + reservation.seats,
+        id:
+          reservation.date +
+          reservation.screenTime +
+          reservation.seats +
+          getTodayDay(),
         date: reservation.date,
         theater: reservation.theater,
         movie: reservation.movie,
@@ -40,6 +44,7 @@ const PaymentHistory: React.FC = () => {
         selectedPeople: reservation.selectedPeople,
         seats: reservation.seats,
         cancelDate: getTodayDay(),
+        reservationDate: reservation.reservationDate,
         cancelPayMethod: reservation.payMethod,
         cancelPayAmount: reservation.paymentAmount,
       };
@@ -51,7 +56,7 @@ const PaymentHistory: React.FC = () => {
             .addCancelHistory(cancelReservation);
           useReservationHistoryStore
             .getState()
-            .deleteReservation(cancelReservation.id);
+            .deleteReservation(reservation.id);
           usePaymentRelatedStore.getState().resetState();
           useScheduleRelatedStore.getState().resetState();
           alert("취소 되었습니다.");
@@ -61,6 +66,11 @@ const PaymentHistory: React.FC = () => {
       alert("다시 로그인한 후 진행해주세요.");
       navigate(AppRoutes.LOGIN_PAGE);
     }
+  }
+
+  function handleNavigateReview(movie: string) {
+    const encodedName = encodeURIComponent(movie); // URL에 안전하게 포함되도록 인코딩
+    navigate(`/movies/${encodedName}`);
   }
 
   return (
@@ -87,7 +97,14 @@ const PaymentHistory: React.FC = () => {
                   </div>
                   <div className="top-right">
                     <div className="schedule-info">
-                      <div className="movie-title">
+                      <div
+                        className="movie-title"
+                        onClick={() => {
+                          if (reservation.movie != null) {
+                            handleNavigateReview(reservation.movie);
+                          }
+                        }}
+                      >
                         <img src={`${reservation.grade}`} />
                         {reservation.movie}
                       </div>
@@ -120,7 +137,16 @@ const PaymentHistory: React.FC = () => {
                   </div>
                 </div>
                 <div className="bottom">
-                  <button className="bottom-left">관람평쓰기</button>
+                  <button
+                    className="bottom-left"
+                    onClick={() => {
+                      if (reservation.movie != null) {
+                        handleNavigateReview(reservation.movie);
+                      }
+                    }}
+                  >
+                    관람평쓰기
+                  </button>
                   <button
                     className="bottom-middle-cancel"
                     onClick={() => handleCancel(reservation)}

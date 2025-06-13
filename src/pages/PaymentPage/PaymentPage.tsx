@@ -34,6 +34,7 @@ const PaymentPage: React.FC = () => {
     (state) => state.selectedPeople
   );
   const selectedSeats = useScheduleRelatedStore((state) => state.selectedSeats);
+  const setReservationTime = useScheduleRelatedStore((state) => state.setReservationTime);
 
   const payMethod = usePaymentRelatedStore((state) => state.payMethod);
   const setPayMethod = usePaymentRelatedStore((state) => state.setPayMethod);
@@ -55,12 +56,17 @@ const PaymentPage: React.FC = () => {
   const finalAmount = totalPrice - discountPrice;
 
   function handlePayment() {
-    if (isTokenValid()) {
+    if(!payMethod) {
+      alert("결제 먼저 해주세요.");
+    }
+    if (isTokenValid() && payMethod) {
+      const dateTime = new Date().toISOString();
       setPaymentAmount(finalAmount);
       setHasPaid(true);
+      setReservationTime(dateTime);
 
       const newReservation = {
-        id: selectedDate + selectedScreenTime + selectedSeats,
+        id: selectedDate + selectedScreenTime + selectedSeats + dateTime,
         date: selectedDate,
         theater: selectedTheater,
         movie: selectedMovie,
@@ -71,6 +77,7 @@ const PaymentPage: React.FC = () => {
         seats: selectedSeats,
         payMethod: payMethod,
         paymentAmount: finalAmount,
+        reservationDate: dateTime,
       };
       useReservationHistoryStore.getState().addReservation(newReservation);
       navigate(AppRoutes.TICKET_PAGE);

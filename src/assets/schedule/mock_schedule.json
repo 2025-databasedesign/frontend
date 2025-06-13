@@ -218,7 +218,7 @@
     "schedules": [
       {
         "movieId": 6,
-        "movieName": "어벤져스",
+        "movieName": "어벤저스",
         "durationMinutes": 81,
         "grade": "/src/assets/grade_15.png",
         "theaters": [

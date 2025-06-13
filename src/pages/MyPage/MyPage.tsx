@@ -5,9 +5,11 @@ import PaymentCancelHistory from "../../components/PaymentCanlcelHistory/Payment
 import PaymentHistory from "../../components/PaymentHistory/PaymentHistory";
 import MyReview from "../../components/MyReview/MyReview";
 import MyInfoManage from "../../components/MyInfoManage/MyInfoManage";
+import { useUserStore } from "../../stores/UserRelatedStore";
 
 const MyPage: React.FC = () => {
   const [feature, setFeature] = useState("payment-history");
+  const name = useUserStore((state) => state.name);
 
   function renderFeatureContent() {
     switch (feature) {
@@ -32,7 +34,7 @@ const MyPage: React.FC = () => {
         </div>
         <div className="my-page-main">
           <div className="my-page-wrapper">
-            <div className="hello">반가워요</div>
+            <div className="hello">{name}{name && "님"} 반가워요!</div>
             <div className="feature-area">
               <div className="feature-wrapper">
                 <button
