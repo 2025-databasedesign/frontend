@@ -37,6 +37,9 @@ type ScheduleRelatedStore = {
   selectedSeats: number[][];
   setSelectedSeats: (seats: number[][]) => void;
 
+  reservationTime: string | null;
+  setReservationTime: (time: string) => void;
+
   resetState: () => void;
 };
 
@@ -76,6 +79,9 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
 
       selectedSeats: [],
       setSelectedSeats: (seats) => set({ selectedSeats: seats }),
+
+      reservationTime: null,
+      setReservationTime: (time) => set({ reservationTime: time }),
 
 
       resetState: () =>

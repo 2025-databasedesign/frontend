@@ -1,0 +1,145 @@
+.payment-cancel-history-main {
+  .title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid gray;
+  }
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .history-wrapper {
+    display: grid;
+
+    .total {
+      margin-bottom: 8px;
+      span {
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+    }
+    .history-main-wrapper {
+      max-height: calc(
+        100dvh - 10dvh - 65px - 32px - 21px - 8px - 51px - 16px - 52px
+      );
+      overflow: auto;
+      .history-main {
+        border: 1px solid gray;
+        margin-bottom: 1rem;
+        border-radius: 12px;
+
+        .top {
+          display: grid;
+          grid-template-columns: 1fr 4fr;
+          align-items: center;
+          padding: 16px 16px 0 16px;
+
+          .top-left {
+            width: 80px;
+            margin-right: 12px;
+            .poster {
+              border-radius: 8px;
+            }
+          }
+          .top-right {
+            display: flex;
+            align-items: end;
+            .schedule-info {
+              display: grid;
+              align-items: center;
+
+              .movie-title {
+                font-size: 24px;
+                display: flex;
+                align-items: center;
+                margin: unset;
+
+                img {
+                  border-radius: 4px;
+                  margin-right: 4px;
+                }
+              }
+              .theater-format {
+                font-weight: 500;
+                font-size: 20px;
+              }
+              .date-and-time {
+                font-size: 16px;
+                font-weight: 500;
+              }
+              .seat-info {
+                font-size: 20px;
+                font-weight: 500;
+              }
+              .people-type {
+                font-size: 16px;
+              }
+            }
+            .cancel-money-area {
+              display: grid;
+              align-items: center;
+              margin-left: 4rem;
+
+              .cancel-date {
+                font-size: 16px;
+                display: grid;
+                span {
+                  font-size: 16px;
+                  font-weight: 500;
+                }
+              }
+              .money-info {
+                display: grid;
+                align-items: center;
+
+                .payment-amount {
+                  font-weight: 500;
+                }
+
+                .payment-method {
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+        }
+        .bottom {
+          display: flex;
+          justify-content: end;
+          align-items: center;
+          margin: 0px 16px 8px 0;
+
+          .cancel-history-delete {
+            color: var(--primary-color);
+            background-color: unset;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 12px;
+            cursor: pointer;
+          }
+          .cancel-history-delete:hover {
+            background-color: var(--primary-color);
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .payment-cancel-history-main {
+    .history-wrapper {
+      .history-main-wrapper {
+        max-height: calc(
+          100dvh - 10dvh - 65px - 32px - 21px - 8px - 51px - 16px - 32px
+        );
+      }
+    }
+  }
+}

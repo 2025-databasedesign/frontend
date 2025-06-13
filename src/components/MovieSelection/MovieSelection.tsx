@@ -4,7 +4,7 @@ import "./MovieSelection.css";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 // import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
 import { getMovieInfo } from "../../utils/scheduleRelatedUtils";
-import { fullScheduleProps } from "../../types/ScheduleRelatedType";
+import { fullScheduleProps } from "../../types/scheduleRelatedType";
 import checkIcon from "../../assets/image/check.png";
 
 const parseGradeNumber = (gradePath: string) => {

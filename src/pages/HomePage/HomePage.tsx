@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./HomePage.css";
 import leftArrow from "../../assets/image/arrow_left_white.png";
 import rightArrow from "../../assets/image/arrow_right_white.png";
-import { PosterInfoProps } from "../../types/ScheduleRelatedType";
+import { PosterInfoProps } from "../../types/scheduleRelatedType";
 import Navbar from "../../components/Navbar";
 import PosterInfo from "../../components/PosterInfo";
 // import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
@@ -39,6 +39,12 @@ const HomePage: React.FC = () => {
       console.log("error: ", error);
     }
   };
+
+  // const getUserInfo = async () => {
+  //   try {
+  //     const response = await fetch("http://54.180.117.246/api/users/")
+  //   }
+  // }
 
   useEffect(() => {
     getMovieInfo();
@@ -132,40 +138,42 @@ const HomePage: React.FC = () => {
       <div className="navbar-wrapper">
         <Navbar />
       </div>
-      <div
-        className="slider"
-        ref={sliderRef}
-        onMouseDown={handleDragStart}
-        onMouseMove={handleDragMove}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
-        onTouchStart={handleDragStart}
-        onTouchMove={handleDragMove}
-        onTouchEnd={handleDragEnd}
-      >
-        <div className="posters-area">
-          {/* {movieList.map((movie, index) => ( */}
-          {movieInfo.map((movie, index) => (
-            <div className="item-container" key={index}>
-              <PosterInfo
-                movieName={movie.movieName}
-                rating={movie.rating}
-                star={movie.star}
-                image={movie.image}
-                grade={movie.grade}
-                isReservable={movie.isReservable}
-                rank={movie.rank}
-              />
-            </div>
-          ))}
+      <div className="home-page-main">
+        <div
+          className="slider"
+          ref={sliderRef}
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragMove}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onTouchStart={handleDragStart}
+          onTouchMove={handleDragMove}
+          onTouchEnd={handleDragEnd}
+        >
+          <div className="posters-area">
+            {/* {movieList.map((movie, index) => ( */}
+            {movieInfo.map((movie, index) => (
+              <div className="item-container" key={index}>
+                <PosterInfo
+                  movieName={movie.movieName}
+                  rating={movie.rating}
+                  star={movie.star}
+                  image={movie.image}
+                  grade={movie.grade}
+                  isReservable={movie.isReservable}
+                  rank={movie.rank}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="arrows-area">
-        <div className="left-arrow" onClick={handlePrev}>
-          <img src={leftArrow} alt="left arrow" />
-        </div>
-        <div className="right-arrow" onClick={handleNext}>
-          <img src={rightArrow} alt="right arrow" />
+        <div className="arrows-area">
+          <div className="left-arrow" onClick={handlePrev}>
+            <img src={leftArrow} alt="left arrow" />
+          </div>
+          <div className="right-arrow" onClick={handleNext}>
+            <img src={rightArrow} alt="right arrow" />
+          </div>
         </div>
       </div>
     </div>

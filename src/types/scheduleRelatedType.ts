@@ -4,6 +4,7 @@ export type FullSchedule = {
   schedules: fullScheduleProps[];
 };
 export type fullScheduleProps = {
+  movieId: number;
   movieName: string;
   durationMinutes: number;
   grade: string;

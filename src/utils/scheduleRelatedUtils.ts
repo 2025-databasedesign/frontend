@@ -100,9 +100,14 @@ export function getWeekday(dateStr: string) {
 export function getMonthAndDay(dateStr: string) {
   const date = new Date(dateStr);
 
-const month = String(date.getMonth() + 1).padStart(2, "0"); // "06"
-const day = String(date.getDate()).padStart(2, "0");        // "03"
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // "06"
+  const day = String(date.getDate()).padStart(2, "0"); // "03"
   return `${month}/${day}`;
+}
+
+export function getTodayDay() {
+  const today = new Date().toISOString().split('T')[0];
+  return today;
 }
 
 export const extractGradeValue = (grade: string | undefined | null): string => {

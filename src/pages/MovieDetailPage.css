@@ -2,7 +2,7 @@
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   color: #333;
 }
 
@@ -11,11 +11,10 @@
   gap: 32px;
   margin-bottom: 32px;
 }
-
-.movie-poster {
-  width: 280px;
-  border-radius: 12px;
+.detail-movie-poster {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  border-radius: 12px;
 }
 
 .movie-info-section {
@@ -99,14 +98,19 @@
 
 .review-form textarea {
   width: 100%;
-  min-height: 100px;
+  min-height: 80px;
   resize: vertical;
   padding: 12px;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-family: inherit;
   background-color: #f9f9f9;
+  margin-bottom: unset;
+}
+
+.character-limit {
+  font-size: 16px;
+  color: gray;
 }
 
 .review-form button {
@@ -128,9 +132,16 @@
   margin-bottom: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid #f0f0f0;
-  font-size: 15px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+
 }
 
 .review-item strong {
   margin-right: 8px;
+}
+.limit-exceeded {
+  color: var(--primary-color);
+  font-weight: 500;
 }

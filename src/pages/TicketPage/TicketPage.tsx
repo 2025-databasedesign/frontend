@@ -6,6 +6,7 @@ import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import {
   extractGradeValue,
   getMonthAndDay,
+  getTodayDay,
   getWeekday,
 } from "../../utils/scheduleRelatedUtils";
 import {
@@ -15,6 +16,7 @@ import {
 } from "../../utils/paymentUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
+import { useReservationHistoryStore } from "../../stores/ReservationHistoryStore";
 
 const TicketPage: React.FC = () => {
   const navigate = useNavigate();
@@ -39,14 +41,36 @@ const TicketPage: React.FC = () => {
   const selectedPeople = useScheduleRelatedStore(
     (state) => state.selectedPeople
   );
+  const reservationTime = useScheduleRelatedStore((state) => state.reservationTime);
   // ------------------------- Access store
 
   const seatLabels = getSeatSeparately(selectedSeats);
   const peopleTypes = getPeoplePrices(selectedPeople);
 
   function handleCancel() {
+    const cancelReservation = {
+      id: selectedDate + selectedScreenTime + selectedSeats + getTodayDay(),
+      date: selectedDate,
+      theater: selectedTheater,
+      movie: selectedMovie,
+      grade: selectedGrade,
+      format: selectedFormat,
+      screenTime: selectedScreenTime,
+      selectedPeople: selectedPeople,
+      seats: selectedSeats,
+      reservationDate: reservationTime,
+      cancelDate: getTodayDay(),
+      cancelPayMethod: payMethod,
+      cancelPayAmount: paymentAmount,
+    };
     if (confirm("취소하시겠습니까?")) {
       if (confirm("되돌이킬 수 없습니다.")) {
+        useReservationHistoryStore
+          .getState()
+          .addCancelHistory(cancelReservation);
+        useReservationHistoryStore
+          .getState()
+          .deleteReservation(cancelReservation.id);
         usePaymentRelatedStore.getState().resetState();
         useScheduleRelatedStore.getState().resetState();
         alert("취소 되었습니다.");
@@ -56,17 +80,17 @@ const TicketPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if(!selectedScreenTime) {
+    if (!selectedScreenTime) {
       alert("스케쥴 먼저 선택하세요.");
       navigate(AppRoutes.RESERVATION_PAGE, { replace: true });
     } else if (selectedSeats.length === 0) {
       alert("좌석 먼저 선택하세요.");
       navigate(AppRoutes.SEAT_SELECTION_PAGE, { replace: true });
-    } else if (!hasPaid) {
+    } else if (!hasPaid || !payMethod) {
       alert("결제 먼저 하세요.");
       navigate(AppRoutes.PAYMENT_PAGE, { replace: true });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -105,7 +129,6 @@ const TicketPage: React.FC = () => {
             </div>
             <div className="ticket-bottom">
               <div className="label-area">좌석</div>
-              {/* <div className="seat-area">{getSeatDisplay(selectedSeats)}</div> */}
               <div className="seat-area">
                 {seatLabels.map((seat, index) => (
                   <span key={index} className="seat-tag">

@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { usePaymentRelatedStore } from "../../stores/PaymentRelatedStore";
 import { isTokenValid } from "../../utils/authUtils";
+import { useReservationHistoryStore } from "../../stores/ReservationHistoryStore";
 
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -33,11 +34,14 @@ const PaymentPage: React.FC = () => {
     (state) => state.selectedPeople
   );
   const selectedSeats = useScheduleRelatedStore((state) => state.selectedSeats);
+  const setReservationTime = useScheduleRelatedStore((state) => state.setReservationTime);
 
   const payMethod = usePaymentRelatedStore((state) => state.payMethod);
   const setPayMethod = usePaymentRelatedStore((state) => state.setPayMethod);
-  
-  const setPaymentAmount = usePaymentRelatedStore((state) => state.setPaymentAmount);
+
+  const setPaymentAmount = usePaymentRelatedStore(
+    (state) => state.setPaymentAmount
+  );
   const setHasPaid = usePaymentRelatedStore((state) => state.setHasPaid);
 
   // ------------------------- Access store
@@ -49,18 +53,41 @@ const PaymentPage: React.FC = () => {
   const seatDisplay = getSeatDisplay(selectedSeats);
   const peoplePrices = getPeoplePrices(selectedPeople);
   const totalPrice = getTotalPrice(selectedPeople);
+  const finalAmount = totalPrice - discountPrice;
 
   function handlePayment() {
-    if (isTokenValid()) {
-      setPaymentAmount((totalPrice - discountPrice));
+    if(!payMethod) {
+      alert("결제 먼저 해주세요.");
+    }
+    if (isTokenValid() && payMethod) {
+      const dateTime = new Date().toISOString();
+      setPaymentAmount(finalAmount);
       setHasPaid(true);
+      setReservationTime(dateTime);
+
+      const newReservation = {
+        id: selectedDate + selectedScreenTime + selectedSeats + dateTime,
+        date: selectedDate,
+        theater: selectedTheater,
+        movie: selectedMovie,
+        grade: selectedGrade,
+        format: selectedFormat,
+        screenTime: selectedScreenTime,
+        selectedPeople: selectedPeople,
+        seats: selectedSeats,
+        payMethod: payMethod,
+        paymentAmount: finalAmount,
+        reservationDate: dateTime,
+      };
+      useReservationHistoryStore.getState().addReservation(newReservation);
+      navigate(AppRoutes.TICKET_PAGE);
     } else {
       localStorage.removeItem("schedule-storage");
     }
-    navigate(AppRoutes.TICKET_PAGE);
   }
 
   useEffect(() => {
+    usePaymentRelatedStore.getState().resetState();
     if (!selectedScreenTime) {
       alert("스케쥴 먼저 선택하세요.");
       navigate(AppRoutes.RESERVATION_PAGE, { replace: true });
@@ -186,10 +213,15 @@ const PaymentPage: React.FC = () => {
                 </div>
                 <div className="total-payment-area">
                   <span>최종 결제 금액</span>
-                  <span>{(totalPrice - discountPrice).toLocaleString()}원</span>
+                  <span>{(finalAmount).toLocaleString()}원</span>
                 </div>
               </div>
-              <button className="payment-button" onClick={() => handlePayment()}>결제하기</button>
+              <button
+                className="payment-button"
+                onClick={() => handlePayment()}
+              >
+                결제하기
+              </button>
             </div>
           </div>
         </div>

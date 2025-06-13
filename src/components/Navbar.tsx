@@ -21,12 +21,14 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="nav-bar container">
-      <img
-        src={logoImage}
-        alt="cinema logo"
-        onClick={() => navigate(AppRoutes.HOME)}
-        className="logo"
-      />
+      <span className="logo-wrapper">
+        <img
+          src={logoImage}
+          alt="cinema logo"
+          onClick={() => navigate(AppRoutes.HOME)}
+          className="logo"
+        />
+      </span>
       <ul className="center-menu">
         <li className="li-center-menu">
           <div className="middle-navigation">
@@ -77,7 +79,10 @@ const Navbar: React.FC = () => {
               <button onClick={handleLogout}>로그아웃</button>
             </li>
             <li>
-              <button>마이</button>
+              <button onClick={() => navigate(AppRoutes.MY_PAGE)} className="my-button">
+                {/* 마이 */}
+                <img src="/src/assets/image/my-icon.png" alt="my page" className="my-icon"/>
+              </button>
             </li>
           </>
         ) : (

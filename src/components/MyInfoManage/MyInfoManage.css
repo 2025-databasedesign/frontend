@@ -1,0 +1,56 @@
+.my-info-main {
+  /* background-color: wheat; */
+  display: grid;
+  align-items: center;
+
+  .my-info-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid black;
+  }
+
+  .info-change-area {
+    max-height: calc(
+        100dvh - 10dvh - 65px - 32px - 21px - 8px - 51px - 12px
+      );
+      overflow: auto;
+    display: grid;
+    gap: 1rem;
+
+    > * {
+      display: grid;
+      grid-template-columns: 7fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      .left-my {
+        .change-title {
+          font-size: 20px;
+        }
+        input {
+          height: 40px;
+        }
+      }
+      .right-my {
+        background-color: unset;
+        color: var(--primary-color);
+        font-size: 20px;
+        font-weight: 500;
+        padding: 4px;
+        margin-top: 16px;
+      }
+      .right-my:hover {
+        color: white;
+        background-color: var(--primary-color);
+      }
+    }
+    .delete-account {
+      display: grid;
+      grid-template-columns: none;
+      justify-self: center;
+      font-weight: 500;
+      padding: 12px;
+    }
+  }
+}
