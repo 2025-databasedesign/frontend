@@ -1,5 +1,8 @@
 .navbar-wrapper {
   background: rgb(224, 227, 231);
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 .home-page-main {
   display: grid;

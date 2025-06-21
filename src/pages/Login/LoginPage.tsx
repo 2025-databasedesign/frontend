@@ -4,6 +4,7 @@ import "./LoginPage.css";
 import { isTokenValid } from "../../utils/authUtils";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { useUserStore } from "../../stores/UserRelatedStore";
+import { useAdminStore } from "../../stores/AdminStore";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,8 @@ const LoginPage: React.FC = () => {
 
   const setName = useUserStore((state) => state.setName);
   const setUserEmail = useUserStore((state) => state.setUserEmail);
+  const setUserStatus = useUserStore((state) => state.setUserStatus);
+  const setIsAdmin = useAdminStore((state) => state.setIsAdmin);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
@@ -35,6 +38,12 @@ const LoginPage: React.FC = () => {
         setUserEmail(email);
         console.log("로그인 성공:", data);
         setName(data.data.name);
+
+        if(data.data.status == "ADMIN") {
+          setIsAdmin(true);
+        } else {
+          setUserStatus(data.data.status);
+        }
 
         const token = data.data.token;
         const exprTime = parseInt(data.data.exprTime); // "3600" → 3600

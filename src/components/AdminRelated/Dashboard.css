@@ -1,0 +1,203 @@
+.dashboard-main {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  min-height: 100dvh;
+  padding: 2rem;
+}
+
+.main-overview-top {
+  display: flex;
+  justify-content: space-evenly;
+  width: calc(90dvw - 4rem);
+  > * {
+    background-color: white;
+    padding: 20px 32px;
+    width: 240px;
+    border-radius: 12px;
+  }
+  .monthly-sales-area {
+    background-color: rgb(62 60 60);
+
+    .sales-area {
+      color: white;
+    }
+  }
+
+  .overview-sub-title {
+    color: rgb(188, 186, 186);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .sales-area {
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.main-overview-bottom {
+  margin-top: 1.5rem;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1.5fr 1fr;
+  min-height: calc(100dvh - 2rem - 1.5rem - 125px - 1rem);
+}
+
+.chart {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+/* theater chart */
+.theater-sales-area {
+  width: 100%;
+  /* max-width -> media */
+  max-width: 800px;
+  /* height: 600px; */
+  margin: 0 auto;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: max-content 1fr;
+  grid-template-areas: "data-axis-1 chart";
+
+  table {
+    tbody {
+      max-height: 240px;
+      margin-top: 1rem;
+    }
+  }
+
+  .column {
+    grid-area: chart;
+  }
+  .data-axis-1 {
+    grid-area: data-axis-1;
+    writing-mode: tb-rl;
+  }
+}
+
+/* movie chart */
+.dashboard-main {
+  .main-overview-bottom {
+    .movie-sales-area {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+      margin-top: 1rem;
+
+      table.movie-chart {
+        tbody {
+          overflow-y: scroll;
+          max-height: 200px;
+          scrollbar-width: thin;
+          margin-top: 1rem;
+          th {
+            margin: unset;
+            margin-inline-start: -3rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.weekly-sales-area {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+
+  table {
+    tbody.weekly-chart-body {
+      min-height: 300px;
+      max-width: 532px;
+      max-height: 500px;
+      margin-top: 1rem;
+    }
+  }
+}
+
+caption {
+  font-weight: 500;
+}
+
+/*desktop*/
+@media screen and (max-width: 1300px) {
+  .dashboard-main {
+    padding: 1rem;
+  }
+
+  .main-overview-top {
+    width: calc(90dvw - 2rem);
+    > * {
+      padding: 12px 24px;
+      width: 200px;
+      background-color: white;
+    }
+
+    .overview-sub-title {
+      font-size: 14px;
+      margin-bottom: unset;
+    }
+    .sales-area {
+      font-size: 22px;
+    }
+  }
+
+  .main-overview-bottom {
+    margin-top: 8px;
+    grid-template-columns: 1.5fr 1fr;
+    min-height: calc(100dvh - 1rem - 1rem - 12px - 78px);
+  }
+
+  .chart {
+    padding: 8px;
+  }
+
+  .theater-sales-area {
+    width: 100%;
+    max-width: 600px;
+    table {
+      tbody {
+        max-height: 160px;
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .dashboard-main {
+    .main-overview-bottom {
+      .movie-sales-area {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 12px;
+
+        table.movie-chart {
+          tbody {
+            max-height: 144px;
+            margin-top: 8px;
+            th {
+              margin-inline-start: -3rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .weekly-sales-area {
+    table {
+      tbody.weekly-chart-body {
+        min-height: 240px;
+        max-width: 400px;
+        max-height: 300px;
+        margin-top: 8px;
+      }
+    }
+  }
+}

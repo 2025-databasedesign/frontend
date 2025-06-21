@@ -11,4 +11,5 @@ export enum AppRoutes {
   PAYMENT_PAGE = "/payment-page",
   TICKET_PAGE = "/ticket-page",
   MY_PAGE = "/my-page",
+  ADMIN_PAGE = "/admin-page",
 }

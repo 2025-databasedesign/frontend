@@ -1,0 +1,122 @@
+.movie-main {
+  display: grid;
+  min-height: 100dvh;
+  padding: 2rem;
+  width: 90dvw;
+}
+.movie-manage-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.movie-register {
+  .movie-register-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+
+    label {
+      margin: unset;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    input {
+      margin: unset;
+      height: 20px;
+      font-size: 20px;
+    }
+
+    .movie-register-button {
+      padding: 8px;
+      width: 160px;
+      justify-self: end;
+      margin: unset;
+      margin-top: 12px;
+      font-weight: 500;
+      background-color: var(--admin-primary-color);
+      border: none;
+    }
+    .movie-register-button:hover {
+      background-color: var(--button-hover-color);
+    }
+  }
+}
+
+.movie-delete {
+  .movie-delete-main-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    .movie-delete-main {
+      background-color: white;
+      border-radius: 12px;
+      padding: 12px;
+      max-height: 300px;
+      overflow-y: scroll;
+      
+      .movie-area-admin {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        .delete-icon {
+          width: 20px;
+          margin-right: 8px;
+          display: flex;
+          cursor: pointer;
+        }
+      }
+      .movie-area-admin:hover {
+        color: var(--admin-primary-color);
+      }
+      .movie-area-admin:hover .delete-icon {
+        filter: invert(57%) sepia(15%) saturate(2008%) hue-rotate(173deg)
+          brightness(90%) contrast(82%);
+      }
+    }
+  }
+}
+
+/*desktop*/
+@media screen and (max-width: 1300px) {
+  .movie-main {
+    padding: 1rem;
+    gap: 1rem;
+    /* 15: scroll-bar width */
+    min-height: 100dvh;
+    width: calc(90dvw - 15px);
+  }
+  .movie-manage-title {
+    margin-bottom: 4px;
+  }
+
+  .movie-register {
+    .movie-register-form {
+      gap: 8px;
+      input {
+        font-size: 16px;
+      }
+      .movie-register-button {
+        padding: 4px;
+        width: 140px;
+        margin-top: 16px;
+      }
+    }
+  }
+
+  .movie-delete {
+    .movie-delete-main-wrapper {
+      .movie-delete-main {
+        padding: 8px;
+        max-height: 200px;
+        overflow-y: scroll;
+  
+        .movie-area-admin {
+          .delete-icon {
+            width: 16px;
+          }
+        }
+      }
+    }
+  }
+}

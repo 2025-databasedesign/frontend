@@ -14,7 +14,7 @@ export type TheaterInSchedule = {
   theaterId: string;
   theaterName: string;
   format: string;
-  subDub: string | null;
+  subDub: string;
   availSeat: number;
   totalSeat: number;
   startTimes: string[];
@@ -31,3 +31,13 @@ export type PosterInfoProps = {
 };
 
 
+//--------------------------- Admin의 SCHEDULE 관리
+// ScheduleManage.tsx
+export type ScheduleForRegister = {
+  movieId: number;
+  theaters: TheaterInSchedule[];
+};
+export type RegisterSchedule = {
+  date: string;
+  schedules: ScheduleForRegister[];
+};

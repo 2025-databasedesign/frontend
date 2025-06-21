@@ -15,6 +15,11 @@ export function logout() {
   localStorage.removeItem("expires_at");
   localStorage.removeItem("schedule-storage");
   localStorage.removeItem("payment-storage");
+  localStorage.removeItem("admin-storage");
   //consider later after connect with api
   // localStorage.removeItem("history-storage");
 }
+
+// export function isAdmin() {
+//   const 
+// }
