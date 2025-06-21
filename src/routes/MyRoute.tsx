@@ -14,7 +14,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import TicketPage from "../pages/TicketPage/TicketPage";
 import MyPage from "../pages/MyPage/MyPage";
-import SalesPage from "../pages/SalesPage/SalesPage";
+import AdminPage from "../pages/AdminPage/AdminPage";
 
 const MyRoute: React.FC = () => {
   return (
@@ -70,10 +70,10 @@ const MyRoute: React.FC = () => {
           }
         />
         <Route
-          path={AppRoutes.SALES_PAGE}
+          path={AppRoutes.ADMIN_PAGE}
           element={
             <ProtectedRoute>
-              <SalesPage />
+              <AdminPage />
             </ProtectedRoute>
           }
         />

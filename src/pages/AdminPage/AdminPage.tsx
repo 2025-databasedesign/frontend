@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./SalesPage.css";
+import './AdminPage.css'
 import { AppRoutes } from "../../routes/AppRoutes";
 import { useNavigate } from "react-router-dom";
 import { useAdminStore } from "../../stores/AdminStore";
@@ -9,7 +9,7 @@ import MovieManage from "../../components/AdminRelated/MovieManage";
 import TheaterManage from "../../components/AdminRelated/TheaterManage";
 import UserManage from "../../components/AdminRelated/UserManage";
 
-const SalesPage: React.FC = () => {
+const AdminPage: React.FC = () => {
   const navigate = useNavigate();
   const viewType = useAdminStore((state) => state.viewType);
   const setViewType = useAdminStore((state) => state.setViewType);
@@ -67,4 +67,4 @@ const SalesPage: React.FC = () => {
   );
 };
 
-export default SalesPage;
+export default AdminPage;
