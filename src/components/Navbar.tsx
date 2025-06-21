@@ -10,8 +10,10 @@ import { useAdminStore } from "../stores/AdminStore";
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const isAdmin = useAdminStore((state) => state.isAdmin);
+  const setIsAdmin = useAdminStore((state) => state.setIsAdmin);
 
   function handleLogout() {
+    setIsAdmin(false);
     // Clear token from localStorage
     logout();
     // Reset Zustand booking state (in memory)
@@ -33,31 +35,11 @@ const Navbar: React.FC = () => {
       </span>
       <ul className="center-menu">
         <li className="li-center-menu">
-          <div className="middle-navigation">
-            <span
-              className="span-nav-content"
-              // onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
-            >
-              영화
-            </span>
-            <ul className="sub-tab">
-              <li className="li-sub-tab">
-                <a
-                  className="sub-tab-navigation"
-                  onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
-                >
-                  영화리스트
-                </a>
-              </li>
-              <li className="li-sub-tab">
-                <a
-                  className="sub-tab-navigation"
-                  onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
-                >
-                  영화설정
-                </a>
-              </li>
-            </ul>
+          <div
+            className="middle-navigation"
+            onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
+          >
+            <span className="span-nav-content">영화</span>
           </div>
         </li>
         <li className="li-center-menu">
@@ -108,19 +90,21 @@ const Navbar: React.FC = () => {
             <li>
               <button onClick={handleLogout}>로그아웃</button>
             </li>
-            <li>
-              <button
-                onClick={() => navigate(AppRoutes.MY_PAGE)}
-                className="my-button"
-              >
-                {/* 마이 */}
-                <img
-                  src="/src/assets/image/my-icon.png"
-                  alt="my page"
-                  className="my-icon"
-                />
-              </button>
-            </li>
+            {!isAdmin && (
+              <li>
+                <button
+                  onClick={() => navigate(AppRoutes.MY_PAGE)}
+                  className="my-button"
+                >
+                  {/* 마이 */}
+                  <img
+                    src="/src/assets/image/my-icon.png"
+                    alt="my page"
+                    className="my-icon"
+                  />
+                </button>
+              </li>
+            )}
           </>
         ) : (
           <li>

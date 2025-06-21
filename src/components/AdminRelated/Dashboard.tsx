@@ -3,6 +3,8 @@ import "./Dashboard.css";
 
 const Dashboard: React.FC = () => {
   // const [theaters, setTheaters] = useState<TheaterInSchedule[]>([]);
+  const revenue = 1000000;  //mock data
+  const newUser = 300;  //mock data
 
   // useEffect(() => {
   //   const fetchTheaters = async () => {
@@ -19,7 +21,7 @@ const Dashboard: React.FC = () => {
       <div className="main-overview-top">
         <div className="monthly-sales-area">
           <div className="overview-sub-title">월 매출</div>
-          <div className="sales-area">100000원</div>
+          <div className="sales-area">{revenue.toLocaleString()}원</div>
         </div>
         <div className="high-profit-movie-area">
           <div className="overview-sub-title">월 최고 매출 영화</div>
@@ -31,7 +33,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="new-user-area">
           <div className="overview-sub-title">새 회원 수</div>
-          <div className="sales-area">+300명</div>
+          <div className="sales-area">+{newUser.toLocaleString()}명</div>
         </div>
       </div>
       <div className="main-overview-bottom">

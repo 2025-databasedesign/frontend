@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import './AdminPage.css'
+import "./AdminPage.css";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { useNavigate } from "react-router-dom";
 import { useAdminStore } from "../../stores/AdminStore";
@@ -8,6 +8,7 @@ import Dashboard from "../../components/AdminRelated/Dashboard";
 import MovieManage from "../../components/AdminRelated/MovieManage";
 import TheaterManage from "../../components/AdminRelated/TheaterManage";
 import UserManage from "../../components/AdminRelated/UserManage";
+import ScheduleManage from "../../components/AdminRelated/ScheduleManage";
 
 const AdminPage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,10 +17,10 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     setViewType("dashboard");
-  }, [setViewType])
+  }, [setViewType]);
 
   return (
-    <div className="sales-page">
+    <div className="admin-page">
       <div className="side-bar">
         <span className="logo-wrapper">
           <img
@@ -50,6 +51,12 @@ const AdminPage: React.FC = () => {
             THEATER
           </li>
           <li
+            className={`${viewType == "schedule-manage" ? "selected-tab" : ""}`}
+            onClick={() => setViewType("schedule-manage")}
+          >
+            SCHEDULE
+          </li>
+          <li
             className={`${viewType == "user-manage" ? "selected-tab" : ""}`}
             onClick={() => setViewType("user-manage")}
           >
@@ -57,10 +64,11 @@ const AdminPage: React.FC = () => {
           </li>
         </ul>
       </div>
-      <div className="sales-page-main">
+      <div className="admin-page-main">
         {viewType == "dashboard" && <Dashboard />}
         {viewType == "movie-manage" && <MovieManage />}
         {viewType == "theater-manage" && <TheaterManage />}
+        {viewType == "schedule-manage" && <ScheduleManage />}
         {viewType == "user-manage" && <UserManage />}
       </div>
     </div>

@@ -1,0 +1,270 @@
+.schedule-main {
+  min-height: 100dvh;
+  width: 90dvw;
+  padding: 1.5rem;
+  display: grid;
+}
+
+.schedule-label-admin {
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.admin-schedule-top {
+  display: grid;
+  /* justify-content: end; */
+  grid-template-columns: 1fr 3fr;
+}
+
+.schedule-lookup {
+  margin-bottom: 16px;
+  .schedule-date-input {
+    display: flex;
+    gap: 12px;
+
+    input {
+      margin: unset;
+      width: 240px;
+      height: 40px;
+    }
+    .lookup-button {
+      font-weight: 500;
+      padding: 4px 20px;
+      height: 40px;
+      background-color: var(--admin-primary-color);
+      border: none;
+
+      span {
+        display: flex;
+        align-items: center;
+        img {
+          width: 24px;
+        }
+      }
+    }
+    .lookup-button:hover {
+      border: none;
+      background-color: var(--button-hover-color);
+    }
+  }
+}
+
+.schedule-movie-lookup-delete {
+  .movie-list-main-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    .movie-list-main {
+      background-color: white;
+      border-radius: 12px;
+      padding: 12px;
+      max-height: 300px;
+      overflow-y: scroll;
+      display: grid;
+      gap: 4px;
+
+      .movie-area-admin {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 500;
+        cursor: pointer;
+
+        .schedule-button-area {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 12px;
+          span {
+            border: 1px solid var(--admin-primary-color);
+            width: 36px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              width: 20px;
+              filter: invert(58%) sepia(14%) saturate(2258%) hue-rotate(175deg)
+                brightness(89%) contrast(85%);
+            }
+          }
+          .delete img {
+            width: 16px;
+          }
+
+          .lookup:hover,
+          .delete:hover {
+            background-color: var(--admin-primary-color);
+            img {
+              filter: brightness(0) saturate(100%) invert(100%) sepia(1%)
+                saturate(0%) hue-rotate(191deg) brightness(109%) contrast(101%);
+            }
+          }
+          .delete:hover {
+            img {
+              filter: invert(100%) sepia(1%) saturate(0%) hue-rotate(191deg)
+                brightness(109%) contrast(101%);
+            }
+          }
+        }
+      }
+      .movie-area-admin:hover {
+        color: var(--admin-primary-color);
+      }
+    }
+  }
+}
+
+.admin-schedule-right {
+  margin-left: 16px;
+  align-self: center;
+  .schedule-area {
+    background-color: white;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-height: 400px;
+    max-height: 500px;
+  }
+}
+
+.schedule-register {
+  margin-top: 1rem;
+
+  .schedule-register-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
+
+    label {
+      margin: unset;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    input {
+      margin: unset;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    .register-button {
+      padding: 8px;
+      width: 160px;
+      height: 60px;
+      justify-self: center;
+      margin: unset;
+      margin-top: 12px;
+      font-weight: 500;
+      background-color: var(--admin-primary-color);
+      border: none;
+    }
+    .register-button:hover {
+      background-color: var(--button-hover-color);
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 1300px) {
+  .schedule-main {
+    /* 15px: scroll-bar width */
+    width: calc(90dvw - 15px);
+    padding: 16px;
+  }
+
+  .schedule-label-admin {
+    font-size: 20px;
+  }
+
+  .admin-schedule-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .schedule-lookup {
+    margin-bottom: 12px;
+    .schedule-date-input {
+      gap: 8px;
+
+      input {
+        margin: unset;
+        width: 220px;
+        height: 36px;
+      }
+      .lookup-button {
+        padding: 4px 16px;
+        height: 36px;
+
+        span {
+          img {
+            width: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .schedule-movie-lookup-delete {
+    .movie-list-main-wrapper {
+      .movie-list-main {
+        background-color: white;
+        padding: 8px;
+        max-height: 240px;
+
+        .movie-area-admin {
+          .schedule-button-area {
+            gap: 8px;
+            span {
+              width: 28px;
+
+              img {
+                width: 16px;
+              }
+            }
+            .delete img {
+              width: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .admin-schedule-right {
+    margin-left: 12px;
+    align-self:flex-end;
+    .schedule-area {
+      padding: 12px;
+      min-height: 300px;
+      max-height: 400px;
+    }
+  }
+
+  .schedule-register {
+    margin-top: 12px;
+
+    .schedule-register-form {
+      gap: 8px;
+
+      label {
+        font-size: 16px;
+      }
+
+      input {
+        height: 36px;
+      }
+
+      .register-button {
+        width: 120px;
+        height: 48px;
+        margin-top: 16px;
+      }
+    }
+  }
+}

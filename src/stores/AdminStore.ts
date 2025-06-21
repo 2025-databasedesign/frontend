@@ -12,7 +12,7 @@ type AdminStore = {
 export const useAdminStore = create<AdminStore>()(
   persist(
     (set) => ({
-      isAdmin: true,
+      isAdmin: false,
       setIsAdmin: (admin) => set({ isAdmin: admin }),
 
       viewType: "",

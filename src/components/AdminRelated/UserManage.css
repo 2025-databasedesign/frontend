@@ -1,0 +1,138 @@
+.user-manage-main {
+  display: grid;
+  min-height: 100dvh;
+  padding: 2rem;
+  width: 90dvw;
+  grid-template-columns: 1fr 1fr;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.user-ban-area {
+  display: grid;
+  align-items: center;
+
+  .admin-user-input-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    input {
+      width: 400px;
+      height: 60px;
+      margin-bottom: unset;
+    }
+    button {
+      padding: unset;
+      width: 120px;
+      height: 64px;
+      font-weight: 500;
+    }
+  }
+}
+
+.view-ban-list-area {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  display: grid;
+  justify-content: center;
+
+  button {
+    width: 240px;
+    margin-bottom: 1rem;
+    align-self: center;
+    padding: 8px 16px;
+    background-color: transparent;
+    color: var(--admin-primary-color);
+    border: 2px solid var(--admin-primary-color);
+  }
+  button:hover {
+    background-color: var(--admin-primary-color);
+    color: white;
+    border-color: var(--admin-primary-color);
+  }
+}
+
+.ban-list {
+  display: grid;
+  gap: 1rem;
+  .banned-user-area {
+    background-color: rgb(231, 229, 229);
+    display: grid;
+    padding: 12px;
+    border-radius: 12px;
+
+    > * {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 220px 260px 1fr;
+
+      span {
+        font-weight: 600;
+        font-size: 16px;
+      }
+    }
+    button {
+      width: 100px;
+      padding: unset;
+      margin: unset;
+      justify-self: flex-end;
+      border-width: 1px;
+    }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .user-manage-main {
+    padding: 1rem;
+  }
+
+  .user-ban-area {
+
+    .admin-user-input-area {
+      gap: 12px;
+      input {
+        width: 300px;
+        height: 52px;
+      }
+      button {
+        width: 100px;
+        height: 52px;
+      }
+    }
+  }
+
+  .view-ban-list-area {
+    padding: 12px;
+
+    button {
+      font-size: 16px;
+      width: 200px;
+      margin-bottom: 12px;
+    }
+  }
+
+  .ban-list {
+    gap: 1rem;
+    .banned-user-area {
+      padding: 8px;
+
+      > * {
+        display: grid;
+        align-items: baseline;
+        grid-template-columns: 160px 180px 1fr;
+        font-size: 16px;
+
+        span {
+          font-weight: 600;
+          font-size: 12px;
+        }
+      }
+      button {
+        width: 80px;
+      }
+    }
+  }
+}
