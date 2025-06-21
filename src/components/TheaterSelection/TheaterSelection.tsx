@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./TheaterSelection.css";
-import { TheaterInSchedule } from "../../types/ScheduleRelatedType";
+import { TheaterInSchedule } from "../../types/scheduleRelatedType";
 import { getTheatersInfo } from "../../utils/scheduleRelatedUtils";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 // import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";

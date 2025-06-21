@@ -2,12 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes/AppRoutes";
 import "./Navbar.css";
-import logoImage from "../assets/image/logo-transparent-bg.png";
+import logoImage from "../assets/image/logo-transparent-bg1.png";
 import { isTokenValid, logout } from "../utils/authUtils";
 import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
+import { useAdminStore } from "../stores/AdminStore";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const isAdmin = useAdminStore((state) => state.isAdmin);
 
   function handleLogout() {
     // Clear token from localStorage
@@ -34,10 +36,28 @@ const Navbar: React.FC = () => {
           <div className="middle-navigation">
             <span
               className="span-nav-content"
-              onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
+              // onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
             >
               영화
             </span>
+            <ul className="sub-tab">
+              <li className="li-sub-tab">
+                <a
+                  className="sub-tab-navigation"
+                  onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
+                >
+                  영화리스트
+                </a>
+              </li>
+              <li className="li-sub-tab">
+                <a
+                  className="sub-tab-navigation"
+                  onClick={() => navigate(AppRoutes.MOVIELIST_PAGE)}
+                >
+                  영화설정
+                </a>
+              </li>
+            </ul>
           </div>
         </li>
         <li className="li-center-menu">
@@ -71,6 +91,16 @@ const Navbar: React.FC = () => {
             <span className="span-nav-content">상영관</span>
           </div>
         </li>
+        {isAdmin && (
+          <li className="li-center-menu">
+            <div
+              className="middle-navigation"
+              onClick={() => navigate(AppRoutes.SALES_PAGE)}
+            >
+              <span className="span-nav-content">매출</span>
+            </div>
+          </li>
+        )}
       </ul>
       <ul>
         {isTokenValid() ? (
@@ -79,9 +109,16 @@ const Navbar: React.FC = () => {
               <button onClick={handleLogout}>로그아웃</button>
             </li>
             <li>
-              <button onClick={() => navigate(AppRoutes.MY_PAGE)} className="my-button">
+              <button
+                onClick={() => navigate(AppRoutes.MY_PAGE)}
+                className="my-button"
+              >
                 {/* 마이 */}
-                <img src="/src/assets/image/my-icon.png" alt="my page" className="my-icon"/>
+                <img
+                  src="/src/assets/image/my-icon.png"
+                  alt="my page"
+                  className="my-icon"
+                />
               </button>
             </li>
           </>

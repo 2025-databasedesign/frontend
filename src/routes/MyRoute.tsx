@@ -14,7 +14,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import TicketPage from "../pages/TicketPage/TicketPage";
 import MyPage from "../pages/MyPage/MyPage";
-
+import SalesPage from "../pages/SalesPage/SalesPage";
 
 const MyRoute: React.FC = () => {
   return (
@@ -66,6 +66,14 @@ const MyRoute: React.FC = () => {
           element={
             <ProtectedRoute>
               <MyPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={AppRoutes.SALES_PAGE}
+          element={
+            <ProtectedRoute>
+              <SalesPage />
             </ProtectedRoute>
           }
         />
