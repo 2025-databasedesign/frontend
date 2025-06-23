@@ -36,7 +36,7 @@ const TheaterManage: React.FC = () => {
   const handleTheaterRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://54.180.117.246/api/theater", {
+      const response = await fetch("http://54.180.117.246/api/theaters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ const TheaterManage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://54.180.117.246/api/theater/${theaterId}`,
+        `http://54.180.117.246/api/theaters/${theaterId}`,
         {
           method: "DELETE",
         }
@@ -97,7 +97,7 @@ const TheaterManage: React.FC = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://54.180.117.246/api/theater/${theaterInfoForUpdate.theaterId}`,
+        `http://54.180.117.246/api/theaters/${theaterInfoForUpdate.theaterId}`,
         {
           method: "PUT",
           headers: {

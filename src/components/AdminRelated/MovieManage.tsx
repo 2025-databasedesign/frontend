@@ -27,35 +27,33 @@ const MovieManage: React.FC = () => {
     setMovieInfoForRegister((prev) => ({ ...prev, [name]: value }));
   };
 
-  //찐 handleMovieRegister API, 주소 확인
-  // const handleMovieRegister = async (e: React.FormEvent) => {
-  //   e.preventDefault();
+  // 찐 handleMovieRegister API, 주소 확인
+  const handleMovieRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  //   try {
-  //     const response = await fetch("api/movies", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(
-  //         movieInfoForRegister,
-  //       ),
-  //     });
+    try {
+      const response = await fetch("http://54.180.117.246/api/movies", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieInfoForRegister),
+      });
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log("Register success:", data);
-  //       alert("영화 등록 성공!");
-  //     } else {
-  //       const errorData = await response.json();
-  //       console.error("Register failed:", errorData);
-  //       alert(`영화 등록 실패: ${errorData.message || response.statusText}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during fetch:", error);
-  //     alert("서버 오류로 영화 등록이 실패했습니다.");
-  //   }
-  // };
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Register success:", data);
+        alert("영화 등록 성공!");
+      } else {
+        const errorData = await response.json();
+        console.error("Register failed:", errorData);
+        alert(`영화 등록 실패: ${errorData.message || response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      alert("서버 오류로 영화 등록이 실패했습니다.");
+    }
+  };
 
   //Mock data
 
@@ -65,51 +63,64 @@ const MovieManage: React.FC = () => {
   // mock data
   useEffect(() => {
     const fetchMovies = async () => {
-      const data = await getMovieInfo();
-      if (data) {
-        setMovieListForDelete(data);
+      try {
+        const response = await fetch("http://54.180.117.246/api/movies", {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch movies");
+        }
+        const result = await response.json();
+        // result.data는 배열, 각 객체에서 필요한 정보만 추출
+        const movies: PosterInfoProps[] = result.data.map((movie: any) => ({
+          movieId: movie.movieId || movie.movieid || movie.id || 0,
+          movieName: movie.title,
+          posterUrl: "", // 포스터 url이 없으므로 빈 값
+        }));
+        setMovieListForDelete(movies);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
       }
     };
     fetchMovies();
   }, []);
 
   //찐 handleDeleteMovie API, 주소 확인
-  // const handleDeleteMovie = async(movieId: number) => {
-  //   try {
-  //     const response = await fetch("api/movies", {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         id: movieId,
-  //       }),
-  //     });
+  const handleDeleteMovie = async (movieId: number) => {
+    try {
+      const response = await fetch(
+        `http://54.180.117.246/api/movies/${movieId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log("Delete success:", data);
-  //       alert("영화 삭제 성공!");
-  //     } else {
-  //       const errorData = await response.json();
-  //       console.error("Delete failed:", errorData);
-  //       alert(`영화 삭제 실패: ${errorData.message || response.statusText}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during fetch:", error);
-  //     alert("서버 오류로 영화 삭제 실패했습니다.");
-  //   }
-  // }
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Delete success:", data);
+        alert("영화 삭제 성공!");
+      } else {
+        const errorData = await response.json();
+        console.error("Delete failed:", errorData);
+        alert(`영화 삭제 실패: ${errorData.message || response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      alert("서버 오류로 영화 삭제 실패했습니다.");
+    }
+  };
   // -------------------------------movie delete-------------------------
 
   return (
     <div className="movie-main">
       <div className="movie-register">
         <div className="movie-manage-title">영화 등록</div>
-        <form
-          className="movie-register-form"
-          // onSubmit={handleMovieRegister}
-        >
+        <form className="movie-register-form" onSubmit={handleMovieRegister}>
           <label>
             <span className="label">영화 제목</span>
             <input
@@ -219,11 +230,12 @@ const MovieManage: React.FC = () => {
         <div className="movie-delete-main-wrapper">
           <div className="movie-delete-main">
             {movieListForDelete.map((movie, index) => (
-              <div className="movie-area-admin" key={index}>
+              <div className="movie-area-admin" key={movie.movieId}>
+                {" "}
+                {/* key에도 id */}
                 <div
                   className="delete-icon"
-                  // 찐 api 연결 할 때에는 index아니고 찐 id로 넣어야 함
-                  // onClick={() => handleDeleteMovie(index)}
+                  onClick={() => handleDeleteMovie(movie.movieId)} // id를 전달
                 >
                   <img
                     src="/src/assets/image/delete-icon.png"
@@ -232,7 +244,6 @@ const MovieManage: React.FC = () => {
                   />
                 </div>
                 <div className="movie-title-admin">{movie.movieName}</div>
-                <div className="movie-title-admin"></div>
               </div>
             ))}
           </div>
