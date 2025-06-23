@@ -51,7 +51,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <img src={movie.image} alt={movie.movieName} className="movie-poster" />
       <div className="movie-title">{movie.movieName}</div>
       <div className="movie-info">
-        예매율 {movie.rating.toFixed(1)}% &nbsp;|&nbsp; ⭐{" "}
+        예매수 {movie.rating} &nbsp;|&nbsp; ⭐{" "}
         {movie.star ?? "평점 없음"}
       </div>
       <button

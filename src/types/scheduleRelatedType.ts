@@ -21,6 +21,7 @@ export type TheaterInSchedule = {
   endTimes: string[];
 };
 export type PosterInfoProps = {
+  movieId: number;
   movieName: string;
   rating: number;
   star: number | null;

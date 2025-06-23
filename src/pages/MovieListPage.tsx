@@ -5,7 +5,7 @@ import MovieCardGrid from "../components/MovieList/MovieCardGrid";
 import "./MovieListPage.css";
 
 export default function MovieListPage() {
-  const [sortType, setSortType] = useState("예매율순");
+  const [sortType, setSortType] = useState("예매순");
   const [onlyNowPlaying, setOnlyNowPlaying] = useState(false);
 
   return (

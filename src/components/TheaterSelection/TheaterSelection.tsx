@@ -24,38 +24,40 @@ const TheaterSelection: React.FC = () => {
   // const {theaterList, setMovieList} = useCinemaRelatedStore();
 
   //mock data
-  useEffect(() => {
-    setSelectedTheater(null);
-
-    const fetchTheaters = async () => {
-      const data = await getTheatersInfo();
-      if (data) {
-        setTheaters(data);
-      }
-    };
-    fetchTheaters();
-    setSelectedMovie(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  //찐 api
   // useEffect(() => {
   //   setSelectedTheater(null);
 
   //   const fetchTheaters = async () => {
-  //     try {
-  //       const res = await fetch("/api/theaters");
-  //       const resData = await res.json();
-  //       setTheaterList(resData.data);
-  //     } catch (err) {
-  //       console.log("Error fetching theaters: ", err);
+  //     const data = await getTheatersInfo();
+  //     if (data) {
+  //       setTheaters(data);
   //     }
   //   };
   //   fetchTheaters();
-
   //   setSelectedMovie(null);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+
+  //찐 api
+  useEffect(() => {
+    setSelectedTheater(null);
+
+    const fetchTheaters = async () => {
+      try {
+        const res = await fetch("http://54.180.117.246/api/theaters");
+        const resData = await res.json();
+        if (resData.result && Array.isArray(resData.data)) {
+          setTheaters(resData.data);
+        }
+      } catch (err) {
+        console.log("Error fetching theaters: ", err);
+      }
+    };
+    fetchTheaters();
+
+    setSelectedMovie(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="location-selection">

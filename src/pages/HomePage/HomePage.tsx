@@ -60,29 +60,78 @@ const HomePage: React.FC = () => {
         }
         const result = await response.json();
         if (result?.result && Array.isArray(result.data)) {
-          const mapped = result.data.map((item: any) => ({
-            movieId: item.movieId,
-            movieName: item.title,
-            rating: item.rating ?? 0,
-            star: item.star ?? null,
-            image: item.posterPath
-              ? `http://54.180.117.246${item.posterPath.replace(/^\/images\/posters\//, "/Images/")}`
-              : "",
-            grade: item.grade === "15"
-              ? "/src/assets/grade_15.png"
-              : item.grade === "19"
-              ? "/src/assets/grade_19.png"
-              : "/src/assets/grade_all.png",
-            isReservable: true,
-            rank: item.rank ?? null,
-            releaseDate: item.releaseDate,
-            runningTime: item.runningTime,
-            director: item.director,
-            actors: item.actors,
-            formats: item.formats,
-            genreIds: item.genreIds,
-            genreNames: item.genreNames,
-          }));
+            // Fetch star ratings for each movie
+            // Fetch revenue data first
+            const revenueRes = await fetch("http://54.180.117.246/api/revenue/movie");
+            let revenueData: Record<string, number> = {};
+            if (revenueRes.ok) {
+            const revenueJson = await revenueRes.json();
+            if (revenueJson?.result && revenueJson.data) {
+              revenueData = revenueJson.data;
+            }
+            }
+
+            const mapped = await Promise.all(
+            result.data.map(async (item: any) => {
+              let star = null;
+              let rating = null;
+              try {
+              const reviewRes = await fetch(
+                `http://54.180.117.246/api/reviews?type=MOVIE&targetId=${item.movieId}`
+              );
+              if (reviewRes.ok) {
+                const reviewData = await reviewRes.json();
+                if (
+                Array.isArray(reviewData.data) &&
+                reviewData.data.length > 0
+                ) {
+                // Calculate average rating
+                const ratings = reviewData.data.map((r: any) => r.rating);
+                const avg =
+                  ratings.reduce(
+                  (sum: number, cur: number) => sum + cur,
+                  0
+                  ) / ratings.length;
+                star = avg;
+                }
+              }
+              } catch (e) {
+              // ignore error, star remains null
+              }
+
+              // Calculate 예매수 (rating) from revenue API
+              const revenue = revenueData[item.title] || 0;
+              rating = Math.ceil(revenue / 15000);
+
+              return {
+                movieId: item.movieId,
+                movieName: item.title,
+                rating,
+                star,
+                image: item.posterPath
+                  ? `http://54.180.117.246${item.posterPath.replace(
+                      /^\/images\/posters\//,
+                      "/Images/"
+                    )}`
+                  : "",
+                grade:
+                  item.grade === "15"
+                    ? "/src/assets/grade_15.png"
+                    : item.grade === "19"
+                    ? "/src/assets/grade_19.png"
+                    : "/src/assets/grade_all.png",
+                isReservable: true,
+                // rank: reviewData.data.length, // 예매수로 변경
+                releaseDate: item.releaseDate,
+                runningTime: item.runningTime,
+                director: item.director,
+                actors: item.actors,
+                formats: item.formats,
+                genreIds: item.genreIds,
+                genreNames: item.genreNames,
+              };
+            })
+          );
           setMovieInfo(mapped);
         }
       } catch (error) {
@@ -174,6 +223,7 @@ const HomePage: React.FC = () => {
             {movieInfo.map((movie, index) => (
               <div className="item-container" key={index}>
                 <PosterInfo
+                  movieId={movie.movieId}
                   movieName={movie.movieName}
                   rating={movie.rating}
                   star={movie.star}

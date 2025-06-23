@@ -30,7 +30,7 @@ export default function MovieListHeader({
             className="sort-select"
             onChange={(e) => onSortChange(e.target.value)}
           >
-            <option>예매율순</option>
+            <option>예매순</option>
             <option>별점순</option>
             <option>개봉일순</option>
           </select>

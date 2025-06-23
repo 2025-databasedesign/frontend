@@ -12,6 +12,7 @@ import { AppRoutes } from "../routes/AppRoutes";
 // };
 
 const PosterInfo: React.FC<PosterInfoProps> = ({
+  movieId,
   movieName,
   rating,
   star,
@@ -68,7 +69,7 @@ const PosterInfo: React.FC<PosterInfoProps> = ({
         </div>
         <div className="sub-info">
           <span className="rate-info">
-            예매율 <span className="rate-percentage">{rating}%</span>
+            예매수 <span className="rate-percentage">{rating}</span>
           </span>
           <span className="star-info">
             <img src="/src/assets/star.png" alt="star icon" />

@@ -63,7 +63,7 @@ const TheaterSeatMap: React.FC<TheaterSeatMapProps> = ({
 
                 if (cell === 0) {
                   className += " aisle";
-                  style.background = "#e0e0e0";
+                  style.background = "#000000";
                 } else if (cell === 1) {
                   className += " normal";
                   style.background = "#cccccc";
