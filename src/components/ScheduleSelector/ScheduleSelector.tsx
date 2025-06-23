@@ -35,11 +35,13 @@ const ScheduleSelector: React.FC = () => {
       <div className="right-area">
         {selectedDate ? selectedDate : formatted}({weekday})
       </div>
-      {scheduleViewType == "theater" ? (
-        <TheaterSelection />
-      ) : (
-        <MovieSelection />
-      )}
+      <div className="left-section">
+        {scheduleViewType == "theater" ? (
+          <TheaterSelection />
+        ) : (
+          <MovieSelection />
+        )}
+      </div>
       <div className="schedule-selection">
         <DateSlider />
         <div className="schedule-list-wrapper">

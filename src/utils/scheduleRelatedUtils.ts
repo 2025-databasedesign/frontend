@@ -111,9 +111,16 @@ export function getMonthAndDay(dateStr: string) {
 }
 
 export function getTodayDay() {
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   return today;
 }
+
+export const getNextDay = (dateStr: string) => {
+  const date = new Date(dateStr); // e.g., 2025-06-11
+  date.setDate(date.getDate() + 1); // Add 1 day
+
+  return date.toISOString().split("T")[0]; // Return as "YYYY-MM-DD"
+};
 
 export const extractGradeValue = (grade: string | undefined | null): string => {
   const matched = grade?.match(/\d+/)?.[0];
