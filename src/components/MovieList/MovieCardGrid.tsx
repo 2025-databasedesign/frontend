@@ -2,7 +2,19 @@ import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import "./MovieCardGrid.css";
 
+// type Movie = {
+//   movieName: string;
+//   rating: number;
+//   star: number | null;
+//   image: string;
+//   grade: string;
+//   isReservable: boolean;
+//   rank: number | null;
+//   releaseDate?: string;
+// };
+
 type Movie = {
+  movieId: number;
   movieName: string;
   rating: number;
   star: number | null;
@@ -11,6 +23,12 @@ type Movie = {
   isReservable: boolean;
   rank: number | null;
   releaseDate?: string;
+  runningTime?: number;
+  director?: string;
+  actors?: string[];
+  formats?: string[];
+  genreIds?: number[];
+  genreNames?: string[];
 };
 
 type Props = {
@@ -22,9 +40,36 @@ export default function MovieCardGrid({ sortType, onlyNowPlaying }: Props) {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    fetch("/src/assets/cinema_info/mock_cinema.json")
+    fetch("http://54.180.117.246/api/movies")
       .then((res) => res.json())
-      .then((data) => setMovies(data));
+      .then((result) => {
+        if (result?.result && Array.isArray(result.data)) {
+          const mapped = result.data.map((item: any) => ({
+            movieId: item.movieId,
+            movieName: item.title,
+            rating: item.rating ?? 0,
+            star: item.star ?? null,
+            image: item.posterPath
+              ? `http://54.180.117.246${item.posterPath.replace(/^\/images\/posters\//, "/Images/")}`
+              : "",
+            grade: item.grade === "15"
+              ? "/src/assets/grade_15.png"
+              : item.grade === "19"
+              ? "/src/assets/grade_19.png"
+              : "/src/assets/grade_all.png",
+            isReservable: true, // 실제 예약 가능 여부는 별도 필드가 있으면 사용
+            rank: item.rank ?? null,
+            releaseDate: item.releaseDate,
+            runningTime: item.runningTime,
+            director: item.director,
+            actors: item.actors,
+            formats: item.formats,
+            genreIds: item.genreIds,
+            genreNames: item.genreNames,
+          }));
+          setMovies(mapped);
+        }
+      });
   }, []);
 
   const filtered = onlyNowPlaying

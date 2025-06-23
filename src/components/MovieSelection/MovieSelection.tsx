@@ -27,38 +27,56 @@ const MovieSelection: React.FC = () => {
   // const {movieList, setMovieList} = useCinemaRelatedStore();
 
   //mock movies' data
-  useEffect(() => {
-    setSelectedMovie(null);
-
-    const fetchMovies = async () => {
-      const data = await getMovieInfo();
-      if (data) {
-        setMovies(data);
-      }
-    };
-    fetchMovies();
-
-    setSelectedTheater(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  //찐 api
   // useEffect(() => {
   //   setSelectedMovie(null);
 
   //   const fetchMovies = async () => {
-  //     try {
-  //       const res = await fetch("/api/movies");
-  //       const resData = await res.json();
-  //       setMovieList(resData.data);
-  //     } catch (err) {
-  //       console.log("Error fetching movies: ", err);
+  //     const data = await getMovieInfo();
+  //     if (data) {
+  //       setMovies(data);
   //     }
   //   };
   //   fetchMovies();
+
   //   setSelectedTheater(null);
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+
+  // 찐 api
+  useEffect(() => {
+    setSelectedMovie(null);
+
+    fetch("http://54.180.117.246/api/movies")
+      .then((res) => res.json())
+      .then((result) => {
+        if (result?.result && Array.isArray(result.data)) {
+          const mapped = result.data.map((item: any) => ({
+            movieId: item.movieId,
+            movieName: item.title,
+            rating: item.rating ?? 0,
+            star: item.star ?? null,
+            image: item.posterPath
+              ? `http://54.180.117.246${item.posterPath.replace(/^\/images\/posters\//, "/Images/")}`
+              : "",
+            grade: item.grade === "15"
+              ? "/src/assets/grade_15.png"
+              : item.grade === "19"
+              ? "/src/assets/grade_19.png"
+              : "/src/assets/grade_all.png",
+            isReservable: true,
+            rank: item.rank ?? null,
+            releaseDate: item.releaseDate,
+          }));
+          setMovies(mapped);
+        }
+      })
+      .catch((err) => {
+        console.log("Error fetching movies: ", err);
+      });
+
+    setSelectedTheater(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="movie-selection">

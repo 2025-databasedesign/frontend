@@ -1,10 +1,10 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./MovieCard.css";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 
 type Movie = {
+  movieId: number;
   movieName: string;
   rating: number;
   star: number | null;
@@ -12,6 +12,13 @@ type Movie = {
   grade: string;
   isReservable: boolean;
   rank: number | null;
+  releaseDate?: string;
+  runningTime?: number;
+  director?: string;
+  actors?: string[];
+  formats?: string[];
+  genreIds?: number[];
+  genreNames?: string[];
 };
 
 export default function MovieCard({ movie }: { movie: Movie }) {

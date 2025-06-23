@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes/AppRoutes";
 import "./Navbar.css";
@@ -7,8 +7,85 @@ import { isTokenValid, logout } from "../utils/authUtils";
 import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
 import { useAdminStore } from "../stores/AdminStore";
 
+// 예시: 유저 잔액을 가져오는 훅 (실제 구현에 맞게 수정)
+const useUserBalance = () => {
+  // 실제로는 zustand/recoil/swr 등에서 가져오세요
+  // 여기선 예시로 5000원 고정
+  return 5000;
+};
+
+type PaymentPopupProps = {
+  onClose: () => void;
+  onSuccess: (amount: number) => void;
+};
+
+const PaymentPopup: React.FC<PaymentPopupProps> = ({ onClose, onSuccess }) => {
+  const [amount, setAmount] = useState<number>(0);
+  const [cardNumber, setCardNumber] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (amount > 0 && cardNumber.length >= 12) {
+      onSuccess(amount);
+      onClose();
+    } else {
+      alert("카드번호와 금액을 올바르게 입력하세요.");
+    }
+  };
+
+  return (
+    <div className="payment-popup-overlay">
+      <div className="payment-popup">
+        <h3>충전하기</h3>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>카드번호</label>
+            <input
+              type="text"
+              value={cardNumber}
+              onChange={e => setCardNumber(e.target.value)}
+              placeholder="1234-5678-9012-3456"
+              maxLength={19}
+              required
+            />
+          </div>
+          <div>
+            <label>금액</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={e => setAmount(Number(e.target.value))}
+              min={1000}
+              step={1000}
+              required
+            />
+          </div>
+          <div className="popup-buttons">
+            <button type="submit">결제</button>
+            <button type="button" onClick={onClose}>취소</button>
+          </div>
+        </form>
+      </div>
+      <style>{`
+        .payment-popup-overlay {
+          position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
+          background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .payment-popup {
+          background: #fff; padding: 2rem; border-radius: 8px; min-width: 300px;
+          box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+        }
+        .payment-popup input { width: 100%; margin-bottom: 1rem; }
+        .popup-buttons { display: flex; gap: 1rem; justify-content: flex-end; }
+      `}</style>
+    </div>
+  );
+};
+
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
+    const [showPayment, setShowPayment] = useState(false);
+    const [balance, setBalance] = useState(useUserBalance());
   const isAdmin = useAdminStore((state) => state.isAdmin);
   const setIsAdmin = useAdminStore((state) => state.setIsAdmin);
 
@@ -21,6 +98,15 @@ const Navbar: React.FC = () => {
 
     alert("로그아웃되었습니다.");
     navigate(AppRoutes.HOME);
+  }
+
+  function handleCharge() {
+    setShowPayment(true);
+  }
+
+  function handlePaymentSuccess(amount: number) {
+    setBalance(prev => prev + amount);
+    alert(`${amount.toLocaleString()}원이 충전되었습니다.`);
   }
 
   return (
@@ -90,30 +176,46 @@ const Navbar: React.FC = () => {
             <li>
               <button onClick={handleLogout}>로그아웃</button>
             </li>
-            {!isAdmin && (
-              <li>
-                <button
-                  onClick={() => navigate(AppRoutes.MY_PAGE)}
-                  className="my-button"
-                >
-                  {/* 마이 */}
-                  <img
-                    src="/src/assets/image/my-icon.png"
-                    alt="my page"
-                    className="my-icon"
-                  />
-                </button>
-              </li>
-            )}
-          </>
-        ) : (
-          <li>
-            <button onClick={() => navigate(AppRoutes.LOGIN_PAGE)}>
-              로그인
-            </button>
-          </li>
-        )}
-      </ul>
+                  {!isAdmin && (
+                    <>
+                      <li>
+                        <button
+                          onClick={() => navigate(AppRoutes.MY_PAGE)}
+                          className="my-button"
+                        >
+                          {/* 마이 */}
+                          <img
+                            src="/src/assets/image/my-icon.png"
+                            alt="my page"
+                            className="my-icon"
+                          />
+                        </button>
+                      </li>
+                      <li className="balance-li">
+                        <span className="balance-text">
+                          {balance.toLocaleString()}원
+                        </span>
+                        <button className="charge-btn" onClick={handleCharge}>
+                          충전
+                        </button>
+                      </li>
+                    </>
+                  )}
+                </>
+              ) : (
+                <li>
+                  <button onClick={() => navigate(AppRoutes.LOGIN_PAGE)}>
+                    로그인
+                  </button>
+                </li>
+              )}
+            </ul>
+      {showPayment && (
+        <PaymentPopup
+          onClose={() => setShowPayment(false)}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
     </nav>
   );
 };

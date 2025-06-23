@@ -52,7 +52,6 @@ const TheaterSeatMap: React.FC<TheaterSeatMapProps> = ({
             <div key={rowIndex} className="seat-row">
               <div className="row-label">{getRowLabel(rowIndex)}</div>
               {row.map((cell, colIndex) => {
-                const isSeat = cell === 1;
                 const seatPos: [number, number] = [rowIndex + 1, colIndex + 1];
                 const isSelected = selectedSeats.some(
                   ([r, c]) => r === seatPos[0] && c === seatPos[1]
@@ -60,74 +59,55 @@ const TheaterSeatMap: React.FC<TheaterSeatMapProps> = ({
 
                 let className = "seat";
                 let content = "";
+                let style: React.CSSProperties = {};
 
-                if (cell === 0) className += " aisle";
-                else if (cell === 1) {
+                if (cell === 0) {
+                  className += " aisle";
+                  style.background = "#e0e0e0";
+                } else if (cell === 1) {
+                  className += " normal";
+                  style.background = "#cccccc";
                   const isAtLimit =
                     totalPeople > 0 && selectedSeats.length >= totalPeople;
                   const isDisabled = isAtLimit && !isSelected;
 
-                  className += " normal";
                   if (isSelectable && isSelected) {
                     className += " selected";
                   } else if (isSelectable && isDisabled) {
                     className += " disabled";
                   }
                   content = `${colIndex + 1}`;
-                } else if (cell == 2) {
+                } else if (cell === 2 || cell === 3) {
                   className += " aisle";
-                  // className += " door";
-                  // content = "🚪";
-                } else if (cell == 3) {
-                  className += " aisle";
-                  // className += " extinguisher";
-                  // content = "🧯";
+                  style.background = "#333333";
                 } else {
                   className += " unknown";
                 }
 
-                // switch (cell) {
-                //   case 0:
-                //     className += " aisle";
-                //     break;
-                //   case 1:
-                //     className += " normal";
-                //     content = `${colIndex + 1}`;
-                //     break;
-                //   case 2:
-                //     className += " aisle";
-                //     // className += " door";
-                //     // content = "🚪";
-                //     break;
-                //   case 3:
-                //     className += " aisle";
-                //     // className += " extinguisher";
-                //     // content = "🧯";
-                //     break;
-                //   default:
-                //     className += " unknown";
-                //     break;
-                // }
-
                 return (
-                  <div
+                    <div
                     key={colIndex}
                     className={className}
-                    style={isSelectable ? { cursor: "pointer" } : undefined}
+                    style={{
+                      ...style,
+                      ...(isSelectable && cell === 1 ? { cursor: "pointer" } : {}),
+                      ...(isSelectable && isSelected ? { background: "#4caf50", color: "#fff" } : {}),
+                    }}
                     onClick={() => {
                       if (
-                        !isSelectable ||
-                        (totalPeople > 0 &&
-                          selectedSeats.length >= totalPeople &&
-                          !isSelected)
+                      !isSelectable ||
+                      cell !== 1 ||
+                      (totalPeople > 0 &&
+                        selectedSeats.length >= totalPeople &&
+                        !isSelected)
                       )
-                        return;
+                      return;
 
-                      if (isSeat) toggleSeat(rowIndex, colIndex);
+                      toggleSeat(rowIndex, colIndex);
                     }}
-                  >
+                    >
                     {content}
-                  </div>
+                    </div>
                 );
               })}
             </div>

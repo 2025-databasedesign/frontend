@@ -16,6 +16,9 @@ type ScheduleRelatedStore = {
   selectedTheater: string | null;
   setSelectedTheater: (theater: string | null) => void;
 
+  selectedScreenId: number | null;
+  setSelectedScreenId: (id: number | null) => void;
+
   selectedMovie: string | null;
   setSelectedMovie: (movie: string | null) => void;
 
@@ -46,11 +49,14 @@ type ScheduleRelatedStore = {
 export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
   persist(
     (set) => ({
-      selectedDate: "2025-05-17", //temporary date for ui
+      selectedDate: "2025-06-11", //temporary date for ui
       setSelectedDate: (date) => set({ selectedDate: date }),
 
       selectedTheater: null,
       setSelectedTheater: (theater) => set({ selectedTheater: theater }),
+
+      selectedScreenId: null,
+      setSelectedScreenId: (id) => set({ selectedScreenId: id }),
 
       selectedMovie: null,
       setSelectedMovie: (movie) => set({ selectedMovie: movie }),
@@ -86,7 +92,7 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
 
       resetState: () =>
         set(() => ({
-          selectedDate: "2025-05-17",
+          selectedDate: "2025-06-11",
           selectedTheater: null,
           selectedMovie: null,
           shouldResetMovie: true,

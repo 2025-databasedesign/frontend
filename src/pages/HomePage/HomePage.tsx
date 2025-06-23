@@ -26,19 +26,19 @@ const HomePage: React.FC = () => {
   // ------------------------- Access store
 
   /////fetch mock movie's info
-  const getMovieInfo = async () => {
-    try {
-      const response = await fetch("/src/assets/cinema_info/mock_cinema.json");
-      if (!response.ok) {
-        throw new Error("Failed to fetch cinema's info");
-      }
-      const data = await response.json();
-      setMovieInfo(data);
-      return data;
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
+  // const getMovieInfo = async () => {
+  //   try {
+  //     const response = await fetch("/src/assets/cinema_info/mock_cinema.json");
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch cinema's info");
+  //     }
+  //     const data = await response.json();
+  //     setMovieInfo(data);
+  //     return data;
+  //   } catch (error) {
+  //     console.log("error: ", error);
+  //   }
+  // };
 
   // const getUserInfo = async () => {
   //   try {
@@ -46,32 +46,51 @@ const HomePage: React.FC = () => {
   //   }
   // }
 
-  useEffect(() => {
-    getMovieInfo();
-  }, []);
+  // useEffect(() => {
+  //   getMovieInfo();
+  // }, []);
 
   //real API
-  // useEffect(() => {
-  //   const fetchAll = async () => {
-  //     try {
-  //       const [moviesRes, theatersRes, ] = await Promise.all([
-  //         fetch("http://54.180.117.246/api/movies"),
-  //         fetch("http://54.180.117.246/api/theaters"),
-  //       ]);
-
-  //       const [movies, theaters] = await Promise.all([
-  //         moviesRes.json(),
-  //         theatersRes.json(),
-  //       ]);
-
-  //       setMovieList(movies.data);
-  //       setTheaterList(theaters.data);
-  //     } catch (err) {
-  //       console.error("Error fetching data:", err);
-  //     }
-  //   };
-  //   fetchAll();
-  // }, [setMovieList, setTheaterList]);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch("http://54.180.117.246/api/movies");
+        if (!response.ok) {
+          throw new Error("Failed to fetch movies info");
+        }
+        const result = await response.json();
+        if (result?.result && Array.isArray(result.data)) {
+          const mapped = result.data.map((item: any) => ({
+            movieId: item.movieId,
+            movieName: item.title,
+            rating: item.rating ?? 0,
+            star: item.star ?? null,
+            image: item.posterPath
+              ? `http://54.180.117.246${item.posterPath.replace(/^\/images\/posters\//, "/Images/")}`
+              : "",
+            grade: item.grade === "15"
+              ? "/src/assets/grade_15.png"
+              : item.grade === "19"
+              ? "/src/assets/grade_19.png"
+              : "/src/assets/grade_all.png",
+            isReservable: true,
+            rank: item.rank ?? null,
+            releaseDate: item.releaseDate,
+            runningTime: item.runningTime,
+            director: item.director,
+            actors: item.actors,
+            formats: item.formats,
+            genreIds: item.genreIds,
+            genreNames: item.genreNames,
+          }));
+          setMovieInfo(mapped);
+        }
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    };
+    fetchMovies();
+  }, []);
 
   //////////////////////////// Handle slider's button click
   function handleNext() {

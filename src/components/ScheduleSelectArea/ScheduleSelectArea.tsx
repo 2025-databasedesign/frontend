@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ScheduleSelectArea.css";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
 import { FullSchedule } from "../../types/scheduleRelatedType";
-import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
+// import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { EMPTY_PEOPLE_COUNT } from "../../utils/constant";
@@ -29,6 +29,9 @@ const ScheduleSelectArea: React.FC = () => {
   );
   const setSelectedMovie = useScheduleRelatedStore(
     (state) => state.setSelectedMovie
+  );
+  const setSelectedScreenId = useScheduleRelatedStore(
+    (state) => state.setSelectedScreenId
   );
   const setSelectedGrade = useScheduleRelatedStore(
     (state) => state.setSelectedGrade
@@ -67,11 +70,13 @@ const ScheduleSelectArea: React.FC = () => {
     theaterName: string,
     movieName: string,
     grade: string,
-    format: string
+    format: string,
+    scheduleId: number
   ) {
     setSelectedScreenTime([startTime, endTime]);
     setSelectedTheater(theaterName);
     setSelectedMovie(movieName);
+    setSelectedScreenId(scheduleId);
     setSelectedGrade(grade);
     setSelectedFormat(format);
     setSelectedPeople(EMPTY_PEOPLE_COUNT);
@@ -81,13 +86,43 @@ const ScheduleSelectArea: React.FC = () => {
 
   useEffect(() => {
     const fetchFullSchedule = async () => {
-      const data = await getfullSchedule();
-      if (data) {
-        setFullSchedule(data);
+      if (!selectedDate) return;
+      try {
+        const response = await fetch(`http://54.180.117.246/api/schedules/${selectedDate}`);
+        const result = await response.json();
+        if (result?.result && result?.data?.schedules) {
+          // 날짜를 selectedDate로 강제 세팅 (mock)
+          const fullScheduleData: FullSchedule = {
+            date: selectedDate, // <- 여기!
+            schedules: result.data.schedules.map((movie: any) => ({
+              movieId: movie.movieId,
+              movieName: movie.movieName ?? "",
+              durationMinutes: movie.durationMinutes ?? 0,
+              grade: movie.grade ?? "",
+              theaters: (movie.theaters ?? []).map((theater: any) => ({
+                theaterId: theater.theaterId,
+                theaterName: theater.theaterName,
+                format: theater.format,
+                subDub: theater.subDub ?? null,
+                availSeat: theater.availableSeat ?? 0,
+                totalSeat: theater.totalSeat ?? 0,
+                startTimes: theater.startTimes ?? [],
+                endTimes: theater.endTimes ?? [],
+                scheduleIds: theater.scheduleIds ?? [], // Add this line to map scheduleIds if available
+              })),
+            })),
+          };
+          setFullSchedule([fullScheduleData]);
+          console.log(fullScheduleData);
+        } else {
+          setFullSchedule([]);
+        }
+      } catch (error) {
+        setFullSchedule([]);
       }
     };
     fetchFullSchedule();
-  }, []);
+  }, [selectedDate]);
 
   return (
     <div className="schedule-select-area">
@@ -121,20 +156,26 @@ const ScheduleSelectArea: React.FC = () => {
                             className={
                               selectedTime ===
                               `${groupTime.movieName}-${theater.theaterId}-${time}`
-                                ? "selected-button"
-                                : ""
+                              ? "selected-button"
+                              : ""
                             }
                             onClick={() => {
                               setSelectedTime(
-                                `${groupTime.movieName}-${theater.theaterId}-${time}`
+                              `${groupTime.movieName}-${theater.theaterId}-${time}`
                               );
+                              // scheduleId를 찾기 위해 theaters 배열에서 해당 startTime과 endTime이 일치하는 객체를 찾음
+                              const scheduleId =
+                              theater.scheduleIds && theater.scheduleIds[index3]
+                                ? theater.scheduleIds[index3]
+                                : undefined;
                               handleSelectSchedule(
                                 theater.startTimes[index3],
                                 theater.endTimes[index3],
                                 theater.theaterName,
                                 groupTime.movieName,
                                 groupTime.grade,
-                                theater.format
+                                theater.format,
+                                scheduleId
                               );
                             }}
                           >

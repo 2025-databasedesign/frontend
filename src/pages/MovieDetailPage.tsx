@@ -7,7 +7,20 @@ import { AppRoutes } from "../routes/AppRoutes";
 import { useReviewStore } from "../stores/ReviewStore";
 import { useReservationHistoryStore } from "../stores/ReservationHistoryStore";
 
+// type Movie = {
+//   movieName: string;
+//   rating: number;
+//   star: number | null;
+//   image: string;
+//   grade: string;
+//   isReservable: boolean;
+//   rank: number | null;
+//   releaseDate?: string;
+// };
+
+
 type Movie = {
+  movieId: number;
   movieName: string;
   rating: number;
   star: number | null;
@@ -16,6 +29,12 @@ type Movie = {
   isReservable: boolean;
   rank: number | null;
   releaseDate?: string;
+  runningTime?: number;
+  director?: string;
+  actors?: string[];
+  formats?: string[];
+  genreIds?: number[];
+  genreNames?: string[];
 };
 
 export default function MovieDetailPage() {
@@ -94,14 +113,47 @@ export default function MovieDetailPage() {
     }
   }
 
+  const [movies, setMovies] = useState<Movie[]>([]);
+
   useEffect(() => {
-    fetch("/src/assets/cinema_info/mock_cinema.json")
+    fetch("http://54.180.117.246/api/movies")
       .then((res) => res.json())
-      .then((data: Movie[]) => {
-        const matched = data.find((m) => m.movieName === movieId);
-        setMovie(matched ?? null);
+      .then((result) => {
+        if (result?.result && Array.isArray(result.data)) {
+          const mapped = result.data.map((item: any) => ({
+            movieId: item.movieId,
+            movieName: item.title,
+            rating: item.rating ?? 0,
+            star: item.star ?? null,
+            image: item.posterPath
+              ? `http://54.180.117.246${item.posterPath.replace(/^\/images\/posters\//, "/Images/")}`
+              : "",
+            grade: item.grade === "15"
+              ? "/src/assets/grade_15.png"
+              : item.grade === "19"
+              ? "/src/assets/grade_19.png"
+              : "/src/assets/grade_all.png",
+            isReservable: true,
+            rank: item.rank ?? null,
+            releaseDate: item.releaseDate,
+            runningTime: item.runningTime,
+            director: item.director,
+            actors: item.actors,
+            formats: item.formats,
+            genreIds: item.genreIds,
+            genreNames: item.genreNames,
+          }));
+          setMovies(mapped);
+        }
       });
-  }, [movieId]);
+  }, []);
+
+  useEffect(() => {
+    if (movies.length && movieId) {
+      const matched = movies.find((m) => m.movieName === movieId);
+      setMovie(matched ?? null);
+    }
+  }, [movies, movieId]);
 
   if (!movie) {
     return (
@@ -110,6 +162,25 @@ export default function MovieDetailPage() {
       </div>
     );
   }
+
+  console.log("movie: ", movie);
+
+  // useEffect(() => {
+  //   fetch("/src/assets/cinema_info/mock_cinema.json")
+  //     .then((res) => res.json())
+  //     .then((data: Movie[]) => {
+  //       const matched = data.find((m) => m.movieName === movieId);
+  //       setMovie(matched ?? null);
+  //     });
+  // }, [movieId]);
+
+  // if (!movie) {
+  //   return (
+  //     <div style={{ padding: "40px", textAlign: "center" }}>
+  //       영화를 찾을 수 없습니다.
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
@@ -136,9 +207,9 @@ export default function MovieDetailPage() {
               예매율 {movie.rating.toFixed(1)}% | ⭐ {movie.star ?? "평점 없음"}
             </div>
             <div className="movie-details">
-              감독: 감독 이름 / 배우: 배우1, 배우2
+              감독: {movie.director ?? "정보 없음"} / 배우: {movie.actors && movie.actors.length > 0 ? movie.actors.join(", ") : "정보 없음"}
               <br />
-              장르: 액션 / 개봉: {movie.releaseDate ?? "정보 없음"}
+              장르: {movie.genreNames && movie.genreNames.length > 0 ? movie.genreNames.join(", ") : "정보 없음"} / 개봉: {movie.releaseDate ?? "정보 없음"}
             </div>
             <div className="detail-buttons">
               <button
