@@ -3,7 +3,6 @@ import "./MovieManage.css";
 import { MovieInfo } from "../../types/AdminPageRelatedType";
 // import { useCinemaRelatedStore } from "../../stores/CinemaRelatedStore";
 import { PosterInfoProps } from "../../types/scheduleRelatedType";
-import { getMovieInfo } from "../../utils/scheduleRelatedUtils";
 
 const MovieManage: React.FC = () => {
   const [movieInfoForRegister, setMovieInfoForRegister] = useState<MovieInfo>({
@@ -44,6 +43,7 @@ const MovieManage: React.FC = () => {
         const data = await response.json();
         console.log("Register success:", data);
         alert("영화 등록 성공!");
+        fetchMovies();
       } else {
         const errorData = await response.json();
         console.error("Register failed:", errorData);
@@ -61,29 +61,29 @@ const MovieManage: React.FC = () => {
 
   // -------------------------------movie delete-------------------------
   // mock data
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await fetch("http://54.180.117.246/api/movies", {
-          headers: {
-            Accept: "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch movies");
-        }
-        const result = await response.json();
-        // result.data는 배열, 각 객체에서 필요한 정보만 추출
-        const movies: PosterInfoProps[] = result.data.map((movie: any) => ({
-          movieId: movie.movieId || movie.movieid || movie.id || 0,
-          movieName: movie.title,
-          posterUrl: "", // 포스터 url이 없으므로 빈 값
-        }));
-        setMovieListForDelete(movies);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch("http://54.180.117.246/api/movies", {
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch movies");
       }
-    };
+      const result = await response.json();
+      // result.data는 배열, 각 객체에서 필요한 정보만 추출
+      const movies: PosterInfoProps[] = result.data.map((movie: any) => ({
+        movieId: movie.movieId || movie.movieid || movie.id || 0,
+        movieName: movie.title,
+        posterUrl: "", // 포스터 url이 없으므로 빈 값
+      }));
+      setMovieListForDelete(movies);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  };
+  useEffect(() => {
     fetchMovies();
   }, []);
 
@@ -104,6 +104,7 @@ const MovieManage: React.FC = () => {
         const data = await response.json();
         console.log("Delete success:", data);
         alert("영화 삭제 성공!");
+        fetchMovies();
       } else {
         const errorData = await response.json();
         console.error("Delete failed:", errorData);
@@ -230,7 +231,7 @@ const MovieManage: React.FC = () => {
         <div className="movie-delete-main-wrapper">
           <div className="movie-delete-main">
             {movieListForDelete.map((movie, index) => (
-              <div className="movie-area-admin" key={movie.movieId}>
+              <div className="movie-area-admin" key={index}>
                 {" "}
                 {/* key에도 id */}
                 <div

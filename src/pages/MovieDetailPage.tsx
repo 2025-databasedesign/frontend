@@ -139,7 +139,7 @@ export default function MovieDetailPage() {
         alert("리뷰 등록에 실패했습니다.");
       }
     } catch (e) {
-      alert("리뷰 등록 중 오류가 발생했습니다.");
+      alert("리뷰 등록 중 오류가 발생했습니다:" + e);
     }
   }
 
@@ -187,6 +187,7 @@ export default function MovieDetailPage() {
                 }
               } catch (e) {
                 // ignore fetch error, keep star/rating as default
+                console.log("Error" + e);
               }
 
               // 예매수 = 매출 / 15000 (올림)
@@ -259,6 +260,7 @@ export default function MovieDetailPage() {
                     }
                   } catch (e) {
                     // 실패 시 reviewer는 그대로 userId
+                    console.log("Error: " + e);
                   }
                   return {
                     movieReviewId: item.id,

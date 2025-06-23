@@ -40,6 +40,7 @@ const Dashboard: React.FC = () => {
         }
       } catch (e) {
         // handle error if needed
+        console.log("Error: "+ e);
       }
     };
     fetchTheaterRevenue();
@@ -128,7 +129,7 @@ const Dashboard: React.FC = () => {
               <tbody>
                 {Object.entries(theaterRevenue)
                   .reverse()
-                  .map(([theaterName, revenue], idx) => {
+                  .map(([theaterName, revenue]) => {
                     const maxRevenue = Math.max(
                       ...Object.values(theaterRevenue),
                       1
@@ -142,8 +143,8 @@ const Dashboard: React.FC = () => {
                             { "--size": size.toFixed(2) } as React.CSSProperties
                           }
                         >
-                          <span className="data">{revenue}</span>
-                          <span className="tooltip">{revenue} 원</span>
+                          <span className="data">{revenue.toLocaleString()}₩</span>
+                          <span className="tooltip">{revenue.toLocaleString()} 원</span>
                         </td>
                       </tr>
                     );

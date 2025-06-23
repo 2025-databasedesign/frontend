@@ -16,6 +16,11 @@
     background-color: rgb(226, 226, 226);
     border-right: 1px solid darkgray;
   }
+  .left-section {
+    background-color: rgb(241, 241, 241);
+    border-right: 1px solid darkgray;
+    min-height: calc(100dvh - 10dvh - 68px - 68px);
+  }
   .schedule-selection {
     overflow: auto;
     .schedule-list-wrapper {
