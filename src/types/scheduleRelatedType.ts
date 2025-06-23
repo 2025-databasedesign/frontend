@@ -29,6 +29,7 @@ export type TheaterInSchedule = {
   totalSeat: number;
   startTimes: string[];
   endTimes: string[];
+  scheduleIds: number[];
 };
 export type PosterInfoProps = {
   movieId: number;

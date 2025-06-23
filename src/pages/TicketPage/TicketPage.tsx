@@ -41,7 +41,9 @@ const TicketPage: React.FC = () => {
   const selectedPeople = useScheduleRelatedStore(
     (state) => state.selectedPeople
   );
-  const reservationTime = useScheduleRelatedStore((state) => state.reservationTime);
+  const reservationTime = useScheduleRelatedStore(
+    (state) => state.reservationTime
+  );
   // ------------------------- Access store
 
   const seatLabels = getSeatSeparately(selectedSeats);
@@ -106,9 +108,7 @@ const TicketPage: React.FC = () => {
               <div className="movie-title">
                 {selectedMovie} ({selectedFormat})
               </div>
-              <div className="grade">
-                {extractGradeValue(selectedGrade)}세이상관람가
-              </div>
+              <div className="grade">{selectedGrade == "ALL" ? "전체 " : `${selectedGrade}세이상 `}관람가</div>
               <div className="theater">{selectedTheater}</div>
             </div>
             <div className="ticket-middle">

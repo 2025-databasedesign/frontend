@@ -119,3 +119,17 @@ export const extractGradeValue = (grade: string | undefined | null): string => {
   const matched = grade?.match(/\d+/)?.[0];
   return matched || "all";
 };
+
+export const getGrade = (grade: string | null) => {
+  if (grade == "ALL") {
+    return "/src/assets/grade_all.png";
+  } else if (grade == "15") {
+    return "/src/assets/grade_15.png";
+  } else if (grade == "12") {
+    return "/src/assets/grade_12.png.png";
+  } else if (grade == "19") {
+    return "/src/assets/grade_19.png";
+  } else {
+    return "등급정보 없음";
+  }
+};

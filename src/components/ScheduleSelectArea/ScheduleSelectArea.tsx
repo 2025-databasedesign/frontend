@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./ScheduleSelectArea.css";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
-import { FullSchedule } from "../../types/scheduleRelatedType";
+import {
+  FullSchedule,
+  fullScheduleProps,
+  TheaterInSchedule,
+} from "../../types/scheduleRelatedType";
 // import { getfullSchedule } from "../../utils/scheduleRelatedUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { EMPTY_PEOPLE_COUNT } from "../../utils/constant";
+import { getGrade } from "../../utils/scheduleRelatedUtils";
 // import Grade from "../Grade/Grade";
 
 // const parseGradeNumber = (gradePath: string) => {
@@ -88,29 +93,35 @@ const ScheduleSelectArea: React.FC = () => {
     const fetchFullSchedule = async () => {
       if (!selectedDate) return;
       try {
-        const response = await fetch(`http://54.180.117.246/api/schedules/${selectedDate}`);
+        const response = await fetch(
+          `http://54.180.117.246/api/schedules/${selectedDate}`
+        );
         const result = await response.json();
         if (result?.result && result?.data?.schedules) {
           // 날짜를 selectedDate로 강제 세팅 (mock)
           const fullScheduleData: FullSchedule = {
             date: selectedDate, // <- 여기!
-            schedules: result.data.schedules.map((movie: any) => ({
-              movieId: movie.movieId,
-              movieName: movie.movieName ?? "",
-              durationMinutes: movie.durationMinutes ?? 0,
-              grade: movie.grade ?? "",
-              theaters: (movie.theaters ?? []).map((theater: any) => ({
-                theaterId: theater.theaterId,
-                theaterName: theater.theaterName,
-                format: theater.format,
-                subDub: theater.subDub ?? null,
-                availSeat: theater.availableSeat ?? 0,
-                totalSeat: theater.totalSeat ?? 0,
-                startTimes: theater.startTimes ?? [],
-                endTimes: theater.endTimes ?? [],
-                scheduleIds: theater.scheduleIds ?? [], // Add this line to map scheduleIds if available
-              })),
-            })),
+            schedules: result.data.schedules.map(
+              (movie: fullScheduleProps) => ({
+                movieId: movie.movieId,
+                movieName: movie.movieName ?? "",
+                durationMinutes: movie.durationMinutes ?? 0,
+                grade: movie.grade ?? "",
+                theaters: (movie.theaters ?? []).map(
+                  (theater: TheaterInSchedule) => ({
+                    theaterId: theater.theaterId,
+                    theaterName: theater.theaterName,
+                    format: theater.format,
+                    subDub: theater.subDub ?? null,
+                    availSeat: theater.availSeat ?? 0,
+                    totalSeat: theater.totalSeat ?? 0,
+                    startTimes: theater.startTimes ?? [],
+                    endTimes: theater.endTimes ?? [],
+                    scheduleIds: theater.scheduleIds ?? [], // Add this line to map scheduleIds if available
+                  })
+                ),
+              })
+            ),
           };
           setFullSchedule([fullScheduleData]);
           console.log(fullScheduleData);
@@ -119,6 +130,7 @@ const ScheduleSelectArea: React.FC = () => {
         }
       } catch (error) {
         setFullSchedule([]);
+        console.log("Error: " + error);
       }
     };
     fetchFullSchedule();
@@ -129,7 +141,7 @@ const ScheduleSelectArea: React.FC = () => {
       {filteredSchedules.map((groupTime, index1) => (
         <div className="group-time-select" key={index1}>
           <div className="movie-info-area">
-            <img src={groupTime.grade} />
+            <img src={getGrade(groupTime.grade)} />
             <span className="movie-name">{groupTime.movieName}</span>
           </div>
           <div className="time-select-wrapper">
@@ -156,18 +168,19 @@ const ScheduleSelectArea: React.FC = () => {
                             className={
                               selectedTime ===
                               `${groupTime.movieName}-${theater.theaterId}-${time}`
-                              ? "selected-button"
-                              : ""
+                                ? "selected-button"
+                                : ""
                             }
                             onClick={() => {
                               setSelectedTime(
-                              `${groupTime.movieName}-${theater.theaterId}-${time}`
+                                `${groupTime.movieName}-${theater.theaterId}-${time}`
                               );
                               // scheduleId를 찾기 위해 theaters 배열에서 해당 startTime과 endTime이 일치하는 객체를 찾음
                               const scheduleId =
-                              theater.scheduleIds && theater.scheduleIds[index3]
-                                ? theater.scheduleIds[index3]
-                                : undefined;
+                                theater.scheduleIds &&
+                                theater.scheduleIds[index3]
+                                  ? theater.scheduleIds[index3]
+                                  : undefined;
                               handleSelectSchedule(
                                 theater.startTimes[index3],
                                 theater.endTimes[index3],
@@ -180,15 +193,6 @@ const ScheduleSelectArea: React.FC = () => {
                             }}
                           >
                             <div className="start-time">{time}</div>
-                            <div className="seat-info">
-                              <span className="avail-seat">
-                                {theater.availSeat}
-                              </span>
-                              /
-                              <span className="total-seat">
-                                {theater.totalSeat}
-                              </span>
-                            </div>
                           </button>
                         </li>
                       ))}
