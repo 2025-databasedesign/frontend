@@ -53,6 +53,34 @@ export type RegisterSchedule = {
   date: string;
   schedules: ScheduleForRegister[];
 };
+
+export type RealMovie = {
+  actors?: string[];
+  director?: string;
+  formats?: string[];
+  genreIds?: number[];
+  genreNames?: string[];
+  grade: string;
+  movieId: number;
+  posterPath: string;
+  releaseDate?: string;
+  runningTime?: number;
+  title: string;
+  rating: number;
+  star: number | null;
+  isReservable: boolean;
+  rank: number | null;
+};
+
+export type CertainMovie = {
+  format: string;
+  movieTitle: string;
+  scheduleIds: number;
+  startTime: string;
+  subDub: string;
+  theaterName: string;
+}
+
 //--------------------------- Admin의 THEATER 관리
 // TheaterManage.tsx
 export type TheaterForRegister = {

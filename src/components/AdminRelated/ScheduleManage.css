@@ -120,15 +120,103 @@
 .admin-schedule-right {
   margin-left: 16px;
   align-self: center;
-  .schedule-area {
-    background-color: white;
+  .schedule-area-wrapper {
     border-radius: 12px;
+    overflow: hidden;
+    .schedule-area {
+      overflow-y: scroll;
+      min-height: 300px;
+      max-height: 400px;
+      background-color: white;
+      border-radius: 12px;
+      display: grid;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .no-schedule-area {
+      justify-self: center;
+      font-weight: 600;
+      align-self: first baseline;
+    }
+  }
+}
+
+.admin-schedule-main-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  .schedule-grade {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
-    min-height: 400px;
-    max-height: 500px;
+  }
+  .schedule-movie-name {
+    font-weight: 600;
+  }
+}
+
+.admin-schedule-sub-info {
+  display: flex;
+  gap: 2rem;
+  margin: 4px 0;
+}
+
+.start-time-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(100px, 1fr)
+  ); /* auto-wrap columns */
+  row-gap: 8px;
+  column-gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+.admin-main-schedule {
+  list-style: none;
+  button {
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 1px 1px 4px rgb(120, 120, 120);
+    color: rgb(102 102 102);
+    .start-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: black;
+    }
+    .seat-info {
+      font-size: 12px;
+      font-weight: 500;
+      .avail-seat {
+        color: rgb(66 118 82);
+      }
+    }
+  }
+  .selected-button {
+    border: 1px solid black;
+  }
+}
+
+.date-group {
+  .start-time-container {
+    row-gap: 20px;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(200px, 1fr)
+    ); /* auto-wrap columns */
+
+    .format-subdub {
+      color: darkolivegreen;
+      font-weight: 600;
+    }
+    .theater {
+      color: darkslategray;
+      font-weight: 500;
+    }
+    .start-time {
+      color: salmon;
+    }
   }
 }
 
@@ -168,8 +256,6 @@
     }
   }
 }
-
-
 
 @media screen and (max-width: 1300px) {
   .schedule-main {
@@ -238,7 +324,7 @@
 
   .admin-schedule-right {
     margin-left: 12px;
-    align-self:flex-end;
+    align-self: flex-end;
     .schedule-area {
       padding: 12px;
       min-height: 300px;
