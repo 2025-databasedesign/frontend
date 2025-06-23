@@ -43,7 +43,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ onClose, onSuccess }) => {
             <input
               type="text"
               value={cardNumber}
-              onChange={e => setCardNumber(e.target.value)}
+              onChange={(e) => setCardNumber(e.target.value)}
               placeholder="1234-5678-9012-3456"
               maxLength={19}
               required
@@ -54,7 +54,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ onClose, onSuccess }) => {
             <input
               type="number"
               value={amount}
-              onChange={e => setAmount(Number(e.target.value))}
+              onChange={(e) => setAmount(Number(e.target.value))}
               min={1000}
               step={1000}
               required
@@ -62,7 +62,9 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ onClose, onSuccess }) => {
           </div>
           <div className="popup-buttons">
             <button type="submit">결제</button>
-            <button type="button" onClick={onClose}>취소</button>
+            <button type="button" onClick={onClose}>
+              취소
+            </button>
           </div>
         </form>
       </div>
@@ -84,8 +86,8 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ onClose, onSuccess }) => {
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
-    const [showPayment, setShowPayment] = useState(false);
-    const [balance, setBalance] = useState(useUserBalance());
+  const [showPayment, setShowPayment] = useState(false);
+  const [balance, setBalance] = useState(useUserBalance());
   const isAdmin = useAdminStore((state) => state.isAdmin);
   const setIsAdmin = useAdminStore((state) => state.setIsAdmin);
 
@@ -105,7 +107,7 @@ const Navbar: React.FC = () => {
   }
 
   function handlePaymentSuccess(amount: number) {
-    setBalance(prev => prev + amount);
+    setBalance((prev) => prev + amount);
     alert(`${amount.toLocaleString()}원이 충전되었습니다.`);
   }
 
@@ -159,7 +161,7 @@ const Navbar: React.FC = () => {
             <span className="span-nav-content">상영관</span>
           </div>
         </li>
-        {isAdmin && (
+        {isTokenValid() && isAdmin && (
           <li className="li-center-menu">
             <div
               className="middle-navigation"
@@ -176,40 +178,40 @@ const Navbar: React.FC = () => {
             <li>
               <button onClick={handleLogout}>로그아웃</button>
             </li>
-                  {!isAdmin && (
-                    <>
-                      <li>
-                        <button
-                          onClick={() => navigate(AppRoutes.MY_PAGE)}
-                          className="my-button"
-                        >
-                          {/* 마이 */}
-                          <img
-                            src="/src/assets/image/my-icon.png"
-                            alt="my page"
-                            className="my-icon"
-                          />
-                        </button>
-                      </li>
-                      <li className="balance-li">
-                        <span className="balance-text">
-                          {balance.toLocaleString()}원
-                        </span>
-                        <button className="charge-btn" onClick={handleCharge}>
-                          충전
-                        </button>
-                      </li>
-                    </>
-                  )}
-                </>
-              ) : (
+            {!isAdmin && (
+              <>
                 <li>
-                  <button onClick={() => navigate(AppRoutes.LOGIN_PAGE)}>
-                    로그인
+                  <button
+                    onClick={() => navigate(AppRoutes.MY_PAGE)}
+                    className="my-button"
+                  >
+                    {/* 마이 */}
+                    <img
+                      src="/src/assets/image/my-icon.png"
+                      alt="my page"
+                      className="my-icon"
+                    />
                   </button>
                 </li>
-              )}
-            </ul>
+                <li className="balance-li">
+                  <span className="balance-text">
+                    {balance.toLocaleString()}원
+                  </span>
+                  <button className="charge-btn" onClick={handleCharge}>
+                    충전
+                  </button>
+                </li>
+              </>
+            )}
+          </>
+        ) : (
+          <li>
+            <button onClick={() => navigate(AppRoutes.LOGIN_PAGE)}>
+              로그인
+            </button>
+          </li>
+        )}
+      </ul>
       {showPayment && (
         <PaymentPopup
           onClose={() => setShowPayment(false)}

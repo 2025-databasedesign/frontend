@@ -59,7 +59,7 @@ const TheaterSeatMap: React.FC<TheaterSeatMapProps> = ({
 
                 let className = "seat";
                 let content = "";
-                let style: React.CSSProperties = {};
+                const style: React.CSSProperties = {};
 
                 if (cell === 0) {
                   className += " aisle";
