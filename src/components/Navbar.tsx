@@ -176,7 +176,7 @@ const Navbar: React.FC = () => {
               className="middle-navigation"
               onClick={() => navigate(AppRoutes.ADMIN_PAGE)}
             >
-              <span className="span-nav-content">매출</span>
+              <span className="span-nav-content">관리</span>
             </div>
           </li>
         )}

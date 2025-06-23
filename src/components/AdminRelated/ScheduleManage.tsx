@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./ScheduleManage.css";
-import { getMovieInfo } from "../../utils/scheduleRelatedUtils";
+import { getGrade, getMovieInfo } from "../../utils/scheduleRelatedUtils";
 import {
+  CertainMovie,
+  FullSchedule,
+  fullScheduleProps,
   PosterInfoProps,
+  RealMovie,
   RegisterSchedule,
 } from "../../types/scheduleRelatedType";
 
 const ScheduleManage: React.FC = () => {
   const [lookupDate, setLookupDate] = useState("");
-  const [movieList, setMovieList] = useState<PosterInfoProps[]>([]);
+  const [fullSchedule, setFullSchedule] = useState<CertainMovie[]>([]);
+  const [movieList, setMovieList] = useState<RealMovie[]>([]);
+  const [daySchedule, setDaySchedule] = useState<fullScheduleProps[]>([]);
   const [registerSchedule, setRegisterSchedule] = useState<RegisterSchedule>({
     date: "",
     schedules: [
@@ -24,6 +30,7 @@ const ScheduleManage: React.FC = () => {
             totalSeat: 0,
             startTimes: [""],
             endTimes: [""],
+            scheduleIds: [0],
           },
         ],
       },
@@ -32,60 +39,109 @@ const ScheduleManage: React.FC = () => {
 
   // ------------------------ 특정 영화 상영일정 삭제
   //찐 handleDeleteMovieSchedule API, 주소 확인
-  // const handleDeleteMovieSchedule = async (movieId: number) => {
-  //   if (!window.confirm("영화 스케쥴을 정말로 삭제하시겠습니까?")) return;
+  const handleDeleteMovieSchedule = async (movieId: number) => {
+    if (!window.confirm("영화 스케쥴을 정말로 삭제하시겠습니까?")) return;
 
-  //   try {
-  //     const response = await fetch(
-  //       `http:/api/schedules/movie/${movieId}`,
-  //       {
-  //         method: "DELETE",
-  //       }
-  //     );
+    try {
+      const response = await fetch(
+        `http:/api/schedules/movie/${movieId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log("Deleted movie:", data);
-  //       alert("영화 스케쥴이 완료되었습니다.");
-  //     } else {
-  //       const errorData = await response.json();
-  //       alert(`영화 스케쥴 삭제 실패: ${errorData.message || response.statusText}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Delete failed:", error);
-  //     alert("서버 오류로 인해 삭제에 실패했습니다.");
-  //   }
-  // };
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Deleted movie:", data);
+        alert("영화 스케쥴이 완료되었습니다.");
+      } else {
+        const errorData = await response.json();
+        alert(`영화 스케쥴 삭제 실패: ${errorData.message || response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("서버 오류로 인해 삭제에 실패했습니다.");
+    }
+  };
 
   //mock data
   //영화 리스트 조회
   useEffect(() => {
     const fetchMovies = async () => {
-      const data = await getMovieInfo();
-      if (data) {
-        setMovieList(data);
+      const response = await fetch("http://54.180.117.246/api/movies");
+      if (!response.ok) {
+        throw new Error("Failed to fetch movies info");
       }
+      const result = await response.json();
+      const data = result.data;
+      setDaySchedule([]);
+      setMovieList(data);
     };
     fetchMovies();
   }, []);
 
+  // ------------------------ 상영일정 조회
+  const handleLookupDateSchedule = async (date: string) => {
+    try {
+      const res = await fetch(`http://54.180.117.246/api/schedules/${date}`);
+      const resData = await res.json();
+      const dayData = resData.data.schedules;
+      console.log(dayData);
+      setFullSchedule([]);
+      setDaySchedule(dayData);
+    } catch (err) {
+      console.log("Error fetching schedule: ", err);
+    }
+  };
+
   // ------------------------ 특정 영화 상영일정 조회
-  // 찐 handleLookupMovieSchedule API, 주소 확인
-  // const handleLookupMovieSchedule = async (movieId: number) => {
-  //   try {
-  //     const res = await fetch(`/api/schedules/movie/${movieId}`);
-  //     const resData = await res.json();
-  //     setMovieList(resData);
-  //   } catch (err) {
-  //     console.log("Error fetching schedule: ", err);
-  //   }
-  // }
+  const handleLookupMovieSchedule = async (movieId: number) => {
+    try {
+      const res = await fetch(
+        `http://54.180.117.246/api/schedules/movie/${movieId}`
+      );
+      const resData = await res.json();
+
+      const sorted = resData.data.sort(
+        (
+          a: { startTime: string | number | Date },
+          b: { startTime: string | number | Date }
+        ) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+      );
+      console.log(sorted);
+      setDaySchedule([]);
+      setFullSchedule(sorted);
+    } catch (err) {
+      console.log("Error fetching schedule: ", err);
+    }
+  };
+
+  const groupSchedulesByDate = (schedules: CertainMovie[]) => {
+    const sorted = schedules.sort(
+      (a, b) =>
+        new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+    );
+
+    const grouped: { [date: string]: any[] } = {};
+
+    sorted.forEach((schedule) => {
+      const dateOnly = schedule.startTime.split("T")[0]; // "2025-06-15"
+      if (!grouped[dateOnly]) {
+        grouped[dateOnly] = [];
+      }
+      grouped[dateOnly].push(schedule);
+    });
+
+    return grouped;
+  };
+
+  const groupedSchedules = groupSchedulesByDate(fullSchedule);
 
   // ------------------------ 상영일정 등록
   // 찐 handleRegisterSchedule API, 주소 확인
   const handleRegisterSchedule = async () => {
     try {
-      const response = await fetch("/api/schedules", {
+      const response = await fetch("http://54.180.117.246/api/schedules", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registerSchedule),
@@ -122,7 +178,7 @@ const ScheduleManage: React.FC = () => {
               />
               <button
                 className="lookup-button"
-                // onClick={handleLookupMovieSchedule}
+                onClick={() => handleLookupDateSchedule(lookupDate)}
               >
                 <span className="lookup">
                   <img src="/src/assets/image/search-icon.png" alt="조회" />
@@ -138,11 +194,11 @@ const ScheduleManage: React.FC = () => {
               <div className="movie-list-main">
                 {movieList.map((movie, index) => (
                   <div className="movie-area-admin" key={index}>
-                    <div className="movie-title-admin">{movie.movieName}</div>
+                    <div className="movie-title-admin">{movie.title}</div>
                     <div className="schedule-button-area">
                       <span
                         className="delete"
-                        // onClick={handleDeleteMovieSchedule()}
+                        onClick={() => handleDeleteMovieSchedule(movie.movieId)}
                       >
                         <img
                           src="/src/assets/image/delete-icon.png"
@@ -151,7 +207,7 @@ const ScheduleManage: React.FC = () => {
                       </span>
                       <span
                         className="lookup"
-                        // onClick={handleLookupMovieSchedule}
+                        onClick={() => handleLookupMovieSchedule(movie.movieId)}
                       >
                         <img
                           src="/src/assets/image/search-icon.png"
@@ -166,8 +222,74 @@ const ScheduleManage: React.FC = () => {
           </div>
         </div>
         <div className="admin-schedule-right">
-          <div className="schedule-area">
-            조회할 때 보이는 상영일정 공간
+          <div className="schedule-area-wrapper">
+            <div className="schedule-area">
+              {daySchedule.length > 0 ? (
+                daySchedule.map((schedule, index) => (
+                  <div key={index} className="day-schedule">
+                    <div className="admin-schedule-main-info">
+                      <span className="schedule-grade">
+                        <img src={getGrade(schedule.grade)} />
+                      </span>
+                      <span className="schedule-movie-name">
+                        {schedule.movieName}
+                      </span>
+                      <span className="schedule-duration">
+                        {schedule.durationMinutes}(분)
+                      </span>
+                    </div>
+                    {schedule.theaters.map((theater, i) => (
+                      <div key={i}>
+                        <div className="admin-schedule-sub-info">
+                          <span>{theater.theaterName}</span>
+                          <span>총 좌석 수: {theater.totalSeat}</span>
+                          <span>포맷: {theater.format}</span>
+                          <span>자막/더빙: {theater.subDub}</span>
+                        </div>
+                        <div className="start-time-container">
+                          {theater.startTimes.map((time, ix) => (
+                            <li className="admin-main-schedule" key={ix}>
+                              <button
+                                data-tooltip={`종료 ${theater.endTimes[ix]}`}
+                              >
+                                <div className="start-time">{time}</div>
+                              </button>
+                            </li>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))
+              ) : fullSchedule.length > 0 ? (
+                <div>
+                  {Object.entries(groupedSchedules).map(([date, schedules]) => (
+                    <div key={date} className="date-group">
+                      <h4>{date}</h4>
+                      <div className="start-time-container">
+                        {schedules.map((s) => (
+                          <li
+                            key={s.scheduleId}
+                            className="admin-main-schedule"
+                          >
+                            <button>
+                              <div className="format-subdub">
+                                형식: {s.format}, <br />
+                                자막/더빙: {s.subDub}
+                              </div>
+                              <div className="theater">상영관: {s.theaterName}</div>
+                              <div className="start-time">시작 시간: {s.startTime.slice(11, 16)}</div>
+                            </button>
+                          </li>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-schedule-area">상영일정 조회 구역</div>
+              )}
+            </div>
           </div>
         </div>
       </div>
