@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./PaymentPage.css";
 import Navbar from "../../components/Navbar";
 import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
-import { getWeekday } from "../../utils/scheduleRelatedUtils";
+import { getGrade, getWeekday } from "../../utils/scheduleRelatedUtils";
 import {
   getPeopleDisplay,
   getPeoplePrices,
@@ -72,8 +72,6 @@ const PaymentPage: React.FC = () => {
         return `${rowLetter}${colNumber}`;
       });
 
-
-
       fetch("http://54.180.117.246/api/reservations", {
         method: "POST",
         headers: {
@@ -108,9 +106,9 @@ const PaymentPage: React.FC = () => {
       setPaymentAmount(finalAmount);
       setHasPaid(true);
       setReservationTime(dateTime);
-      useUserStore.getState().setBalance(
-        useUserStore.getState().balance - finalAmount
-      );
+      useUserStore
+        .getState()
+        .setBalance(useUserStore.getState().balance - finalAmount);
 
       const newReservation = {
         id: selectedDate + selectedScreenTime + selectedSeats + dateTime,
@@ -164,7 +162,7 @@ const PaymentPage: React.FC = () => {
             <div className="schedule-info-area">
               <div className="title-format-grade-area">
                 <span>
-                  <img src={`${selectedGrade}`} alt="15" />
+                  <img src={getGrade(selectedGrade)} alt={`${selectedGrade}`} />
                 </span>
                 <span>{selectedMovie}</span>
                 <span>({selectedFormat})</span>

@@ -7,6 +7,7 @@ import { AppRoutes } from "../routes/AppRoutes";
 // import { useReviewStore } from "../stores/ReviewStore";
 import { useReservationHistoryStore } from "../stores/ReservationHistoryStore";
 import { useUserStore } from "../stores/UserRelatedStore";
+import { extractGradeValue } from "../utils/scheduleRelatedUtils";
 
 // type Movie = {
 //   movieName: string;
@@ -78,11 +79,6 @@ export default function MovieDetailPage() {
   );
   const reviewable =
     filteredHistory.length > 0 && myReviews.length < filteredHistory.length;
-
-  const parseGradeNumber = (gradePath: string) => {
-    const match = gradePath.match(/grade_(\d+)\.png$/);
-    return match ? match[1] : "등급 정보 없음";
-  };
 
   function charCounter(inputField: string) {
     const currentLength = inputField.length;
@@ -323,7 +319,10 @@ export default function MovieDetailPage() {
             <div className="movie-title">{movie.movieName}</div>
             <div className="movie-badges">
               <span className="badge">
-                {parseGradeNumber(movie.grade)}세 관람가
+                {extractGradeValue(movie.grade) == "all"
+                  ? "전체 "
+                  : `${extractGradeValue(movie.grade)}세 `}
+                관람가
               </span>
               {movie.isReservable ? (
                 <span className="badge">예매 가능</span>

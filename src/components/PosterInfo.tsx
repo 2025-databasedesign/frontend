@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./PosterInfo.css";
-import { PosterInfoProps } from "../types/ScheduleRelatedType";
+import { PosterInfoProps } from "../types/scheduleRelatedType";
 import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
 import { AppRoutes } from "../routes/AppRoutes";
 // import Grade from "./Grade/Grade";
