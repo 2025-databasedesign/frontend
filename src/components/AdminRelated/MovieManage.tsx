@@ -37,9 +37,9 @@ const MovieManage: React.FC = () => {
   //       headers: {
   //         "Content-Type": "application/json",
   //       },
-  //       body: JSON.stringify({
+  //       body: JSON.stringify(
   //         movieInfoForRegister,
-  //       }),
+  //       ),
   //     });
 
   //     if (response.ok) {
@@ -238,9 +238,9 @@ const MovieManage: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="movie-rank-manage">
+      {/* <div className="movie-rank-manage">
         <div className="movie-manage-title">영화 순위 수정</div>
-      </div>
+      </div> */}
     </div>
   );
 };

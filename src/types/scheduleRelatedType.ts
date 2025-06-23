@@ -1,3 +1,13 @@
+export type Seat = {
+  seatId: number;
+  seatNumber: string;
+  rowNo: number;
+  colNo: number;
+  status: string;
+  theater: string;
+};
+
+
 //used in ScheduleSelectArea.tsx
 export type FullSchedule = {
   date: string;
@@ -41,4 +51,14 @@ export type ScheduleForRegister = {
 export type RegisterSchedule = {
   date: string;
   schedules: ScheduleForRegister[];
+};
+//--------------------------- Admin의 THEATER 관리
+// TheaterManage.tsx
+export type TheaterForRegister = {
+  theaterId: string;
+  theaterName: string;
+  totalSeats: number;
+  format: string;
+  price: number;
+  seats: Seat[];
 };

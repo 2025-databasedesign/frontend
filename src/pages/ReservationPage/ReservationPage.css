@@ -11,6 +11,7 @@
     grid-template-columns: 30dvw 30dvw 40dvw;
 
     .left {
+      background-color: rgb(241, 241, 241);
       .location-selection {
         max-height: calc(100dvh - 10dvh - 68px);
       }
@@ -21,7 +22,6 @@
       }
     }
     .right {
-
       .schedule-selection {
         overflow: auto;
 
