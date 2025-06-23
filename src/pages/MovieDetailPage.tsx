@@ -58,6 +58,10 @@ export default function MovieDetailPage() {
   const [movieReviewList, setMovieReviewList] = useState<any[]>([]);
   // const addMovieReview = useReviewStore((state) => state.addMovieReview);
 
+  // Get user info from store at the top level (not inside the function)
+  const userName = useUserStore((state) => state.name);
+  const userEmail = useUserStore((state) => state.userEmail);
+
   // ------------------------- Access store
 
   const textarea = document.getElementById(
@@ -69,13 +73,11 @@ export default function MovieDetailPage() {
     (m) => m.movie == movie?.movieName
   );
 
-  // const reviewInfo = movieReviewList.filter(
-  //   (r) => r.movieName == movie?.movieName
-  // );
-
+  const myReviews = movieReviewList.filter(
+    (r) => r.reviewer === userName || r.reviewer === userEmail
+  );
   const reviewable =
-    filteredHistory.length > 0 &&
-    movieReviewList.length < filteredHistory.length;
+    filteredHistory.length > 0 && myReviews.length < filteredHistory.length;
 
   const parseGradeNumber = (gradePath: string) => {
     const match = gradePath.match(/grade_(\d+)\.png$/);
@@ -98,10 +100,6 @@ export default function MovieDetailPage() {
     setShouldResetMovie(false); // prevent reset on mount
     navigate(AppRoutes.RESERVATION_PAGE);
   }
-
-  // Get user info from store at the top level (not inside the function)
-  const userName = useUserStore((state) => state.name);
-  const userEmail = useUserStore((state) => state.userEmail);
 
   async function handleReview() {
     if (!movie || !textarea || !textarea.value.trim()) return;
@@ -241,16 +239,42 @@ export default function MovieDetailPage() {
             );
             const reviewsResult = await reviewsRes.json();
             if (reviewsResult?.result && Array.isArray(reviewsResult.data)) {
-              setMovieReviewList(
-                reviewsResult.data.map((item: any) => ({
-                  movieReviewId: item.id,
-                  movieStar: item.rating,
-                  movieName: matched.movieName,
-                  movieReviewTime: item.createdAt,
-                  movieReviewContent: item.content,
-                  reviewer: item.reviewer,
-                }))
+              // reviewer가 userId이므로, 각 리뷰의 reviewer(userId) -> email로 변환
+              const token = localStorage.getItem("access_token");
+              const reviewList = await Promise.all(
+                reviewsResult.data.map(async (item: any) => {
+                  let reviewerEmail = item.reviewer;
+                  try {
+                    const userRes = await fetch(
+                      `http://54.180.117.246/api/users/id/${item.reviewer}`,
+                      {
+                        headers: {
+                          ...(token
+                            ? { Authorization: `Bearer ${token}` }
+                            : {}),
+                        },
+                      }
+                    );
+                    if (userRes.ok) {
+                      const userJson = await userRes.json();
+                      if (userJson?.result && userJson.data) {
+                        reviewerEmail = userJson.data;
+                      }
+                    }
+                  } catch (e) {
+                    // 실패 시 reviewer는 그대로 userId
+                  }
+                  return {
+                    movieReviewId: item.id,
+                    movieStar: item.rating,
+                    movieName: matched.movieName,
+                    movieReviewTime: item.createdAt,
+                    movieReviewContent: item.content,
+                    reviewer: reviewerEmail,
+                  };
+                })
               );
+              setMovieReviewList(reviewList);
             }
           } else {
             setMovieReviewList([]);
