@@ -193,6 +193,15 @@ const ScheduleSelectArea: React.FC = () => {
                             }}
                           >
                             <div className="start-time">{time}</div>
+                            {/* <div className="seat-info">
+                              <span className="avail-seat">
+                                {theater.availSeat}
+                              </span>
+                              /
+                              <span className="total-seat">
+                                {theater.totalSeat}
+                              </span>
+                            </div> */}
                           </button>
                         </li>
                       ))}

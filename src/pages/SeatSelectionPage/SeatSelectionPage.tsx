@@ -45,6 +45,35 @@ const SeatSelectionPage: React.FC = () => {
   const setSelectedSeats = useScheduleRelatedStore(
     (state) => state.setSelectedSeats
   );
+  const posterPath = useScheduleRelatedStore((state) => state.posterPath);
+  const setPosterPath = useScheduleRelatedStore((state) => state.setPosterPath);
+
+  useEffect(() => {
+    async function fetchPoster() {
+      if (!selectedMovie) return;
+      try {
+        const res = await fetch(
+          `http://54.180.117.246/api/movies/posterPath?title=${encodeURIComponent(selectedMovie)}`
+        );
+        const data = await res.json();
+        if (data?.result && data?.data) {
+            setPosterPath(
+            data.data
+              ? `http://54.180.117.246${data.data.replace(
+                /^\/images\/posters\//,
+                "/Images/"
+              )}`
+              : ""
+            );
+        } else {
+          setPosterPath("");
+        }
+      } catch {
+        setPosterPath("");
+      }
+    }
+    fetchPoster();
+  }, [selectedMovie]);
   // ------------------------- Access store
 
   // constant area
@@ -162,6 +191,42 @@ const SeatSelectionPage: React.FC = () => {
       alert("좌석을 골라주세요.");
       return;
     }
+    // 좌석 상태 최신화: 결제 버튼 클릭 시점에 한 번 더 확인
+    try {
+      const seatStatusRes = await fetch(
+      `http://54.180.117.246/seats/schedules/${selectedScreenId}/seats/status`
+      );
+      const seatStatusData = await seatStatusRes.json();
+      if (!seatStatusData?.result || !seatStatusData?.data) {
+      alert("좌석 정보를 다시 불러오지 못했습니다.");
+      setSeatInfo(null);
+      setError("좌석 정보를 불러오지 못했습니다.");
+      return;
+      }
+      // selectedSeats: [[rowIdx, colIdx], ...] -> ["A1", ...]
+      const seatNumbers = selectedSeats.map(([rowIdx, colIdx]) => {
+      const rowLetter = String.fromCharCode("A".charCodeAt(0) + (rowIdx - 1));
+      const colNumber = colIdx.toString();
+      return `${rowLetter}${colNumber}`;
+      });
+      // status가 2(hold)인 좌석이 있는지 확인
+      const heldSeats = seatNumbers.filter(
+      (seat) => seatStatusData.data[seat] === 2 || seatStatusData.data[seat] === 3
+      );
+      if (heldSeats.length > 0) {
+      alert(
+        `선택하신 좌석 중 이미 다른 사용자가 선점한 좌석이 있습니다: ${heldSeats.join(
+        ", "
+        )}\n좌석 정보를 새로고침합니다.`
+      );
+      setSeatInfo(seatStatusData.data);
+      setSelectedSeats([]);
+      return;
+      }
+    } catch (err) {
+      alert("좌석 상태 확인 중 오류가 발생했습니다: " + err);
+      return;
+    }
     if (
       selectedDate &&
       selectedTheater &&
@@ -246,13 +311,13 @@ const SeatSelectionPage: React.FC = () => {
         <div className="bottom">
           <div className="select-people-wrap">
             <div className="seat-page-movie-info">
-              <span className="poster">
+                <span className="poster">
                 <img
-                  src="/src/assets/movie1.jpg"
+                  src={useScheduleRelatedStore((state => state.posterPath)) || "/src/assets/image/no-poster.png"}
                   alt=""
                   className="poster-img"
                 />
-              </span>
+                </span>
               <div className="group-info">
                 <div className="title-grade-wrap">
                   <span className="grade">

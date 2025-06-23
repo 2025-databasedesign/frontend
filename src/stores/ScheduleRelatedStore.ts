@@ -43,6 +43,9 @@ type ScheduleRelatedStore = {
   reservationTime: string | null;
   setReservationTime: (time: string) => void;
 
+  posterPath: string | null;
+  setPosterPath: (path: string | null) => void;
+
   resetState: () => void;
 };
 
@@ -89,6 +92,8 @@ export const useScheduleRelatedStore = create<ScheduleRelatedStore>()(
       reservationTime: null,
       setReservationTime: (time) => set({ reservationTime: time }),
 
+      posterPath: null,
+      setPosterPath: (path) => set({ posterPath: path }),
 
       resetState: () =>
         set(() => ({

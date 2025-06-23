@@ -13,8 +13,10 @@ import {
 import { isTokenValid } from "../../utils/authUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
-import { useScheduleRelatedStore } from "../../stores/ScheduleRelatedStore";
+import { useScheduleRelatedStore, PeopleCount } from "../../stores/ScheduleRelatedStore";
 import { usePaymentRelatedStore } from "../../stores/PaymentRelatedStore";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const PaymentHistory: React.FC = () => {
   const navigate = useNavigate();
@@ -26,6 +28,29 @@ const PaymentHistory: React.FC = () => {
     (state) => state.deleteReservation
   );
   // ------------------------- Access store
+
+  // const [reservationHistory, setReservationHistory] = useState<ReservationType[]>([]);
+
+  // useEffect(() => {
+  //   const fetchReservationHistory = async () => {
+  //     const token = localStorage.getItem("access_token");
+  //     try {
+  //       const response = await fetch("http://54.180.117.246/api/reservations/mine", {
+  //         headers: {
+  //           Authorization: token ? `Bearer ${token}` : "",
+  //         },
+  //       });
+  //       if (!response.ok) throw new Error("Failed to fetch reservation history");
+  //       const data = await response.json();
+  //       setReservationHistory(data.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //       setReservationHistory([]);
+  //     }
+  //   };
+
+  //   fetchReservationHistory();
+  // }, []);
 
   function handleCancel(reservation: ReservationType) {
     if (isTokenValid()) {
@@ -85,83 +110,118 @@ const PaymentHistory: React.FC = () => {
             총 <span>{reservationHistory.length}</span> 건
           </div>
           <div className="history-main-wrapper">
-            {reservationHistory.map((reservation, index) => (
-              <div className="history-main" key={index}>
-                <div className="top">
-                  <div className="top-left">
-                    <img
-                      src="/src/assets/movie1.jpg"
-                      alt="영화포스터"
-                      className="poster"
-                    />
-                  </div>
-                  <div className="top-right">
-                    <div className="schedule-info">
-                      <div
-                        className="movie-title"
-                        onClick={() => {
-                          if (reservation.movie != null) {
-                            handleNavigateReview(reservation.movie);
-                          }
-                        }}
-                      >
-                        <img src={`${reservation.grade}`} />
-                        {reservation.movie}
-                      </div>
-                      <div className="theater-format">
-                        {reservation.theater} ({reservation.format})
-                      </div>
-                      <div className="date-and-time">
-                        {reservation.date}({getWeekday(reservation.date)}){" "}
-                        {reservation.screenTime?.[0]}
-                      </div>
-                    </div>
-                    <div className="people-money-area">
-                      <div className="people-info">
-                        <div className="seat-info">
-                          {getSeatDisplay(reservation.seats)}
-                        </div>
-                        <div className="people-type">
-                          {getPeopleDisplay(reservation.selectedPeople)}
-                        </div>
-                      </div>
-                      <div className="money-info">
-                        <div className="payment-amount">
-                          {reservation.paymentAmount.toLocaleString()}원
-                        </div>
-                        <div className="payment-method">
-                          {getPaymentMethod(reservation.payMethod)}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bottom">
-                  <button
-                    className="bottom-left"
-                    onClick={() => {
-                      if (reservation.movie != null) {
-                        handleNavigateReview(reservation.movie);
+            {reservationHistory.map((reservation, index) => {
+              const [posterPath, setPosterPath] = useState<string>("");
+
+              useEffect(() => {
+                if (reservation.movie) {
+                  fetch(`http://54.180.117.246/api/movies/posterPath?title=${encodeURIComponent(reservation.movie)}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (data.result && data.data) {
+                        setPosterPath(
+                          data.data
+                          ? `http://54.180.117.246${data.data.replace(
+                            /^\/images\/posters\//,
+                            "/Images/"
+                            )}`
+                          : ""
+                        );
                       }
-                    }}
-                  >
-                    관람평쓰기
-                  </button>
-                  <button
-                    className="bottom-middle-cancel"
-                    onClick={() => handleCancel(reservation)}
-                  >
-                    예매취소
-                  </button>
-                  <button
-                    className="bottom-right-delete"
-                    onClick={() => deleteReservation(reservation.id)}
-                  >
-                    삭제
-                  </button>
+                    })
+                    .catch(() => setPosterPath("/src/assets/movie1.jpg"));
+                }
+              }, [reservation.movie]);
+
+              return (
+                <div className="history-main" key={index}>
+                  <div className="top">
+                    <div className="top-left">
+                      <img
+                        src={posterPath}
+                        alt="영화포스터"
+                        className="poster"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/src/assets/movie1.jpg";
+                        }}
+                      />
+                    </div>
+                    <div className="top-right">
+                      <div className="schedule-info">
+                        <div
+                          className="movie-title"
+                          onClick={() => {
+                            if (reservation.movie != null) {
+                              handleNavigateReview(reservation.movie);
+                            }
+                          }}
+                        >
+                          <img
+                            src={
+                              reservation.grade === "15"
+                                ? "/src/assets/grade_15.png"
+                                : reservation.grade === "19"
+                                ? "/src/assets/grade_19.png"
+                                : "/src/assets/grade_all.png"
+                            }
+                          />
+                          {reservation.movie}
+                        </div>
+                        <div className="theater-format">
+                          {reservation.theater} ({reservation.format})
+                        </div>
+                        <div className="date-and-time">
+                          {reservation.date}({getWeekday(reservation.date)}){" "}
+                          {reservation.screenTime?.[0]}
+                        </div>
+                      </div>
+                      <div className="people-money-area">
+                        <div className="people-info">
+                          <div className="seat-info">
+                            {getSeatDisplay(reservation.seats)}
+                          </div>
+                          <div className="people-type">
+                            {getPeopleDisplay(reservation.selectedPeople)}
+                          </div>
+                        </div>
+                        <div className="money-info">
+                          <div className="payment-amount">
+                            {reservation.paymentAmount.toLocaleString()}원
+                          </div>
+                          <div className="payment-method">
+                            {getPaymentMethod(reservation.payMethod)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bottom">
+                    <button
+                      className="bottom-left"
+                      onClick={() => {
+                        if (reservation.movie != null) {
+                          handleNavigateReview(reservation.movie);
+                        }
+                      }}
+                    >
+                      관람평쓰기
+                    </button>
+                    <button
+                      className="bottom-middle-cancel"
+                      onClick={() => handleCancel(reservation)}
+                    >
+                      예매취소
+                    </button>
+                    <button
+                      className="bottom-right-delete"
+                      onClick={() => deleteReservation(reservation.id)}
+                    >
+                      삭제
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

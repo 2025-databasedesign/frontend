@@ -154,9 +154,9 @@ const PaymentPage: React.FC = () => {
           <div className="bottom-left">
             <div className="poster-area">
               <img
-                src="/src/assets/movie1.jpg"
+                src={useScheduleRelatedStore((state => state.posterPath)) || "/src/assets/image/no-poster.png"}
                 alt=""
-                className="poster-image"
+                className="poster-img"
               />
             </div>
             <div className="schedule-info-area">

@@ -43,9 +43,9 @@ export default function MovieCard({ movie }: { movie: Movie }) {
   return (
     <div className="movie-card" onClick={handleCardClick}>
       <div className="card-header">
-        <span className="movie-rank">
+        {/* <span className="movie-rank">
           {movie.rank ? `No.${movie.rank}` : "순위 없음"}
-        </span>
+        </span> */}
         <img src={movie.grade} alt="등급" className="card-grade" />
       </div>
       <img src={movie.image} alt={movie.movieName} className="movie-poster" />

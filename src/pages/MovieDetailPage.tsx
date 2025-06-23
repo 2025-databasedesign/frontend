@@ -129,7 +129,7 @@ export default function MovieDetailPage() {
             movieName: movie.movieName,
             movieReviewTime: result.data?.createdAt ?? new Date().toISOString(),
             movieReviewContent: result.data?.content ?? textarea.value,
-            reviewer: result.data?.reviewer ?? "익명",
+            reviewer: userName || userEmail,
           },
         ]);
         textarea.value = "";
