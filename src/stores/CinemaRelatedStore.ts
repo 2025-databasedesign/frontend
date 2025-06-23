@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { Seat } from "../types/scheduleRelatedType";
 
 type MovieInfo = {
   movieId: number;
@@ -14,14 +15,6 @@ type MovieInfo = {
   genreNames: string[];
 };
 
-type Seat = {
-  seatId: number;
-  seatNumber: string;
-  rowNo: number;
-  colNo: number;
-  status: string;
-  theater: string;
-};
 
 export type TheaterInfo = {
   theaterId: number;

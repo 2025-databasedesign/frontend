@@ -122,6 +122,10 @@
   filter: invert(37%) sepia(10%) saturate(5366%) hue-rotate(178deg) brightness(91%) contrast(87%);
 }
 
+.charge-btn {
+  margin-left: 1rem;
+}
+
 /*desktop*/
 @media screen and (max-width: 1300px) {
   .logo {

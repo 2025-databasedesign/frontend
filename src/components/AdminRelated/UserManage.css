@@ -42,7 +42,7 @@
   button {
     width: 240px;
     margin-bottom: 1rem;
-    align-self: center;
+    justify-self: center;
     padding: 8px 16px;
     background-color: transparent;
     color: var(--admin-primary-color);
@@ -58,6 +58,9 @@
 .ban-list {
   display: grid;
   gap: 1rem;
+  max-height: 500px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
   .banned-user-area {
     background-color: rgb(231, 229, 229);
     display: grid;
