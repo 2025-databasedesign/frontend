@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes/AppRoutes";
 import "./Navbar.css";
@@ -6,13 +6,9 @@ import logoImage from "../assets/image/logo-transparent-bg1.png";
 import { isTokenValid, logout } from "../utils/authUtils";
 import { useScheduleRelatedStore } from "../stores/ScheduleRelatedStore";
 import { useAdminStore } from "../stores/AdminStore";
+import { useUserStore } from "../stores/UserRelatedStore";
 
-// 예시: 유저 잔액을 가져오는 훅 (실제 구현에 맞게 수정)
-const useUserBalance = () => {
-  // 실제로는 zustand/recoil/swr 등에서 가져오세요
-  // 여기선 예시로 5000원 고정
-  return 5000;
-};
+
 
 type PaymentPopupProps = {
   onClose: () => void;
@@ -87,7 +83,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ onClose, onSuccess }) => {
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [showPayment, setShowPayment] = useState(false);
-  const [balance, setBalance] = useState(useUserBalance());
+  const balance = useUserStore((state) => state.balance);
   const isAdmin = useAdminStore((state) => state.isAdmin);
   const setIsAdmin = useAdminStore((state) => state.setIsAdmin);
 
@@ -106,9 +102,22 @@ const Navbar: React.FC = () => {
     setShowPayment(true);
   }
 
-  function handlePaymentSuccess(amount: number) {
-    setBalance((prev) => prev + amount);
-    alert(`${amount.toLocaleString()}원이 충전되었습니다.`);
+  async function handlePaymentSuccess(amount: number) {
+    try {
+      const userEmail = useUserStore.getState().userEmail;
+      const res = await fetch(`http://54.180.117.246/api/users/${encodeURIComponent(userEmail)}/charge?amount=${amount}`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (data?.result) {
+        useUserStore.getState().setBalance(balance + amount);
+        alert(`${amount}원이 충전되었습니다.`);
+      } else {
+        alert("충전에 실패했습니다.");
+      }
+    } catch {
+      alert("충전 중 오류가 발생했습니다.");
+    }
   }
 
   return (

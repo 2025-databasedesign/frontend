@@ -184,7 +184,7 @@ const SeatSelectionPage: React.FC = () => {
 
         console.log("scheduleId: "+ scheduleId + ",seatNumbers: " + seatNumbers);
 
-        const response = await fetch("http://54.180.117.246/api/reservations", {
+        const response = await fetch("http://54.180.117.246/seats/hold", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

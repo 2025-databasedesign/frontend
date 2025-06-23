@@ -14,6 +14,7 @@ import { AppRoutes } from "../../routes/AppRoutes";
 import { usePaymentRelatedStore } from "../../stores/PaymentRelatedStore";
 import { isTokenValid } from "../../utils/authUtils";
 import { useReservationHistoryStore } from "../../stores/ReservationHistoryStore";
+import { useUserStore } from "../../stores/UserRelatedStore";
 
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -34,7 +35,12 @@ const PaymentPage: React.FC = () => {
     (state) => state.selectedPeople
   );
   const selectedSeats = useScheduleRelatedStore((state) => state.selectedSeats);
-  const setReservationTime = useScheduleRelatedStore((state) => state.setReservationTime);
+  const setReservationTime = useScheduleRelatedStore(
+    (state) => state.setReservationTime
+  );
+  const selectedScreenId = useScheduleRelatedStore(
+    (state) => state.selectedScreenId
+  );
 
   const payMethod = usePaymentRelatedStore((state) => state.payMethod);
   const setPayMethod = usePaymentRelatedStore((state) => state.setPayMethod);
@@ -47,7 +53,7 @@ const PaymentPage: React.FC = () => {
   // ------------------------- Access store
 
   const [discount, setDiscount] = useState("");
-  const discountPrice = 1000;
+  const discountPrice = 0;
 
   const peopleDisplay = getPeopleDisplay(selectedPeople);
   const seatDisplay = getSeatDisplay(selectedSeats);
@@ -56,14 +62,55 @@ const PaymentPage: React.FC = () => {
   const finalAmount = totalPrice - discountPrice;
 
   function handlePayment() {
-    if(!payMethod) {
+    if (!payMethod) {
       alert("결제 먼저 해주세요.");
     }
     if (isTokenValid() && payMethod) {
+      const seatNumbers = selectedSeats.map(([rowIdx, colIdx]) => {
+        const rowLetter = String.fromCharCode("A".charCodeAt(0) + (rowIdx - 1));
+        const colNumber = colIdx.toString();
+        return `${rowLetter}${colNumber}`;
+      });
+
+
+
+      fetch("http://54.180.117.246/api/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+        },
+        body: JSON.stringify({
+          scheduleId: selectedScreenId || 0,
+          seatNumbers,
+          totalPrice: finalAmount,
+          seatCount: seatNumbers.length,
+          reserveAt: new Date().toISOString(),
+          movieTitle: selectedMovie,
+          theaterName: selectedTheater,
+          paymentMethod: payMethod,
+          // newShowTime: selectedScreenTime?.[3] || "",
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.result) {
+            alert("예매 실패: " + (data.message || "알 수 없는 오류"));
+            throw new Error(data.message);
+          }
+        })
+        .catch((err) => {
+          alert("예매 요청 중 오류가 발생했습니다.");
+          throw err;
+        });
+
       const dateTime = new Date().toISOString();
       setPaymentAmount(finalAmount);
       setHasPaid(true);
       setReservationTime(dateTime);
+      useUserStore.getState().setBalance(
+        useUserStore.getState().balance - finalAmount
+      );
 
       const newReservation = {
         id: selectedDate + selectedScreenTime + selectedSeats + dateTime,
@@ -213,7 +260,7 @@ const PaymentPage: React.FC = () => {
                 </div>
                 <div className="total-payment-area">
                   <span>최종 결제 금액</span>
-                  <span>{(finalAmount).toLocaleString()}원</span>
+                  <span>{finalAmount.toLocaleString()}원</span>
                 </div>
               </div>
               <button

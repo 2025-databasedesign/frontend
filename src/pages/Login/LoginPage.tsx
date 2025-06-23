@@ -14,6 +14,7 @@ const LoginPage: React.FC = () => {
   const setUserEmail = useUserStore((state) => state.setUserEmail);
   const setUserStatus = useUserStore((state) => state.setUserStatus);
   const setIsAdmin = useAdminStore((state) => state.setIsAdmin);
+  const setBalance = useUserStore((state) => state.setBalance);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
@@ -38,6 +39,12 @@ const LoginPage: React.FC = () => {
         setUserEmail(email);
         console.log("로그인 성공:", data);
         setName(data.data.name);
+        
+        const userResponse = await fetch(`http://54.180.117.246/api/users/${encodeURIComponent(email)}`);
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setBalance(userData.data.money);
+        }
 
         if(data.data.status == "ADMIN") {
           setIsAdmin(true);

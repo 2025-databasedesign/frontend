@@ -77,10 +77,13 @@ const TheaterSeatMap: React.FC<TheaterSeatMapProps> = ({
                     className += " disabled";
                   }
                   content = `${colIndex + 1}`;
-                } else if (cell === 2 || cell === 3) {
+                } else if (cell === 2) {
+                  className += " aisle";
+                  style.background = "#888888";
+                } else if (cell === 3) {
                   className += " aisle";
                   style.background = "#333333";
-                } else {
+                }else {
                   className += " unknown";
                 }
 

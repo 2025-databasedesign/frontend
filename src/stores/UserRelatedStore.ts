@@ -9,6 +9,9 @@ type UserStore = {
 
   userStatus: string;
   setUserStatus: (status: string) => void;
+
+  balance: number;
+  setBalance: (balance: number) => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -22,6 +25,9 @@ export const useUserStore = create<UserStore>()(
 
       userStatus: "",
       setUserStatus: (status) => set({userStatus: status}),
+
+      balance: 0,
+      setBalance: (balance) => set({ balance }),
     }),
     {
       name: "user-storage",
