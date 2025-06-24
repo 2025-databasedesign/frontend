@@ -72,6 +72,8 @@ const PaymentPage: React.FC = () => {
         return `${rowLetter}${colNumber}`;
       });
 
+      let reservationId = "";
+
       fetch("http://54.180.117.246/api/reservations", {
         method: "POST",
         headers: {
@@ -96,36 +98,39 @@ const PaymentPage: React.FC = () => {
             alert("예매 실패: " + (data.message || "알 수 없는 오류"));
             throw new Error(data.message);
           }
+          console.log(data.data.reservationId);
+          reservationId = data.data.reservationId;
+
+          const dateTime = new Date().toISOString();
+          setPaymentAmount(finalAmount);
+          setHasPaid(true);
+          setReservationTime(dateTime);
+          useUserStore
+            .getState()
+            .setBalance(useUserStore.getState().balance - finalAmount);
+
+          const newReservation = {
+            id: reservationId,
+            date: selectedDate,
+            theater: selectedTheater,
+            movie: selectedMovie,
+            grade: selectedGrade,
+            format: selectedFormat,
+            screenTime: selectedScreenTime,
+            selectedPeople: selectedPeople,
+            seats: selectedSeats,
+            payMethod: payMethod,
+            paymentAmount: finalAmount,
+            reservationDate: dateTime,
+          };
+          console.log("New Reservation:", newReservation);
+          useReservationHistoryStore.getState().addReservation(newReservation);
+          navigate(AppRoutes.TICKET_PAGE);
         })
         .catch((err) => {
           alert("예매 요청 중 오류가 발생했습니다.");
           throw err;
         });
-
-      const dateTime = new Date().toISOString();
-      setPaymentAmount(finalAmount);
-      setHasPaid(true);
-      setReservationTime(dateTime);
-      useUserStore
-        .getState()
-        .setBalance(useUserStore.getState().balance - finalAmount);
-
-      const newReservation = {
-        id: selectedDate + selectedScreenTime + selectedSeats + dateTime,
-        date: selectedDate,
-        theater: selectedTheater,
-        movie: selectedMovie,
-        grade: selectedGrade,
-        format: selectedFormat,
-        screenTime: selectedScreenTime,
-        selectedPeople: selectedPeople,
-        seats: selectedSeats,
-        payMethod: payMethod,
-        paymentAmount: finalAmount,
-        reservationDate: dateTime,
-      };
-      useReservationHistoryStore.getState().addReservation(newReservation);
-      navigate(AppRoutes.TICKET_PAGE);
     } else {
       localStorage.removeItem("schedule-storage");
     }
@@ -154,7 +159,10 @@ const PaymentPage: React.FC = () => {
           <div className="bottom-left">
             <div className="poster-area">
               <img
-                src={useScheduleRelatedStore((state => state.posterPath)) || "/src/assets/image/no-poster.png"}
+                src={
+                  useScheduleRelatedStore((state) => state.posterPath) ||
+                  "/src/assets/image/no-poster.png"
+                }
                 alt=""
                 className="poster-img"
               />

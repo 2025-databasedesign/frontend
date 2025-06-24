@@ -167,7 +167,7 @@ const Navbar: React.FC = () => {
             className="middle-navigation"
             onClick={() => navigate(AppRoutes.THEATERLIST_PAGE)}
           >
-            {/* <span className="span-nav-content">상영관</span> */}
+            <span className="span-nav-content">상영관</span>
           </div>
         </li>
         {isTokenValid() && isAdmin && (

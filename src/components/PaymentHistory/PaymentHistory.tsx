@@ -13,10 +13,14 @@ import {
 import { isTokenValid } from "../../utils/authUtils";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/AppRoutes";
-import { useScheduleRelatedStore, PeopleCount } from "../../stores/ScheduleRelatedStore";
+import {
+  useScheduleRelatedStore,
+  PeopleCount,
+} from "../../stores/ScheduleRelatedStore";
 import { usePaymentRelatedStore } from "../../stores/PaymentRelatedStore";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useUserStore } from "../../stores/UserRelatedStore";
 
 const PaymentHistory: React.FC = () => {
   const navigate = useNavigate();
@@ -55,11 +59,7 @@ const PaymentHistory: React.FC = () => {
   function handleCancel(reservation: ReservationType) {
     if (isTokenValid()) {
       const cancelReservation = {
-        id:
-          reservation.date +
-          reservation.screenTime +
-          reservation.seats +
-          getTodayDay(),
+        id: reservation.id,
         date: reservation.date,
         theater: reservation.theater,
         movie: reservation.movie,
@@ -76,15 +76,71 @@ const PaymentHistory: React.FC = () => {
 
       if (confirm("취소하시겠습니까?")) {
         if (confirm("되돌이킬 수 없습니다.")) {
-          useReservationHistoryStore
-            .getState()
-            .addCancelHistory(cancelReservation);
-          useReservationHistoryStore
-            .getState()
-            .deleteReservation(reservation.id);
-          usePaymentRelatedStore.getState().resetState();
-          useScheduleRelatedStore.getState().resetState();
-          alert("취소 되었습니다.");
+          fetch(`http://54.180.117.246/api/reservations/${reservation.id}`, {
+            method: "DELETE",
+          })
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error(`예약 취소 실패 (status: ${res.status})`);
+              }
+              return res.json();
+            })
+            .then((data) => {
+              fetch(
+                `http://54.180.117.246/api/users/${encodeURIComponent(
+                  useUserStore.getState().userEmail
+                )}/charge?amount=${reservation.paymentAmount}`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem(
+                      "access_token"
+                    )}`,
+                  },
+                }
+              )
+                .then((res) => res.json())
+                .then((data) => {
+                  useUserStore
+                    .getState()
+                    .setBalance(
+                      useUserStore.getState().balance +
+                        reservation.paymentAmount
+                    );
+                  if (!data.result) {
+                    alert(
+                      `포인트 충전 실패: ${data.message || "알 수 없는 오류"}`
+                    );
+                  }
+                })
+                .catch((err) => {
+                  console.error(err);
+                  alert("포인트 충전 중 오류가 발생했습니다.");
+                });
+
+              if (data.result) {
+                // 상태 수정
+                useReservationHistoryStore
+                  .getState()
+                  .addCancelHistory(cancelReservation);
+                useReservationHistoryStore
+                  .getState()
+                  .deleteReservation(reservation.id);
+                usePaymentRelatedStore.getState().resetState();
+                useScheduleRelatedStore.getState().resetState();
+
+                alert("취소 되었습니다.");
+
+                navigate(AppRoutes.HOME);
+              } else {
+                alert(`취소 실패: ${data.message}`);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+              alert(`취소 중 오류가 발생했습니다.`);
+            });
         }
       }
     } else {
@@ -115,17 +171,21 @@ const PaymentHistory: React.FC = () => {
 
               useEffect(() => {
                 if (reservation.movie) {
-                  fetch(`http://54.180.117.246/api/movies/posterPath?title=${encodeURIComponent(reservation.movie)}`)
+                  fetch(
+                    `http://54.180.117.246/api/movies/posterPath?title=${encodeURIComponent(
+                      reservation.movie
+                    )}`
+                  )
                     .then((res) => res.json())
                     .then((data) => {
                       if (data.result && data.data) {
                         setPosterPath(
                           data.data
-                          ? `http://54.180.117.246${data.data.replace(
-                            /^\/images\/posters\//,
-                            "/Images/"
-                            )}`
-                          : ""
+                            ? `http://54.180.117.246${data.data.replace(
+                                /^\/images\/posters\//,
+                                "/Images/"
+                              )}`
+                            : ""
                         );
                       }
                     })
@@ -142,7 +202,8 @@ const PaymentHistory: React.FC = () => {
                         alt="영화포스터"
                         className="poster"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/src/assets/movie1.jpg";
+                          (e.target as HTMLImageElement).src =
+                            "/src/assets/movie1.jpg";
                         }}
                       />
                     </div>

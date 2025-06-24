@@ -53,14 +53,14 @@ const MyPage: React.FC = () => {
                 >
                   취소내역
                 </button>
-                <button
+                {/* <button
                   className={`my-review ${
                     feature == "my-review" ? "selected-ft" : ""
                   }`}
                   onClick={() => setFeature("my-review")}
                 >
                   리뷰관리
-                </button>
+                </button> */}
                 <button
                   className={`my-info-manage ${
                     feature == "my-info-manage" ? "selected-ft" : ""

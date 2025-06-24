@@ -44,7 +44,7 @@ const ScheduleManage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http:/api/schedules/movie/${movieId}`,
+        `http://54.180.117.246/api/schedules/movie/${movieId}`,
         {
           method: "DELETE",
         }
@@ -195,6 +195,7 @@ const ScheduleManage: React.FC = () => {
                 {movieList.map((movie, index) => (
                   <div className="movie-area-admin" key={index}>
                     <div className="movie-title-admin">{movie.title}</div>
+                    <div className="movie-id-admin">ID: {movie.movieId}</div>
                     <div className="schedule-button-area">
                       <span
                         className="delete"
