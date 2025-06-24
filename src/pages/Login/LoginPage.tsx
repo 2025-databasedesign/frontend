@@ -36,6 +36,12 @@ const LoginPage: React.FC = () => {
       
       if (response.ok) {
         const data = await response.json();
+
+        if(data.data.status == "BANNED") {
+          alert("해당 계정은 정지되었습니다.");
+          return;
+        }
+
         setUserEmail(email);
         console.log("로그인 성공:", data);
         setName(data.data.name);
